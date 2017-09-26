@@ -151,5 +151,4 @@ XMLscene.prototype.display = function() {
     this.popMatrix();
     
     // ---- END Background, camera and axis setup
-    
 }

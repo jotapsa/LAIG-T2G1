@@ -1,45 +1,83 @@
 /**
- * Triangle
+ * MyHalfSphere
  * @constructor
  */
- function Triangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
+ function MyHalfSphere(scene, radius ,slices, stacks) {
  	CGFobject.call(this,scene);
+	
+	this.radius = radius;
+	this.slices = slices;
+	this.stacks = stacks;
+	this.minS = 0;
+	this.maxS = 1;
+	this.minT = 0;
+	this.maxT = 1;
 
- 	this.vertex = [];
- 	this.vertex.push(x1, y1, z1, x2, y2, z2, x3, y3, z3);
-
- 	this.minS = minS || 0;
- 	this.maxS = maxS || 1;
- 	this.minT = minT || 0;
- 	this.maxT = maxT || 1;
- 	
  	this.initBuffers();
- 	
  };
 
- Triangle.prototype = Object.create(CGFobject.prototype);
- Triangle.prototype.constructor = Triangle;
+ MyHalfSphere.prototype = Object.create(CGFobject.prototype);
+ MyHalfSphere.prototype.constructor = MyHalfSphere;
 
- Triangle.prototype.initBuffers = function() {
- 	this.vertices = this.vertex;
+ MyHalfSphere.prototype.initBuffers = function() {
+ 	/*
+ 	* TODO:
+ 	* Replace the following lines in order to build a prism with a **single mesh**.
+ 	*
+ 	* How can the vertices, indices and normals arrays be defined to
+ 	* build a prism with varying number of slices and stacks?
+ 	*/
 
- 	this.texCoords = [
-    this.minS, this.maxT,
-    this.maxS, this.maxT,
-    this.maxS/2, this.minT,
- 	];
+	this.vertices = [];
+ 	this.normals = [];
+ 	this.indices = [];
+ 	this.texCoords = [];
 
- 	this.indices = [
- 	0, 1, 2,
- 	];
+	var theta=(2*Math.PI)/this.slices;
+	var vertical_theta=(Math.PI/2)/this.stacks;
+
+	var s = this.minS;
+	var t = this.minT;
+	var sInc = (this.maxS-this.minS)/this.slices;
+	var tInc = (this.maxT-this.minT)/this.stacks;
+
+	for (stack=0; stack<=this.stacks; stack++)
+	{
+		for (slice=0; slice<this.slices; slice++)
+		{
+			z = Math.cos(vertical_theta* stack)
+			this.radius = Math.sqrt(this.radius - Math.pow(z,2));
+
+			x = this.radius * Math.sin (theta*slice);
+			y = this.radius * Math.cos (theta*slice);
+
+			this.vertices.push (x, y ,z);
+			this.normals.push (x, y, z);
+			this.texCoords.push (s+ slice*sInc, t+ stack*tInc);
+		}
+		s = this.minS;
+	}
+
+	for (j=0; j<this.stacks; j++)
+	{
+		for (i=0; i<this.slices; i++)
+		{
+			if (!(i==this.slices-1))
+			{
+				this.indices.push(i+(j*this.slices),i+1+(j*this.slices),i+1+this.slices+(j*this.slices));
+				this.indices.push(i+1+this.slices+(j*this.slices), i+this.slices+(j*this.slices), i+(j*this.slices));
+			}
+			else
+			{
+				this.indices.push(this.slices*(j), this.slices*(j+1), this.slices*(j+1)-1);
+				this.indices.push(this.slices*(j+1)-1, this.slices*(j+1), this.slices*(j+2)-1);
+
+			}
+		}
+	}
+
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
-
- 	this.normals = [
-      0, 0, 1,
-      0, 0, 1,
-      0, 0, 1,
-    ]
-
  	this.initGLBuffers();
+
  };
