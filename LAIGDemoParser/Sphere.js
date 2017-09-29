@@ -2,12 +2,13 @@
  * Sphere
  * @constructor
  */
- function Sphere(scene, radius ,slices, stacks) {
+ function Sphere(scene, radius ,stacks, slices) {
  	CGFobject.call(this,scene);
 	
 	this.radius = radius;
-	this.slices = slices;
 	this.stacks = stacks;
+	this.slices = slices;
+	
 	this.minS = 0;
 	this.maxS = 1;
 	this.minT = 0;
@@ -20,13 +21,7 @@
  Sphere.prototype.constructor = Sphere;
 
  Sphere.prototype.initBuffers = function() {
- 	/*
- 	* TODO:
- 	* Replace the following lines in order to build a prism with a **single mesh**.
- 	*
- 	* How can the vertices, indices and normals arrays be defined to
- 	* build a prism with varying number of slices and stacks?
- 	*/
+ 	
 
 	this.vertices = [];
  	this.normals = [];

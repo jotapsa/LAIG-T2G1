@@ -1,13 +1,17 @@
 /**
- * MyCylinder
+ * Cylinder
  * @constructor
  */
- function MyCylinder(scene, slices, stacks, radius) {
+ function Cylinder(scene, height, botRadius, topRadius, stacks, slices) {
  	CGFobject.call(this,scene);
 
-	this.slices = slices;
+	this.height= height;
+	
 	this.stacks = stacks;
-	this.radius = radius || 0.5, //r=0.5; d=1
+	this.slices = slices;
+	this.botRadius = botRadius;
+	this.topRadius = topRadius;
+
 	this.minS = 0;
 	this.maxS = 1;
 	this.minT = 0;
@@ -16,16 +20,11 @@
  	this.initBuffers();
  };
 
- MyCylinder.prototype = Object.create(CGFobject.prototype);
- MyCylinder.prototype.constructor = MyCylinder;
+ Cylinder.prototype = Object.create(CGFobject.prototype);
+ Cylinder.prototype.constructor = Cylinder;
 
- MyCylinder.prototype.initBuffers = function() {
+ Cylinder.prototype.initBuffers = function() {
  	/*
- 	* TODO:
- 	* Replace the following lines in order to build a prism with a **single mesh**.
- 	*
- 	* How can the vertices, indices and normals arrays be defined to
- 	* build a prism with varying number of slices and stacks?
  	*/
 
 	this.vertices = [];
