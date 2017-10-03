@@ -1419,13 +1419,36 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
+
+MySceneGraph.prototype.renderNode = function (node){
+    //texture ?
+    //appearance ? 
+
+    
+    for (var i = 0; i<node.leaves.length; i++){
+        if (node.leaves[i] instanceof MyGraphLeaf){
+            this.renderLeaf(node.leaves[i]);
+        }
+        else{
+            //transform matrix ?
+            this.renderNode(this.nodes[node.leaves[i]]);
+        }
+    }
+}
+
+MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
+    //if everything good
+    this.scene.pushMatrix();
+    //this.scene.multMatrix(transformMatrix);
+    //obj.display();
+    this.scene.popMatrix();
+}
+
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
-
-	//start with root? this.idRoot
-	this.nodes[this.idRoot].printChilds();
+	this.renderNode(this.nodes[this.idRoot]);
 	
 }
