@@ -15,10 +15,10 @@ var Z = 2;
     this.botRightVertex = [];
     this.botRightVertex.push(x2, y2, 0);
 
- 	this.minS = minS || 0;
- 	this.maxS = maxS || 1;
- 	this.minT = minT || 0;
- 	this.maxT = maxT || 1;
+ 	this.minS = 0;
+ 	this.maxS = 1;
+ 	this.minT = 0;
+ 	this.maxT = 1;
  	
  	this.initBuffers();
  	

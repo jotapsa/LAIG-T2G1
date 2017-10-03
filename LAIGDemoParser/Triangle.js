@@ -18,10 +18,10 @@ var Z = 2;
  	this.v5 = [];
  	this.v5.push (x3-x1, y3-y1, z3-z1);
 
- 	this.minS = minS || 0;
- 	this.maxS = maxS || 1;
- 	this.minT = minT || 0;
- 	this.maxT = maxT || 1;
+ 	this.minS = 0;
+ 	this.maxS = 1;
+ 	this.minT = 0;
+ 	this.maxT = 1;
  	
  	this.initBuffers();
  	

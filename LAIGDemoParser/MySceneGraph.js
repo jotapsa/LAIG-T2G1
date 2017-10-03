@@ -1423,6 +1423,8 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
+	//console.log("length = " + this.nodes.length);
 	for(var i=0; i<this.nodes.length; i++){
+
 	}
 }
