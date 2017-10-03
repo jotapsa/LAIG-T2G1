@@ -1424,6 +1424,5 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 	for(var i=0; i<this.nodes.length; i++){
-	    
 	}
 }
