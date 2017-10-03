@@ -33,7 +33,5 @@ function MyGraphLeaf(graph, type, args) {
         default:
             break;
     }
-    
-    console.log (xmlelem);
 }
 

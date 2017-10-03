@@ -1348,8 +1348,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.warn("Error in leaf");
 						
 						//parse leaf
-                        this.args = this.reader.getString(xmlelem,'args').split(" ").map(function(n){ return +n;});
-						this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, args));
+                        this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
+						this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
                         sizeChildren++;
 					}
 					else
@@ -1425,6 +1425,7 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 
-	//start with root?
+	//start with root? this.idRoot
+	this.nodes[this.idRoot].printChilds();
 	
 }

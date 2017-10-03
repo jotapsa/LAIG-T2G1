@@ -38,4 +38,13 @@ MyGraphNode.prototype.addChild = function(leaf) {
     this.leaves.push(leaf);
 }
 
+MyGraphNode.prototype.printChilds = function() {
+    console.log("leaves = " + this.leaves);
+    console.log("children = " + this.children);
+    //for(i=0;i<this.leaves.length;i++)
+        //console.log(this.graph.nodes[this.leaves[i]].printChilds());
+}
+
+
+
 
