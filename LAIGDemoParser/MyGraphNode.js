@@ -7,7 +7,7 @@ function MyGraphNode(graph, nodeID) {
     this.graph = graph;
 
     this.nodeID = nodeID;
-    
+
     // IDs of child nodes.
     this.children = [];
 
@@ -27,7 +27,7 @@ function MyGraphNode(graph, nodeID) {
 /**
  * Adds the reference (ID) of another node to this node's children array.
  */
-MyGraphNode.prototype.addChild = function(nodeID) {
+MyGraphNode.prototype.addChildren = function(nodeID) {
     this.children.push(nodeID);
 }
 
@@ -37,7 +37,3 @@ MyGraphNode.prototype.addChild = function(nodeID) {
 MyGraphNode.prototype.addChild = function(leaf) {
     this.leaves.push(leaf);
 }
-
-
-
-

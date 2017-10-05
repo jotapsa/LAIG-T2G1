@@ -8,6 +8,8 @@ function MyGraphLeaf(graph, type, args) {
     this.type = type;
     this.args = args;
 
+    console.log("tipo = " + this.type);
+    console.log("args = " + this.args + " length = " + this.args.length);
     
     switch(this.type){
         case 'rectangle':

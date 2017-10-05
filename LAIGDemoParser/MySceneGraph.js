@@ -1333,7 +1333,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                     else if (curId == nodeID)
                         return "a node may not be a child of its own";
                     else {
-                        this.nodes[nodeID].addChild(curId);
+                        this.nodes[nodeID].addChildren(curId);
                         sizeChildren++;
                     }
                 }                    
@@ -1419,24 +1419,23 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-
 MySceneGraph.prototype.renderNode = function (node){
     //texture ?
     //appearance ? 
-
     
-    for (var i = 0; i<node.leaves.length; i++){
-        if (node.leaves[i] instanceof MyGraphLeaf){
-            this.renderLeaf(node.leaves[i]);
-        }
-        else{
-            //transform matrix ?
-            this.renderNode(this.nodes[node.leaves[i]]);
-        }
+   for (var i = 0; i<node.children.length; i++){
+            //Render all child nodes of node
+            this.renderNode(node.children[i]); 
     }
+    
+    //Render all leaves of node if exists 
+    for(var i=0;i<node.leaves.length;i++){
+        this.renderLeaf(node.leaves[i]);
+    } 
 }
 
 MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
+    console.log("tipo = " + leaf.type);
     //if everything good
     this.scene.pushMatrix();
     //this.scene.multMatrix(transformMatrix);
@@ -1449,6 +1448,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
  */
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
-	this.renderNode(this.nodes[this.idRoot]);
+	//this.renderNode(this.nodes[this.idRoot]);
 	
 }
