@@ -1419,53 +1419,31 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-MySceneGraph.prototype.parseMaterialTexture = function(material,texture){
-    var newMaterial = CGFappearance(this.scene);
-    if(material == null && texture == null){
-        return newMaterial;
-    }
-    else if(material != null && texture == null){
-        return material;
-    }
-    else if(material == null && texture != null){
-        newMaterial.setTexture(texture[0]);
-        return newMaterial;
-    }
-    else{
-        material.setTexture(texture[0]);
-        return material;
-    }
-}
 
-MySceneGraph.prototype.renderNode = function (node){
-    //texture ?
-    //appearance ?
+MySceneGraph.prototype.renderNode = function (node, appearance, texture){
+   var texture = this.textures[node.textureID] || texture;
+   var appearance = this.materials[node.materialID] || appearance;
 
-   //console.log (node.nodeID);
-   //console.log (node.children.length);
-    
+   if(texture != null && appearance != null){
+        appearance.setTexture(texture);
+   }
    for (var i = 0; i<node.children.length; i++){
-            //Render all child nodes of node
-            this.renderNode(this.nodes[node.children[i]]); 
+        //Render all child nodes of node
+        this.renderNode(this.nodes[node.children[i]], appearance, texture); 
     }
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
-        this.renderLeaf(node,node.leaves[i]);
+        this.renderLeaf(node.leaves[i], appearance, texture);
     } 
 }
 
-MySceneGraph.prototype.renderLeaf = function (node, leaf /*, transformMatrix*/){
-    //console.log("tipo = " + leaf.type);
-    var materialLeaf = this.parseMaterialTexture(this.materials[node.materialID],this.textures[node.textureID]);
-    //if everything good
+MySceneGraph.prototype.renderLeaf = function (leaf, appearance, texture){
+
     this.scene.pushMatrix();
-        this.scene.multMatrix(node.transformMatrix);
-        //console.log("texturaID ===== " + node.textureID);
-        //console.log("materialID ===== " + node.materialID);
-        
-        //materialLeaf.apply();
-        //this.materials[node.materialID].apply();
+        if (appearance != null){
+            appearance.apply();
+        }
         leaf.object.display();
     this.scene.popMatrix();
 }
