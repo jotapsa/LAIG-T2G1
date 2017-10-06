@@ -1422,14 +1422,19 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.renderNode = function (node){
     //texture ?
     //appearance ? 
+
+   console.log (node.nodeID);
+   console.log (node.children.length);
     
    for (var i = 0; i<node.children.length; i++){
             //Render all child nodes of node
-            this.renderNode(node.children[i]); 
+            console.log("Entrou children");
+            this.renderNode(this.nodes[node.children[i]]); 
     }
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
+        console.log("Entrou leaves");
         this.renderLeaf(node.leaves[i]);
     } 
 }
@@ -1448,6 +1453,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
  */
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
-	//this.renderNode(this.nodes[this.idRoot]);
+	this.renderNode(this.nodes[this.idRoot]);
 	
 }
