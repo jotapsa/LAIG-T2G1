@@ -1423,24 +1423,23 @@ MySceneGraph.prototype.renderNode = function (node){
     //texture ?
     //appearance ? 
 
-   console.log (node.nodeID);
-   console.log (node.children.length);
+   //console.log (node.nodeID);
+   //console.log (node.children.length);
     
    for (var i = 0; i<node.children.length; i++){
             //Render all child nodes of node
-            console.log("Entrou children");
             this.renderNode(this.nodes[node.children[i]]); 
     }
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
-        console.log("Entrou leaves");
         this.renderLeaf(node.leaves[i]);
     } 
 }
 
 MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
-    console.log("tipo = " + leaf.type);
+    //console.log("tipo = " + leaf.type);
+    
     //if everything good
     this.scene.pushMatrix();
     //this.scene.multMatrix(transformMatrix);
