@@ -1419,9 +1419,27 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
+MySceneGraph.prototype.parseMaterialTexture = function(material,texture){
+    var newMaterial = CGFappearance(this.scene);
+    if(material == null && texture == null){
+        return newMaterial;
+    }
+    else if(material != null && texture == null){
+        return material;
+    }
+    else if(material == null && texture != null){
+        newMaterial.setTexture(texture[0]);
+        return newMaterial;
+    }
+    else{
+        material.setTexture(texture[0]);
+        return material;
+    }
+}
+
 MySceneGraph.prototype.renderNode = function (node){
     //texture ?
-    //appearance ? 
+    //appearance ?
 
    //console.log (node.nodeID);
    //console.log (node.children.length);
@@ -1433,17 +1451,22 @@ MySceneGraph.prototype.renderNode = function (node){
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
-        this.renderLeaf(node.leaves[i]);
+        this.renderLeaf(node,node.leaves[i]);
     } 
 }
 
-MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
+MySceneGraph.prototype.renderLeaf = function (node, leaf /*, transformMatrix*/){
     //console.log("tipo = " + leaf.type);
-    
+    var materialLeaf = this.parseMaterialTexture(this.materials[node.materialID],this.textures[node.textureID]);
     //if everything good
     this.scene.pushMatrix();
-    //this.scene.multMatrix(transformMatrix);
-    //obj.display();
+        this.scene.multMatrix(node.transformMatrix);
+        //console.log("texturaID ===== " + node.textureID);
+        //console.log("materialID ===== " + node.materialID);
+        
+        //materialLeaf.apply();
+        //this.materials[node.materialID].apply();
+        leaf.object.display();
     this.scene.popMatrix();
 }
 
@@ -1452,6 +1475,8 @@ MySceneGraph.prototype.renderLeaf = function (leaf /*, transformMatrix*/){
  */
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
+
+	//Enable Textures
 	this.renderNode(this.nodes[this.idRoot]);
 	
 }

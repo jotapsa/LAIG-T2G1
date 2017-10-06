@@ -8,7 +8,7 @@ function MyGraphLeaf(graph, type, args) {
     this.type = type;
     this.args = args;
 
-    this.obj = null;
+    this.object = null;
     
     switch(this.type){
         case 'rectangle':
