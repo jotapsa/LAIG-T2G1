@@ -9,8 +9,11 @@ var Z = 2;
  function Triangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
  	CGFobject.call(this,scene);
 
- 	this.vertex = [];
- 	this.vertex.push(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+ 	this.vertex = [
+ 	x1, y1, z1,
+ 	x2, y2, z2,
+ 	x3, y3, z3,
+ 	];
 
  	this.v4 = [];
  	this.v4.push (x2-x1, y2-y1, z2-z1);

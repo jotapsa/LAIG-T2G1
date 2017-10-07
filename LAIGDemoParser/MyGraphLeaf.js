@@ -41,6 +41,7 @@ function MyGraphLeaf(graph, type, args) {
                 break;
             }
             else
+                console.log (this.args[0],this.args[1],this.args[2],this.args[3],this.args[4],this.args[5],this.args[6],this.args[7],this.args[8]);
                 this.object = new Triangle(graph.scene,this.args[0],this.args[1],this.args[2],this.args[3],this.args[4],this.args[5],this.args[6],this.args[7],this.args[8]);
             break;
         default:

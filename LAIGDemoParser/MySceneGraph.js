@@ -1420,31 +1420,35 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 
-MySceneGraph.prototype.renderNode = function (node, appearance, texture){
+MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture){
    var texture = this.textures[node.textureID] || texture;
    var appearance = this.materials[node.materialID] || appearance;
+   var renderTransformMatrix = mat4.create();
 
-   if(texture != null && appearance != null){
-        appearance.setTexture(texture);
+   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
+
+   if(texture != null && appearance != null && appearance instanceof CGFappearance){
+        //appearance.setTexture(texture[0]);
    }
    for (var i = 0; i<node.children.length; i++){
         //Render all child nodes of node
-        this.renderNode(this.nodes[node.children[i]], appearance, texture); 
+        this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture); 
     }
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
-        this.renderLeaf(node.leaves[i], appearance, texture);
+        this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
     } 
 }
 
-MySceneGraph.prototype.renderLeaf = function (leaf, appearance, texture){
+MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
 
     this.scene.pushMatrix();
-        if (appearance != null){
-            appearance.apply();
-        }
-        leaf.object.display();
+       if(appearance && appearance instanceof CGFappearance){
+           appearance.apply();
+       }
+       this.scene.multMatrix(renderTransformMatrix);
+       leaf.object.display();
     this.scene.popMatrix();
 }
 
@@ -1455,6 +1459,6 @@ MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 
 	//Enable Textures
-	this.renderNode(this.nodes[this.idRoot]);
+	this.renderNode(this.nodes[this.idRoot], this.nodes[this.idRoot].transformMatrix);
 	
 }

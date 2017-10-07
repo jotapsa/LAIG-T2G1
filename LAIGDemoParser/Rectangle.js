@@ -29,10 +29,10 @@ var Z = 2;
 
  Rectangle.prototype.initBuffers = function() {
  	this.vertices = [
- 	this.topLeftVertex[X], this.topLeftVertex[Y], this.topLeftVertex[Z],
- 	this.topLeftVertex[X], this.botRightVertex[Y], this.topLeftVertex[Z],
- 	this.botRightVertex[X], this.botRightVertex[Y], this.botRightVertex[Z],
- 	this.botRightVertex[X], this.topLeftVertex[Y], this.botRightVertex[Z],
+ 	this.topLeftVertex[X], this.topLeftVertex[Y], 0,
+ 	this.topLeftVertex[X], this.botRightVertex[Y], 0,
+ 	this.botRightVertex[X], this.botRightVertex[Y], 0,
+ 	this.botRightVertex[X], this.topLeftVertex[Y], 0,
  	];
 
  	this.texCoords = [
@@ -44,7 +44,7 @@ var Z = 2;
 
  	this.indices = [
  	0, 1, 2, 
- 	3, 2, 1
+ 	2, 3, 0
  	];
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
