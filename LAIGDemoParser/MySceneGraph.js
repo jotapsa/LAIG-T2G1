@@ -1428,7 +1428,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
    mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
    if(texture != null && appearance != null && appearance instanceof CGFappearance){
-        //appearance.setTexture(texture[0]);
+        appearance.setTexture(texture[0]);
    }
    for (var i = 0; i<node.children.length; i++){
         //Render all child nodes of node
