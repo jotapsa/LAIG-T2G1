@@ -59,37 +59,37 @@
 <TEXTURES>
 	<!-- Window -->
     <TEXTURE id="window">
-        <file path="images/window.jpg" />
+        <file path="images/vidral.jpg" />
         <amplif_factor s="2" t="2" />
     </TEXTURE>
 
      <!-- Floor -->
     <TEXTURE id="floor">
-        <file path="images/floor.jpg" />
+        <file path="images/rocks.jpg" />
         <amplif_factor s="3" t="4" />
     </TEXTURE>
 
     <!-- Wood -->
     <TEXTURE id="wood">
-        <file path="images/wood.jpg" />
+        <file path="images/trunk-image.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Black-Board -->
     <TEXTURE id="board">
-        <file path="images/black_board.jpg" />
+        <file path="images/vidral.jpg" />
         <amplif_factor s="15" t="10" />
     </TEXTURE>
 
     <!-- Walls -->
     <TEXTURE id="wall">
-        <file path="images/wall.jpg" />
+        <file path="images/bank.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Tree -->
     <TEXTURE id="tree">
-        <file path="images/tree.jpg" />
+        <file path="images/leaves.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -188,7 +188,6 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-
             <NODEREF id="windows" />
             <NODEREF id="floor" />
             <NODEREF id="lights" />
@@ -207,9 +206,9 @@
         <TEXTURE id="window" />
 
         <DESCENDANTS>
-					<NODEREF id="window1" />
+		  <NODEREF id="window1" />
           <NODEREF id="window2" />
-				</DESCENDANTS>
+		</DESCENDANTS>
 
     </NODE>
 
@@ -387,7 +386,7 @@
         <ROTATION axis="x" angle="-90" /> -->
 
         <DESCENDANTS>
-            <LEAF type="rectangle" args="0 3 3 0" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -396,7 +395,8 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+        <!-- <TRANSLATION x="0" y="10" z="0" />
+        <SCALE sx="-1" sy="1" sz="1" /> -->
 
         <DESCENDANTS>
             <NODEREF id="table_leg1" />
@@ -412,11 +412,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" />
-        <SCALE sx="-1" sy="1" sz="1" /> -->
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -425,11 +424,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" />
-        <SCALE sx="-1" sy="1" sz="1" /> -->
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -438,11 +436,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" />
-        <SCALE sx="-1" sy="1" sz="1" /> -->
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -451,20 +448,17 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" />
-        <SCALE sx="-1" sy="1" sz="1" /> -->
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
-    <!-- Table Leg -->
-    <NODE id="leg">
+    <!-- Cube -->
+    <NODE id="cube">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-
-        <!-- <SCALE sx="1" sy="1" sz="1" /> -->
 
         <DESCENDANTS>
             <NODEREF id="face1" />
@@ -526,7 +520,7 @@
 
     </NODE>
 
-    <!-- Chair Top -->
+    <!-- Chair Cover-->
     <NODE id="chair_top">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -547,9 +541,10 @@
         <TEXTURE id="null" />
 
         <!-- <ROTATION axis="x" angle="-90" /> -->
+        <!-- <SCALE sx="-1" sy="1" sz="1" /> -->
 
         <DESCENDANTS>
-          <LEAF type="rectangle" args="0 3 3 0" />
+          <NODEREF id="cube" />
         </DESCENDANTS>
 
     </NODE>
@@ -560,9 +555,10 @@
         <TEXTURE id="null" />
 
         <!-- <ROTATION axis="x" angle="-90" /> -->
+        <!-- <SCALE sx="-1" sy="1" sz="1" /> -->
 
         <DESCENDANTS>
-          <LEAF type="rectangle" args="0 3 3 0" />
+          <NODEREF id="cube" />
         </DESCENDANTS>
 
     </NODE>
@@ -573,6 +569,7 @@
         <TEXTURE id="null" />
 
         <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+        <!-- <SCALE sx="-1" sy="1" sz="1" /> -->
 
         <DESCENDANTS>
             <NODEREF id="chair_leg1" />
@@ -591,7 +588,7 @@
         <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -603,7 +600,7 @@
         <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -615,7 +612,7 @@
         <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -627,7 +624,7 @@
         <!-- <TRANSLATION x="0" y="10" z="0" /> -->
 
         <DESCENDANTS>
-            <NODEREF id="leg" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -715,7 +712,7 @@
         <TRANSLATION x="5" y="5" z="-4" />
 
         <DESCENDANTS>
-					<LEAF type="cylinder" args="4 1 1 20 20" />
+		  <LEAF type="cylinder" args="4 1 1 20 20 0 1" />
         </DESCENDANTS>
 
     </NODE>
@@ -725,9 +722,11 @@
         <MATERIAL id="treeMaterial" />
         <TEXTURE id="tree" />
 
+        <TRANSLATION x="10" y="5" z="-4" />
+        <ROTATION axis="x" angle="-90" />
+
         <DESCENDANTS>
-          <!-- ----cone---- -->
-          <LEAF type="cylinder" args="4 1 1 20 20" />
+          <LEAF type="cylinder" args="4 2 0 20 20 1 1" />
         </DESCENDANTS>
 
     </NODE>
