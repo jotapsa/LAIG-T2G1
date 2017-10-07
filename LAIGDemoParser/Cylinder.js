@@ -65,19 +65,44 @@
 	}
 
 	if (this.botCat){
+
+		this.vertices.push(0, 0, 0);
+		this.normals.push(0, 0, -1); 
+		//this.texCoords.push (0.5, 0.5);
+
 		for (i=0; i<=this.slices; i++){
 			this.vertices.push(this.botRadius*Math.cos(theta*i), this.botRadius*Math.sin(theta*i), 0);
 			this.normals.push(0,0,-1);
 			//texCoords ?
+
+		}
+		for (i=0; i<this.slices; i++){
+			this.indices.push((this.stacks*this.slices-1)+1, (this.stacks*this.slices-1)+i+1, (this.stacks*this.slices-1)+i+2);
 		}
 	}
 
 	if (this.topCat){
+		
+		this.vertices.push(0, 0, this.height);
+		this.normals.push(0, 0, 1); 
+		//this.texCoords.push (0.5, 0.5);
+		
 		for (i=0; i<=this.slices; i++){
 			this.vertices.push(this.topRadius*Math.cos(theta*i), this.topRadius*Math.sin(theta*i), this.height);
 			this.normals.push(0,0,1);
 			//texCoords ?
 		}
+		
+		for (i=0; i<this.slices; i++){
+			if (this.botCat){
+				this.indices.push((this.stacks*this.slices+this.slices-1)+1, (this.stacks*this.slices+this.slices-1)+i+1, (this.stacks*this.slices+this.slices-1)+i+2);
+				console.log("entrou");
+			}
+			else{
+				this.indices.push((this.stacks*this.slices-1)+1, (this.stacks*this.slices-1)+i+1, (this.stacks*this.slices-1)+i+2);
+			}
+		}
+
 	}
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
