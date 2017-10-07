@@ -20,7 +20,7 @@ function MyGraphLeaf(graph, type, args) {
             }
             break;
         case 'cylinder':
-            if(this.args.length != 5){
+            if(this.args.length != 7){
                 console.log("error: number of arguments");
             }
             else{
