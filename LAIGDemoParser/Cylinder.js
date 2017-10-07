@@ -2,7 +2,7 @@
  * Cylinder
  * @constructor
  */
- function Cylinder(scene, height, botRadius, topRadius, stacks, slices, topCat,botCat) {
+ function Cylinder(scene, height, botRadius, topRadius, stacks, slices, topCat, botCat) {
  	CGFobject.call(this,scene);
 
 	this.height= height;
@@ -11,6 +11,8 @@
 	this.slices = slices;
 	this.botRadius = botRadius;
 	this.topRadius = topRadius;
+	this.topCat = topCat;
+	this.botCat = botCat;
 
 	this.minS = 0;
 	this.maxS = 1;
@@ -45,19 +47,36 @@
 	{
 		for (j=0;j<=this.slices;j++) // <= because we have to repeat the first vertice in order to get a seamless texture wrap
 		{
-			this.vertices.push((this.botRadius+radiusStep*i)*Math.cos(theta*j), (this.botRadius+radiusStep*i)*Math.sin (theta*j), (i*stacksStep)-0.5);
+			this.vertices.push((this.botRadius+radiusStep*i)*Math.cos(theta*j), (this.botRadius+radiusStep*i)*Math.sin (theta*j), (i*stacksStep));
 			this.normals.push((Math.cos(theta*(j))), (Math.sin(theta*(j))), 0); //need to change this for a truncated cylinder
 			this.texCoords.push (s+ j*sInc, t+ i*tInc);
 		}
 		s = this.minS;
 	}
+	t=this.minT;
 
 	for (j=0; j<this.stacks; j++)
 	{
-			for (i=0; i<this.slices; i++) //since we now do one more iteration in the for loop for slices we also have to add 1 everytime we refer to this.slices
+		for (i=0; i<this.slices; i++) //since we now do one more iteration in the for loop for slices we also have to add 1 everytime we refer to this.slices
 		{
 				this.indices.push(i+(j*(this.slices+1)),i+1+(j*(this.slices+1)),i+1+(this.slices+1)+(j*(this.slices+1)));
 				this.indices.push(i+1+(this.slices+1)+(j*(this.slices+1)), i+(this.slices+1)+(j*(this.slices+1)), i+(j*(this.slices+1)));
+		}
+	}
+
+	if (this.botCat){
+		for (i=0; i<=this.slices; i++){
+			this.vertices.push(this.botRadius*Math.cos(theta*i), this.botRadius*Math.sin(theta*i), 0);
+			this.normals.push(0,0,-1);
+			//texCoords ?
+		}
+	}
+
+	if (this.topCat){
+		for (i=0; i<=this.slices; i++){
+			this.vertices.push(this.topRadius*Math.cos(theta*i), this.topRadius*Math.sin(theta*i), this.height);
+			this.normals.push(0,0,1);
+			//texCoords ?
 		}
 	}
 
