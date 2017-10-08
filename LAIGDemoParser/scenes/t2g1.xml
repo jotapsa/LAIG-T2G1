@@ -584,7 +584,7 @@
       <TEXTURE id="wall" />
 
         <DESCENDANTS>
-            <!-- <NODEREF id="wall1" /> -->
+            <NODEREF id="wall1" />
             <NODEREF id="wall2" />
         </DESCENDANTS>
 
@@ -595,7 +595,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <SCALE sx="1" sy="4" sz="6" />
+        <SCALE sx="1" sy="3" sz="6" />
         <TRANSLATION x="0" y="3" z="3"/>
         <ROTATION axis="y" angle="90"/>
 
@@ -611,15 +611,9 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-<<<<<<< Updated upstream
-        <SCALE sx="6" sy="4" sz="1" />
-        <TRANSLATION x="3" y="3" z="0"/> 
-        <ROTATION axis="y" angle="-90" /> 
-=======
         <SCALE sx="6" sy="3" sz="1" />
         <TRANSLATION x="3" y="3" z="0"/>
         <!-- <ROTATION axis="y" angle="-90" /> -->
->>>>>>> Stashed changes
 
         <DESCENDANTS>
             <NODEREF id="board" />
@@ -666,7 +660,7 @@
      <NODE id="window1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-        
+
         <TRANSLATION x="-2" y="1" z="0.25" />
         <SCALE sx="1.5" sy="1.5" sz="1"/>
 
