@@ -188,24 +188,23 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-            <!-- <NODEREF id="floor" /> -->
+            <NODEREF id="floor" />
             <!-- <NODEREF id="lights" />
             <NODEREF id="tables" />
-            <NODEREF id="chairs" />
-            <NODEREF id="board" /> -->
+            <NODEREF id="chairs" /> -->
             <NODEREF id="walls" />
-            <!-- <NODEREF id="tree" /> -->
+            <NODEREF id="tree" />
         </DESCENDANTS>
 
     </NODE>
 
     <!-- The floor -->
     <NODE id="floor">
-        <MATERIAL id="floorMaterial" />
+        <MATERIAL id="null" />
         <TEXTURE id="floor" />
 
+        <TRANSLATION x="0" y="0" z="36" />
         <SCALE sx="6" sy="1" sz="6" />
-        <TRANSLATION x="0" y="0" z="0" />
         <ROTATION axis="x" angle="-90" />
 
         <DESCENDANTS>
@@ -579,26 +578,13 @@
         </DESCENDANTS>
     </NODE>
 
-    <!-- Black Board -->
-    <NODE id="board">
-        <MATERIAL id="boardMaterial" />
-        <TEXTURE id="board" />
-
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
-        <!-- <ROTATION axis="x" angle="90" /> -->
-
-        <DESCENDANTS>
-            <LEAF type="rectangle" args="0 3 3 0" />
-        </DESCENDANTS>
-    </NODE>
-
     <!-- Walls -->
     <NODE id="walls">
       <MATERIAL id="wallMaterial" />
       <TEXTURE id="wall" />
 
         <DESCENDANTS>
-            <NODEREF id="wall1" />
+            <!-- <NODEREF id="wall1" /> -->
             <NODEREF id="wall2" />
         </DESCENDANTS>
 
@@ -625,11 +611,18 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
+<<<<<<< Updated upstream
         <SCALE sx="6" sy="4" sz="1" />
         <TRANSLATION x="3" y="3" z="0"/> 
         <ROTATION axis="y" angle="-90" /> 
+=======
+        <SCALE sx="6" sy="3" sz="1" />
+        <TRANSLATION x="3" y="3" z="0"/>
+        <!-- <ROTATION axis="y" angle="-90" /> -->
+>>>>>>> Stashed changes
 
         <DESCENDANTS>
+            <NODEREF id="board" />
             <NODEREF id="wall" />
         </DESCENDANTS>
 
@@ -642,6 +635,18 @@
 
         <DESCENDANTS>
             <LEAF type="rectangle" args="-3 3 3 -3" />
+        </DESCENDANTS>
+    </NODE>
+
+    <!-- Black Board -->
+    <NODE id="board">
+        <MATERIAL id="boardMaterial" />
+        <TEXTURE id="board" />
+
+        <TRANSLATION x="-2" y="-2" z="0.25" />
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 4 4 0" />
         </DESCENDANTS>
     </NODE>
 
@@ -700,6 +705,8 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
+      <TRANSLATION x="12" y="-1" z="26" />
+
         <DESCENDANTS>
             <NODEREF id="tree_trunk" />
             <NODEREF id="tree_body" />
@@ -716,7 +723,7 @@
         <TRANSLATION x="5" y="5" z="-4" />
 
         <DESCENDANTS>
-		  <LEAF type="cylinder" args="4 1 1 20 20 0 1" />
+		  <LEAF type="cylinder" args="3 1 1 20 20 0 1" />
         </DESCENDANTS>
 
     </NODE>
@@ -726,11 +733,11 @@
         <MATERIAL id="treeMaterial" />
         <TEXTURE id="tree" />
 
-        <TRANSLATION x="10" y="5" z="-4" />
+        <TRANSLATION x="5" y="4" z="5" />
         <ROTATION axis="x" angle="-90" />
 
         <DESCENDANTS>
-          <LEAF type="cylinder" args="4 2 0 20 20 1 1" />
+          <LEAF type="cylinder" args="8 3 0 40 40 1 1" />
         </DESCENDANTS>
 
     </NODE>
