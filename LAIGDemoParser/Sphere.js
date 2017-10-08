@@ -21,7 +21,8 @@
  Sphere.prototype.constructor = Sphere;
 
  Sphere.prototype.initBuffers = function() {
- 	
+ 	/*
+ 	*/
 
 	this.vertices = [];
  	this.normals = [];
@@ -29,7 +30,8 @@
  	this.texCoords = [];
 
 	var theta=(2*Math.PI)/this.slices;
-	var vertical_theta=(Math.PI/2)/this.stacks;
+	var vertical_theta=(Math.PI)/this.stacks;
+	var r;
 
 	var s = this.minS;
 	var t = this.minT;
@@ -40,14 +42,14 @@
 	{
 		for (slice=0; slice<this.slices; slice++)
 		{
-			z = Math.cos(vertical_theta* stack)
-			this.radius = Math.sqrt(this.radius - Math.pow(z,2));
+			z = -Math.cos(vertical_theta* stack)
+			r = Math.sqrt(1 - Math.pow(z,2));
 
-			x = this.radius * Math.sin (theta*slice);
-			y = this.radius * Math.cos (theta*slice);
+			x = r * Math.sin (theta*slice);
+			y = r * Math.cos (theta*slice);
 
-			this.vertices.push (x, y ,z);
-			this.normals.push (x, y, z);
+			this.vertices.push (this.radius*x, this.radius*y , this.radius*z);
+			this.normals.push (this.radius*x, this.radius*y , this.radius*z);
 			this.texCoords.push (s+ slice*sInc, t+ stack*tInc);
 		}
 		s = this.minS;
