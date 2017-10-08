@@ -188,64 +188,15 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-            <NODEREF id="windows" />
-            <NODEREF id="floor" />
-            <NODEREF id="lights" />
+            <!-- <NODEREF id="floor" /> -->
+            <!-- <NODEREF id="lights" />
             <NODEREF id="tables" />
             <NODEREF id="chairs" />
-            <NODEREF id="board" />
+            <NODEREF id="board" /> -->
             <NODEREF id="walls" />
-            <NODEREF id="tree" />
+            <!-- <NODEREF id="tree" /> -->
         </DESCENDANTS>
 
-    </NODE>
-
-    <!-- The windows -->
-    <NODE id="windows">
-        <MATERIAL id="windowMaterial" />
-        <TEXTURE id="window" />
-
-        <DESCENDANTS>
-		  <NODEREF id="window1" />
-          <NODEREF id="window2" />
-		</DESCENDANTS>
-
-    </NODE>
-
-    <!-- The first window -->
-     <NODE id="window1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
-
-        <DESCENDANTS>
-            <NODEREF id="window" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- The second window -->
-     <NODE id="window2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
-
-        <DESCENDANTS>
-            <NODEREF id="window" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Window -->
-    <NODE id="window">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-						<LEAF type="rectangle" args="0 3 3 0" />
-        </DESCENDANTS>
     </NODE>
 
     <!-- The floor -->
@@ -253,8 +204,8 @@
         <MATERIAL id="floorMaterial" />
         <TEXTURE id="floor" />
 
-        <SCALE sx="6" sy="1" sz="5" />
-        <TRANSLATION x="0" y="0" z="4" />
+        <SCALE sx="6" sy="1" sz="6" />
+        <TRANSLATION x="0" y="0" z="0" />
         <ROTATION axis="x" angle="-90" />
 
         <DESCENDANTS>
@@ -658,10 +609,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="22" y="0" z="5" /> -->
-        <!-- <ROTATION axis="x" angle="90" /> -->
+        <SCALE sx="6" sy="4" sz="1" />
+        <TRANSLATION x="3" y="3" z="0"/>
 
         <DESCENDANTS>
+            <NODEREF id="windows" />
             <NODEREF id="wall" />
         </DESCENDANTS>
 
@@ -672,8 +624,9 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="22" y="0" z="5" /> -->
-        <!-- <ROTATION axis="x" angle="90" /> -->
+        <SCALE sx="6" sy="4" sz="1" />
+        <TRANSLATION x="3" y="3" z="0"/>
+        <ROTATION axis="y" angle="-90" />
 
         <DESCENDANTS>
             <NODEREF id="wall" />
@@ -687,7 +640,55 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-            <LEAF type="rectangle" args="0 4 4 0" />
+            <LEAF type="rectangle" args="-3 3 3 -3" />
+        </DESCENDANTS>
+    </NODE>
+
+    <!-- The windows -->
+    <NODE id="windows">
+        <MATERIAL id="windowMaterial" />
+        <TEXTURE id="window" />
+
+        <DESCENDANTS>
+      <NODEREF id="window1" />
+          <NODEREF id="window2" />
+    </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The first window -->
+     <NODE id="window1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+
+        <DESCENDANTS>
+            <NODEREF id="window" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The second window -->
+     <NODE id="window2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+
+        <DESCENDANTS>
+            <NODEREF id="window" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Window -->
+    <NODE id="window">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 3 3 0" />
         </DESCENDANTS>
     </NODE>
 
