@@ -64,46 +64,50 @@
 		}
 	}
 
-	if (this.botCat){
-
-		this.vertices.push(0, 0, 0);
-		this.normals.push(0, 0, -1); 
-		//this.texCoords.push (0.5, 0.5);
-
-		for (i=0; i<=this.slices; i++){
-			this.vertices.push(this.botRadius*Math.cos(theta*i), this.botRadius*Math.sin(theta*i), 0);
-			this.normals.push(0,0,-1);
-			//texCoords ?
-
-		}
-		for (i=0; i<this.slices; i++){
-			this.indices.push((this.stacks*this.slices-1)+1, (this.stacks*this.slices-1)+i+1, (this.stacks*this.slices-1)+i+2);
-		}
-	}
-
 	if (this.topCat){
 		
 		this.vertices.push(0, 0, this.height);
 		this.normals.push(0, 0, 1); 
-		//this.texCoords.push (0.5, 0.5);
+		this.texCoords.push (0.5, 0.5);
 		
-		for (i=0; i<=this.slices; i++){
+		for (i=0; i<=this.slices; i++){ 
 			this.vertices.push(this.topRadius*Math.cos(theta*i), this.topRadius*Math.sin(theta*i), this.height);
-			this.normals.push(0,0,1);
-			//texCoords ?
+			this.normals.push(0, 0, 1);
+			//Ok, now keep in mind that we the cos varies between -1 and 1 , we want it divede by 2 to make it vary between -0,5 and 0.5 and then add 0.5 so we can get values between 0  and 1
+			this.texCoords.push ((Math.cos(theta*i)/2)+0.5, (Math.sin (theta*i)/2)+0.5);
 		}
 		
 		for (i=0; i<this.slices; i++){
-			if (this.botCat){
-				this.indices.push((this.stacks*this.slices+this.slices-1)+1, (this.stacks*this.slices+this.slices-1)+i+1, (this.stacks*this.slices+this.slices-1)+i+2);
-				console.log("entrou");
-			}
-			else{
-				this.indices.push((this.stacks*this.slices-1)+1, (this.stacks*this.slices-1)+i+1, (this.stacks*this.slices-1)+i+2);
-			}
+			this.indices.push(((this.stacks+1)*(this.slices+1)), ((this.stacks+1)*(this.slices+1))+i+1, ((this.stacks+1)*(this.slices+1))+i+2);
 		}
 
 	}
+
+	if (this.botCat){
+
+		this.vertices.push(0, 0, 0);
+		this.normals.push(0, 0, -1); 
+		this.texCoords.push (0.5, 0.5);
+
+		for (i=0; i<=this.slices; i++){
+			this.vertices.push(this.botRadius*Math.cos(theta*i), this.botRadius*Math.sin(theta*i), 0);
+			this.normals.push(0, 0, -1);
+			//Ok, now keep in mind that we the cos varies between -1 and 1 , we want it divede by 2 to make it vary between -0,5 and 0.5 and then add 0.5 so we can get values between 0  and 1
+			this.texCoords.push ((Math.cos(theta*i)/2)+0.5, (Math.sin (theta*i)/2)+0.5);
+
+		}
+
+		for (i=0; i<this.slices; i++){
+			if (this.topCat){
+				//if we had to "draw" the topCat we pushed (this.slices)+1 vertices
+				this.indices.push(((this.stacks+1)*(this.slices+1)+this.slices)+2, ((this.stacks+1)*(this.slices+1)+this.slices)+i+4, ((this.stacks+1)*(this.slices+1)+this.slices)+i+3);
+			}
+			else{
+				this.indices.push(((this.stacks+1)*(this.slices+1)), ((this.stacks+1)*(this.slices+1))+i+2, ((this.stacks+1)*(this.slices+1))+i+1);
+			}
+		}
+	}
+
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
