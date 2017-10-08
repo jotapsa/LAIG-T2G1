@@ -609,8 +609,9 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <SCALE sx="6" sy="4" sz="1" />
-        <TRANSLATION x="3" y="3" z="0"/>
+        <SCALE sx="1" sy="4" sz="6" />
+        <TRANSLATION x="0" y="3" z="3"/>
+        <ROTATION axis="y" angle="90"/>
 
         <DESCENDANTS>
             <NODEREF id="windows" />
@@ -625,8 +626,8 @@
         <TEXTURE id="null" />
 
         <SCALE sx="6" sy="4" sz="1" />
-        <TRANSLATION x="3" y="3" z="0"/>
-        <ROTATION axis="y" angle="-90" />
+        <TRANSLATION x="3" y="3" z="0"/> 
+        <ROTATION axis="y" angle="-90" /> 
 
         <DESCENDANTS>
             <NODEREF id="wall" />
@@ -650,9 +651,9 @@
         <TEXTURE id="window" />
 
         <DESCENDANTS>
-      <NODEREF id="window1" />
-          <NODEREF id="window2" />
-    </DESCENDANTS>
+            <NODEREF id="window1" />
+            <NODEREF id="window2" />
+        </DESCENDANTS>
 
     </NODE>
 
@@ -660,8 +661,9 @@
      <NODE id="window1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+        
+        <TRANSLATION x="-2" y="1" z="0.25" />
+        <SCALE sx="1.5" sy="1.5" sz="1"/>
 
         <DESCENDANTS>
             <NODEREF id="window" />
@@ -674,7 +676,8 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <!-- <TRANSLATION x="0" y="10" z="0" /> -->
+        <TRANSLATION x="2" y="1" z="0.25" />
+        <SCALE sx="1.5" sy="1.5" sz="1"/>
 
         <DESCENDANTS>
             <NODEREF id="window" />
@@ -688,7 +691,7 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-            <LEAF type="rectangle" args="0 3 3 0" />
+            <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         </DESCENDANTS>
     </NODE>
 
