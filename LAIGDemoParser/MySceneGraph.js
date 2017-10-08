@@ -1427,7 +1427,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
    mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
-   if(texture != null && appearance != null && appearance instanceof CGFappearance){
+   if(appearance != null && texture != null){
         appearance.setTexture(texture[0]);
    }
    for (var i = 0; i<node.children.length; i++){
@@ -1444,9 +1444,15 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
 
     this.scene.pushMatrix();
-       if(appearance && appearance instanceof CGFappearance){
+       if(appearance!=null){
            appearance.apply();
        }
+       
+       /*if(appearance!=null && texture!=null && (leaf.object instanceof Rectangle || leaf.object instanceof Triangle)){
+           leaf.object.scaleTexCoords(texture[1], texture[2]);
+       }
+       */
+       
        this.scene.multMatrix(renderTransformMatrix);
        leaf.object.display();
     this.scene.popMatrix();
@@ -1456,9 +1462,7 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-
-	//Enable Textures
+	//entry point for graph rendering
 	this.renderNode(this.nodes[this.idRoot], this.nodes[this.idRoot].transformMatrix);
 	
 }

@@ -37,14 +37,15 @@ var Z = 2;
 
  	this.texCoords = [
     this.minS, this.maxT,
-    this.maxS, this.maxT,
     this.minS, this.minT,
     this.maxS, this.minT,
+    this.maxS, this.maxT,
  	];
+    this.originalTexCoords = this.texCoords.slice();
 
  	this.indices = [
  	0, 1, 2, 
- 	2, 3, 0
+ 	0, 2, 3
  	];
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
@@ -56,5 +57,16 @@ var Z = 2;
       0, 0, 1,
     ]
 
+    this.originalTexCoords = this.texCoords.slice();
+
  	this.initGLBuffers();
  };
+
+ Rectangle.prototype.scaleTexCoords = function(sFactor, tFactor) {
+    for (i = 0; i<this.texCoords.length; i+=2) {
+        this.texCoords[i] = this.originalTexCoords[i] / sFactor;
+        this.texCoords[i+1] = this.originalTexCoords[i+1] / tFactor;
+    }
+
+    this.updateTexCoordsGLBuffers();
+};

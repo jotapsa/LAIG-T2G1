@@ -41,6 +41,7 @@ var Z = 2;
     this.maxS, this.maxT,
     this.maxS/2, this.minT,
  	];
+    this.originalTexCoords = this.texCoords.slice();
 
  	this.indices = [
  	0, 1, 2,
@@ -56,3 +57,13 @@ var Z = 2;
 
  	this.initGLBuffers();
  };
+
+
+Triangle.prototype.scaleTexCoords = function(sFactor, tFactor) {
+    for (i = 0; i<this.texCoords.length; i+=2) {
+        this.texCoords[i] = this.originalTexCoords[i] / sFactor;
+        this.texCoords[i+1] = this.originalTexCoords[i+1] / tFactor;
+    }
+
+    this.updateTexCoordsGLBuffers();
+};
