@@ -53,6 +53,14 @@
         <specular r="0.6" g="0.6" b="0.6" a="1.0" />
     </LIGHT>
 
+    <LIGHT id="light4">
+        <enable value ="1" />
+        <position x="3" y="8" z="18" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
 </LIGHTS>
 
 <!-- Textures -->
@@ -193,6 +201,15 @@
         <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
+    <!-- Abajur material -->
+    <MATERIAL id="abajurMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="1" g="1" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0" g="0" b="0.0" a="1" />
+    </MATERIAL>
+
 </MATERIALS>
 
 
@@ -218,6 +235,7 @@
             <NODEREF id="chairs" />
             <NODEREF id="walls" />
             <NODEREF id="tree" />
+            <NODEREF id="lights" />
         </DESCENDANTS>
 
     </NODE>
@@ -236,10 +254,74 @@
 				</DESCENDANTS>
     </NODE>
 
+    <!-- The lights -->
+     <NODE id="lights">
+        <MATERIAL id="lightMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="light1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- First Light -->
+     <NODE id="light1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="3" y="0" z="18" />
+
+        <DESCENDANTS>
+            <NODEREF id="light" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Light -->
+     <NODE id="light">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+          <NODEREF id="abajur" />
+          <NODEREF id="post" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Light Abajur -->
+     <NODE id="abajur">
+        <MATERIAL id="abajurMaterial" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="8" z="0" />
+        <ROTATION axis="x" angle="-90" />
+
+
+        <DESCENDANTS>
+          <LEAF type="cylinder" args="4 2 1 20 20 0 0" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Light Post -->
+     <NODE id="post">
+        <MATERIAL id="null" />
+        <TEXTURE id="wood" />
+
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+          <LEAF type="cylinder" args="8 0.5 0.5 20 20 0 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
     <!-- The balls -->
      <NODE id="balls">
         <MATERIAL id="lightMaterial" />
-        <TEXTURE id="clear" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
             <NODEREF id="ball1" />
@@ -253,7 +335,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="football" />
 
-        <TRANSLATION x="2" y="0" z="20" />
+        <TRANSLATION x="2" y="0" z="22" />
 
         <DESCENDANTS>
             <NODEREF id="ball_sphere" />
@@ -266,7 +348,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="basketball" />
 
-        <TRANSLATION x="2" y="0" z="24" />
+        <TRANSLATION x="2" y="0" z="25" />
 
         <DESCENDANTS>
            <NODEREF id="ball_sphere" />
@@ -749,7 +831,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="-2" y="1" z="0.25" />
+        <TRANSLATION x="-2" y="2" z="0.25" />
         <SCALE sx="1.5" sy="1.5" sz="1"/>
 
         <DESCENDANTS>
@@ -763,7 +845,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="2" y="1" z="0.25" />
+        <TRANSLATION x="2" y="2" z="0.25" />
         <SCALE sx="1.5" sy="1.5" sz="1"/>
 
         <DESCENDANTS>
@@ -787,7 +869,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
-      <TRANSLATION x="3" y="0" z="17" />
+      <TRANSLATION x="33" y="0" z="4" />
 
         <DESCENDANTS>
             <NODEREF id="tree_trunk" />
