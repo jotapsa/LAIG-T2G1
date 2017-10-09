@@ -91,7 +91,7 @@
 
     <!-- Walls -->
     <TEXTURE id="wall">
-        <file path="images/bank.jpg" />
+        <file path="images/wall.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -115,13 +115,13 @@
 
     <!-- Keyboard -->
     <TEXTURE id="keyboard">
-        <file path="images/keyboard.jpg" />
+        <file path="images/keyboard.png" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Desktop -->
     <TEXTURE id="desktop">
-        <file path="images/desktop.jpg" />
+        <file path="images/desktop.png" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -140,6 +140,24 @@
     <!-- Lined Sheet -->
     <TEXTURE id="paper">
         <file path="images/paper.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Door -->
+    <TEXTURE id="door">
+        <file path="images/door.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Power Socket -->
+    <TEXTURE id="powerSocket">
+        <file path="images/power_socket.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Wood Floor -->
+    <TEXTURE id="woodFloor">
+        <file path="images/wood_floor.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -254,6 +272,7 @@
             <NODEREF id="walls" />
             <NODEREF id="trees" />
             <NODEREF id="lights" />
+            <NODEREF id="doors" />
         </DESCENDANTS>
 
     </NODE>
@@ -261,7 +280,7 @@
     <!-- The floor -->
     <NODE id="floor">
         <MATERIAL id="null" />
-        <TEXTURE id="floor" />
+        <TEXTURE id="woodFloor" />
 
         <TRANSLATION x="0" y="0" z="36" />
         <SCALE sx="6" sy="1" sz="6" />
@@ -304,6 +323,7 @@
         <DESCENDANTS>
           <NODEREF id="abajur" />
           <NODEREF id="post" />
+          <NODEREF id="base" />
         </DESCENDANTS>
 
     </NODE>
@@ -331,6 +351,19 @@
 
         <DESCENDANTS>
           <LEAF type="cylinder" args="8 0.5 0.5 20 20 0 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Light Base -->
+     <NODE id="base">
+        <MATERIAL id="null" />
+        <TEXTURE id="wood" />
+
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+          <LEAF type="cylinder" args="0.5 2 2 20 20 1 1" />
         </DESCENDANTS>
 
     </NODE>
@@ -721,6 +754,94 @@
 
     </NODE>
 
+    <!-- Doors -->
+     <NODE id="doors">
+        <MATERIAL id="lightMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="door1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- First Door -->
+     <NODE id="door1">
+        <MATERIAL id="null" />
+        <TEXTURE id="door" />
+
+        <TRANSLATION x="0.3" y="9" z="3"/>
+
+        <DESCENDANTS>
+            <NODEREF id="door" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Generic Door -->
+     <NODE id="door">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="0.1" sy="4.5" sz="2" />
+
+        <DESCENDANTS>
+            <NODEREF id="cube" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Wall Sockets -->
+     <NODE id="sockets">
+        <MATERIAL id="lightMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="socket1" />
+            <NODEREF id="socket2" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- First Socket -->
+     <NODE id="socket1">
+        <MATERIAL id="null" />
+        <TEXTURE id="powerSocket" />
+
+        <TRANSLATION x="0.01" y="-7" z="30"/>
+
+        <DESCENDANTS>
+            <NODEREF id="socket" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Second Socket -->
+     <NODE id="socket2">
+        <MATERIAL id="null" />
+        <TEXTURE id="powerSocket" />
+
+        <TRANSLATION x="0.01" y="-7" z="12"/>
+
+        <DESCENDANTS>
+            <NODEREF id="socket" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Generic Socket -->
+     <NODE id="socket">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="0.1" sy="0.3" sz="0.3" />
+
+        <DESCENDANTS>
+            <NODEREF id="cube" />
+        </DESCENDANTS>
+
+    </NODE>
+
     <!-- Walls -->
     <NODE id="walls">
       <MATERIAL id="wallMaterial" />
@@ -739,13 +860,12 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <SCALE sx="1" sy="3" sz="6" />
-        <TRANSLATION x="0" y="3" z="3"/>
-        <ROTATION axis="y" angle="90"/>
+        <TRANSLATION x="0" y="10" z="0"/>
 
         <DESCENDANTS>
             <NODEREF id="windows" />
             <NODEREF id="wall" />
+            <NODEREF id="sockets" />
         </DESCENDANTS>
 
     </NODE>
@@ -755,8 +875,8 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <SCALE sx="6" sy="3" sz="1" />
-        <TRANSLATION x="3" y="3" z="0"/>
+        <TRANSLATION x="0" y="10" z="0"/>
+        <ROTATION axis="y" angle="90"/>
 
         <DESCENDANTS>
             <NODEREF id="wall" />
@@ -769,8 +889,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
+        <SCALE sx="0.1" sy="5" sz="9" />
+
         <DESCENDANTS>
-            <LEAF type="rectangle" args="-3 3 3 -3" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -831,7 +953,6 @@
 
         <DESCENDANTS>
             <NODEREF id="window1" />
-            <NODEREF id="window2" />
         </DESCENDANTS>
 
     </NODE>
@@ -841,22 +962,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="-2" y="1" z="0.25" />
-        <SCALE sx="1.5" sy="1.5" sz="1"/>
-
-        <DESCENDANTS>
-            <NODEREF id="window" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Second window -->
-     <NODE id="window2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="2" y="1" z="0.25" />
-        <SCALE sx="1.5" sy="1.5" sz="1"/>
+        <TRANSLATION x="0.1" y="2" z="22" />
 
         <DESCENDANTS>
             <NODEREF id="window" />
@@ -869,8 +975,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
+        <SCALE sx="0.1" sy="2" sz="3" />
+
         <DESCENDANTS>
-            <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+            <NODEREF id="cube" />
         </DESCENDANTS>
     </NODE>
 
@@ -1051,9 +1159,9 @@
         <MATERIAL id="null" />
         <TEXTURE id="desktop" />
 
-        <TRANSLATION x="1.1" y="5" z="0.55" />
+        <TRANSLATION x="1.1" y="5.1" z="0.52" />
         <ROTATION axis="x" angle="60" />
-        <SCALE sx="0.3" sy="0.01" sz="0.3" />
+        <SCALE sx="0.3" sy="0.01" sz="0.25" />
 
         <DESCENDANTS>
           <NODEREF id="cube" />
