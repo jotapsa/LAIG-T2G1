@@ -81,7 +81,7 @@
 
      <!-- Floor -->
     <TEXTURE id="floor">
-        <file path="images/rocks.jpg" />
+        <file path="images/wood_floor.jpg" />
         <amplif_factor s="3" t="4" />
     </TEXTURE>
 
@@ -106,6 +106,12 @@
     <!-- Tree -->
     <TEXTURE id="tree">
         <file path="images/leaves.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Tree Trunk -->
+    <TEXTURE id="treeTrunk">
+        <file path="images/trunk-image.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -160,12 +166,6 @@
     <!-- Power Socket -->
     <TEXTURE id="powerSocket">
         <file path="images/power_socket.png" />
-        <amplif_factor s="1" t="1" />
-    </TEXTURE>
-
-    <!-- Wood Floor -->
-    <TEXTURE id="woodFloor">
-        <file path="images/wood_floor.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -288,7 +288,7 @@
     <!-- The floor -->
     <NODE id="floor">
         <MATERIAL id="null" />
-        <TEXTURE id="woodFloor" />
+        <TEXTURE id="floor" />
 
         <TRANSLATION x="0" y="0" z="36" />
         <SCALE sx="6" sy="1" sz="6" />
@@ -1068,8 +1068,8 @@
 
     <!-- Tree trunk -->
     <NODE id="tree_trunk">
-        <MATERIAL id="woodMaterial" />
-        <TEXTURE id="wood" />
+        <MATERIAL id="null" />
+        <TEXTURE id="treeTrunk" />
 
         <TRANSLATION x="0" y="3" z="0" />
         <ROTATION axis="x" angle="90" />
