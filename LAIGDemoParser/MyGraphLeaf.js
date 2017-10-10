@@ -9,8 +9,7 @@ function MyGraphLeaf(graph, type, args) {
     this.args = args;
 
     this.object = null;
-    console.log("objeto");
-    
+
     switch(this.type){
         case 'rectangle':
             if(this.args.length != 4){
