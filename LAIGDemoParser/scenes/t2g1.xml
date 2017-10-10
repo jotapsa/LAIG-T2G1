@@ -877,7 +877,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <SCALE sx="0.1" sy="0.3" sz="0.3" />
+        <SCALE sx="0.1" sy="0.2" sz="0.2" />
 
         <DESCENDANTS>
             <NODEREF id="cube" />
@@ -943,6 +943,8 @@
     <NODE id="wallboard">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="1" z="0"/>
 
         <DESCENDANTS>
             <NODEREF id="blackboard" />
