@@ -41,14 +41,13 @@ var Z = 2;
     this.maxS, this.minT,
     this.maxS, this.maxT,
  	];
+ 	
     this.originalTexCoords = this.texCoords.slice();
 
  	this.indices = [
  	0, 1, 2, 
  	0, 2, 3
- 	];
-
- 	this.primitiveType = this.scene.gl.TRIANGLES;
+ 	]; 	
 
  	this.normals = [
       0, 0, 1,
@@ -59,6 +58,7 @@ var Z = 2;
 
     this.originalTexCoords = this.texCoords.slice();
 
+    this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
 
