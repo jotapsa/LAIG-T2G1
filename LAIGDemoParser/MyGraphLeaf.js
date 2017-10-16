@@ -46,6 +46,11 @@ function MyGraphLeaf(graph, type, args,argsP) {
             break;
         case 'patch':
             console.log(this.argsP);
+            if(this.args.length != 2){
+                console.log("error: number of arguments");
+            }
+            else
+                this.object = new Patch(graph.scene,this.args,this.argsP);
             break;
         default:
             break;

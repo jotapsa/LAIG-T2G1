@@ -1350,8 +1350,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						//parse leaf
 						this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
 						if(type == 'patch'){
-                            var cPLines = this.parseCPLines(descendants[j]);
-                            this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,cPLines));
+                            this.CPLines = this.parseCPLines(descendants[j]);
+                            this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,this.CPLines));
 						}
                         else
 						  this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
@@ -1466,7 +1466,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     
     //Render all leaves of node if exists 
     for(var i=0;i<node.leaves.length;i++){
-        this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
+        if(node.leaves[i].object != null)
+            this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
     } 
 }
 
