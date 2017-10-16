@@ -1340,16 +1340,21 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle','patch']);
 						
 						if (type != null)
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
-						
+
 						//parse leaf
-                        this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
-						this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
+						this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
+						if(type == 'patch'){
+                            var cPLines = this.parseCPLines(descendants[j]);
+                            this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,cPLines));
+						}
+                        else
+						  this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
                         sizeChildren++;
 					}
 					else
@@ -1365,6 +1370,30 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
     console.log("Parsed nodes");
     return null ;
+}
+
+MySceneGraph.prototype.parseCPLines = function(leaf) {
+    var cplines = leaf.children;
+    var cLines = [];
+
+    for(i=0;i<cplines.length;i++){
+        cpline = cplines[i];
+        var cLine = [];
+        for(j=0;j<cpline.children.length;j++){
+            var cPoint = cpline.children[j];
+            var x = parseFloat(this.reader.getString(cPoint,"xx",true));
+            var y = parseFloat(this.reader.getString(cPoint,"yy",true));
+            var z = parseFloat(this.reader.getString(cPoint,"zz",true));
+            var w = parseFloat(this.reader.getString(cPoint,"ww",true));
+
+            if(x == null || y == null || z== null || w == null )
+                return null;
+            else
+                cLine.push([x,y,z,w]);
+        }
+        cLines.push(cLine);
+    }
+    return cLines;
 }
 
 /*

@@ -3,10 +3,11 @@
  * @constructor
 **/
 
-function MyGraphLeaf(graph, type, args) {
+function MyGraphLeaf(graph, type, args,argsP) {
     this.reader = new CGFXMLreader();
     this.type = type;
     this.args = args;
+    this.argsP = argsP;
 
     this.object = null;
 
@@ -42,6 +43,9 @@ function MyGraphLeaf(graph, type, args) {
             else{
                 this.object = new Triangle(graph.scene, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5], this.args[6], this.args[7], this.args[8]);
             }
+            break;
+        case 'patch':
+            console.log(this.argsP);
             break;
         default:
             break;
