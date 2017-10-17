@@ -1478,10 +1478,10 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
            appearance.apply();
        }
        
-       /*if(appearance!=null && texture!=null && (leaf.object instanceof Rectangle || leaf.object instanceof Triangle)){
+       if(appearance!=null && texture!=null && (leaf.object instanceof Rectangle || leaf.object instanceof Triangle)){
            leaf.object.scaleTexCoords(texture[1], texture[2]);
        }
-       */
+       
        
        this.scene.multMatrix(renderTransformMatrix);
        leaf.object.display();

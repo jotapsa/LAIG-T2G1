@@ -30,13 +30,17 @@
  	*/
 
 	this.vertices = [];
- 	this.normals = [];
+ 	this.normals =[]
  	this.indices = [];
  	this.texCoords = [];
 
 	var theta=(2*Math.PI)/this.slices;
 	var stacksStep = this.height/this.stacks;
-	var radiusStep= (this.topRadius-this.botRadius)/this.stacks;
+	var radiusStep = (this.topRadius-this.botRadius)/this.stacks;
+	var topBotDiff = Math.abs(this.topRadius-this.botRadius)/2;
+	console.log (topBotDiff);
+	var hip = Math.sqrt(topBotDiff*topBotDiff+this.height*this.height);
+	console.log(hip);
 
 	var s = this.minS;
 	var t = this.minT;
@@ -48,7 +52,9 @@
 		for (j=0;j<=this.slices;j++) // <= because we have to repeat the first vertice in order to get a seamless texture wrap
 		{
 			this.vertices.push((this.botRadius+radiusStep*i)*Math.cos(theta*j), (this.botRadius+radiusStep*i)*Math.sin (theta*j), (i*stacksStep));
-			this.normals.push((Math.cos(theta*(j))), (Math.sin(theta*(j))), 0); //need to change this for a truncated cylinder
+			//this.hipNormals.push((this.height/this.hip), (this.topBotDiff/this.hip));
+			//this.circleNormalsnormals.push((Math.cos(theta*(j))), (Math.sin(theta*(j))), 0);
+			this.normals.push((Math.cos(theta*(j)))*(this.height/hip), (Math.sin(theta*(j)))*(this.height/hip), (topBotDiff/hip));
 			this.texCoords.push (s+ j*sInc, t+ i*tInc);
 		}
 		s = this.minS;
