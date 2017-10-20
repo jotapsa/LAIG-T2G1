@@ -41,6 +41,7 @@ var Z = 2;
     this.maxS, this.minT,
     this.maxS, this.maxT,
  	];
+
  	
     this.originalTexCoords = this.texCoords.slice();
 
@@ -59,6 +60,7 @@ var Z = 2;
     this.originalTexCoords = this.texCoords.slice();
 
     this.primitiveType = this.scene.gl.TRIANGLES;
+    
  	this.initGLBuffers();
  };
 
