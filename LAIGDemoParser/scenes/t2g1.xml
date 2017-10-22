@@ -115,7 +115,7 @@
 
     <!-- Basketball ball -->
     <TEXTURE id="basketball">
-        <file path="images/basketball.jpg" />
+        <file path="images/basketball.png" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
