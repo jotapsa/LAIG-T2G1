@@ -1474,14 +1474,18 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
 
     this.scene.pushMatrix();
+       /* if the leaf doesn't inherit a texture, lets remove any texture previously loaded on to the appearance*/
+       if (appearance!=null && texture==null){
+           appearance.setTexture(null);
+       }
+        
        if(appearance!=null){
            appearance.apply();
        }
-       
+
        if(appearance!=null && texture!=null && (leaf.object instanceof Rectangle || leaf.object instanceof Triangle)){
            leaf.object.scaleTexCoords(texture[1], texture[2]);
        }
-       
        
        this.scene.multMatrix(renderTransformMatrix);
        leaf.object.display();
