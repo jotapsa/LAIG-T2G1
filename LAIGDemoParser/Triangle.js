@@ -19,7 +19,7 @@ var Z = 2;
     this.b=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2)+Math.pow(z2-z1,2));
     this.c=Math.sqrt(Math.pow(x3-x2,2)+Math.pow(y3-y2,2)+Math.pow(z3-z2,2));
 
-    this.cosBeta = (Math.pow(this.a,2)-Math.pow(this.b,2)+Math.pow(this.c,2))/(2*this.a*this.c);
+    this.cosBeta = (Math.pow(this.c,2)-Math.pow(this.a,2)+Math.pow(this.b,2))/(2*this.c*this.b);
     this.beta = Math.acos(this.cosBeta);
     this.sinBeta = Math.sin(this.beta);
 
@@ -45,9 +45,9 @@ var Z = 2;
  	this.vertices = this.vertex;
 
  	this.texCoords = [
-    this.minS, this.maxT,
-    this.minS+this.c, this.maxT,
-    this.minS+this.c-this.a*this.cosBeta, this.minT-this.a*this.sinBeta,
+ 	0, 0,
+ 	this.b, 0,
+ 	this.b-(this.c*this.cosBeta), 1-(this.c*this.sinBeta),
  	];
     this.originalTexCoords = this.texCoords.slice();
 
