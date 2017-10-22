@@ -38,9 +38,7 @@
 	var stacksStep = this.height/this.stacks;
 	var radiusStep = (this.topRadius-this.botRadius)/this.stacks;
 	var topBotDiff = Math.abs(this.topRadius-this.botRadius)/2;
-	console.log (topBotDiff);
 	var hip = Math.sqrt(topBotDiff*topBotDiff+this.height*this.height);
-	console.log(hip);
 
 	var s = this.minS;
 	var t = this.minT;

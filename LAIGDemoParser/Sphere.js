@@ -2,12 +2,14 @@
  * Sphere
  * @constructor
  */
- function Sphere(scene, radius ,stacks, slices) {
+ function Sphere(scene, radius ,slices, stacks) {
  	CGFobject.call(this,scene);
 	
 	this.radius = radius;
-	this.stacks = stacks;
 	this.slices = slices;
+	this.stacks = stacks;
+	console.log ("Slices", this.slices);
+	console.log ("Stacks", this.stacks);
 	
 	this.minS = 0;
 	this.maxS = 1;
@@ -40,16 +42,16 @@
 
 	for (stack=0; stack<=this.stacks; stack++)
 	{
-		for (slice=0; slice<this.slices; slice++)
+		for (slice=0; slice<=this.slices; slice++)
 		{
-			z = -Math.cos(vertical_theta* stack)
+			z = Math.cos(vertical_theta*stack)
 			r = Math.sqrt(1 - Math.pow(z,2));
 
 			x = r * Math.sin (theta*slice);
 			y = r * Math.cos (theta*slice);
 
 			this.vertices.push (this.radius*x, this.radius*y , this.radius*z);
-			this.normals.push (this.radius*x, this.radius*y , this.radius*z);
+			this.normals.push (x, y , z);
 			this.texCoords.push (s+ slice*sInc, t+ stack*tInc);
 		}
 		s = this.minS;
@@ -57,19 +59,9 @@
 
 	for (j=0; j<this.stacks; j++)
 	{
-		for (i=0; i<this.slices; i++)
-		{
-			if (!(i==this.slices-1))
-			{
-				this.indices.push(i+(j*this.slices),i+1+(j*this.slices),i+1+this.slices+(j*this.slices));
-				this.indices.push(i+1+this.slices+(j*this.slices), i+this.slices+(j*this.slices), i+(j*this.slices));
-			}
-			else
-			{
-				this.indices.push(this.slices*(j), this.slices*(j+1), this.slices*(j+1)-1);
-				this.indices.push(this.slices*(j+1)-1, this.slices*(j+1), this.slices*(j+2)-1);
-
-			}
+		for (i=0; i<this.slices; i++){
+			this.indices.push(((this.slices+1)*j)+i,((this.slices+1)*j)+i+1,((this.slices+1)*(j+1))+i);
+			this.indices.push(((this.slices+1)*(j+1))+i+1,((this.slices+1)*(j+1))+i,((this.slices+1)*j)+i+1);
 		}
 	}
 
