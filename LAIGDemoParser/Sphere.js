@@ -34,9 +34,9 @@
 	var r;
 
 	var s = this.minS;
-	var t = this.minT;
+	var t = this.maxT;
 	var sInc = (this.maxS-this.minS)/this.slices;
-	var tInc = (this.maxT-this.minT)/this.stacks;
+	var tInc = (this.minT-this.maxT)/this.stacks;
 
 	for (stack=0; stack<=this.stacks; stack++)
 	{
