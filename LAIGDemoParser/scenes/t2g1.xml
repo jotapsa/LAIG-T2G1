@@ -68,7 +68,7 @@
 	<!-- Window -->
     <TEXTURE id="window">
         <file path="images/sky.jpg" />
-        <amplif_factor s="2" t="2" />
+        <amplif_factor s="1" t="1" />
     </TEXTURE>
 
      <!-- Floor -->
