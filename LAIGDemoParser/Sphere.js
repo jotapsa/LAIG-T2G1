@@ -8,9 +8,7 @@
 	this.radius = radius;
 	this.slices = slices;
 	this.stacks = stacks;
-	console.log ("Slices", this.slices);
-	console.log ("Stacks", this.stacks);
-	
+
 	this.minS = 0;
 	this.maxS = 1;
 	this.minT = 0;
