@@ -41,9 +41,9 @@
 	var hip = Math.sqrt(topBotDiff*topBotDiff+this.height*this.height);
 
 	var s = this.minS;
-	var t = this.minT;
+	var t = this.maxT;
 	var sInc = (this.maxS-this.minS)/this.slices;
-	var tInc = (this.maxT-this.minT)/this.stacks;
+	var tInc = (this.minT-this.maxT)/this.stacks;
 
 	for (i=0; i<=this.stacks; i++)
 	{
@@ -57,7 +57,7 @@
 		}
 		s = this.minS;
 	}
-	t=this.minT;
+	t=this.maxT;
 
 	for (j=0; j<this.stacks; j++)
 	{

@@ -15,6 +15,14 @@ var Z = 2;
  	x3, y3, z3,
  	];
 
+ 	this.a=Math.sqrt(Math.pow(x1-x3,2)+Math.pow(y1-y3,2)+Math.pow(z1-z3,2));
+    this.b=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2)+Math.pow(z2-z1,2));
+    this.c=Math.sqrt(Math.pow(x3-x2,2)+Math.pow(y3-y2,2)+Math.pow(z3-z2,2));
+
+    this.cosBeta = (Math.pow(this.a,2)-Math.pow(this.b,2)+Math.pow(this.c,2))/(2*this.a*this.c);
+    this.beta = Math.acos(this.cosBeta);
+    this.sinBeta = Math.sin(this.beta);
+
  	this.v4 = [];
  	this.v4.push (x2-x1, y2-y1, z2-z1);
 
@@ -38,8 +46,8 @@ var Z = 2;
 
  	this.texCoords = [
     this.minS, this.maxT,
-    this.maxS, this.maxT,
-    this.maxS/2, this.minT,
+    this.minS+this.c, this.maxT,
+    this.minS+this.c-this.a*this.cosBeta, this.minT-this.a*this.sinBeta,
  	];
     this.originalTexCoords = this.texCoords.slice();
 
