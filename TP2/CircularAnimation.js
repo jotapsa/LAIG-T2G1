@@ -3,12 +3,16 @@
  * @constructor
  */
 class CircularAnimation extends Animation {
-    constructor(scene,center,radius,initialAngle,rotationAngle,speed) {
+    constructor(scene,center,radius,startAngle,rotationAngle,speed) {
       super(scene);
       this.center = center;
       this.radius = radius;
-      this.initialAngle = initialAngle;
+      this.startAngle = startAngle;
       this.rotationAngle = rotationAngle;
       this.speed = speed;
+    }
+
+    display(){
+
     }
 }

@@ -1,8 +1,8 @@
 /**
- * LinearAnimation
+ * BezierAnimation
  * @constructor
  */
-class LinearAnimation extends Animation {
+class BezierAnimation extends Animation {
     constructor(scene,controlPoints,speed) {
       super(scene);
       this.CPoints = controlPoints;
