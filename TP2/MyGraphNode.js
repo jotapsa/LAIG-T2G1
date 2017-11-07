@@ -20,8 +20,18 @@ function MyGraphNode(graph, nodeID) {
     // The texture ID.
     this.textureID = null ;
 
+    //The animations ID
+    this.animations = [];
+
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
+}
+
+/**
+ * Adds the reference (ID) of Animation to this node's animation array.
+ */
+MyGraphNode.prototype.addAnimation = function(animationID) {
+    this.animations.push(animationID);
 }
 
 /**

@@ -395,6 +395,10 @@
 
         <TRANSLATION x="2" y="0" z="22" />
 
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="linearexample" />
+        </ANIMATIONREFS>
+
         <DESCENDANTS>
             <NODEREF id="ball_sphere" />
         </DESCENDANTS>
