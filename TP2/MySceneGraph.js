@@ -1205,8 +1205,8 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
       case 'linear':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
         var CPoints = this.parseAnimationsCPoints(children[i]);
-        if ( CPoints.length == 0){
-          return "must have at least one Control Point";
+        if ( CPoints.length < 2){
+          return "must have at least two Control Points";
         }
         this.animations[animationID] = new LinearAnimation(this.scene,CPoints,speed);
         break;

@@ -9,6 +9,10 @@ class BezierAnimation extends Animation {
       this.speed = speed;
     }
 
+    update(){
+
+    }
+
     display(){
 
     }

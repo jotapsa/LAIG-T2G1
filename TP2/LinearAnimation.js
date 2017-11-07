@@ -7,6 +7,12 @@ class LinearAnimation extends Animation {
       super(scene);
       this.CPoints = controlPoints;
       this.speed = speed;
+
+      this.nextPoint = this.CPoints[1];
+    }
+
+    update(){
+
     }
 
     display(){
