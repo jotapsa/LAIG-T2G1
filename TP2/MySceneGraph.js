@@ -1205,11 +1205,11 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
       case 'linear':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
         var CPoints = this.parseAnimationsCPoints(children[i]);
-        if ( CPoints.length < 2){
+        if (CPoints.length < 2){
           return "must have at least two Control Points";
         }
         this.animations[animationID] = new LinearAnimation(this.scene,CPoints,speed);
-        break;
+      break;
 
       case 'circular':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
@@ -1221,7 +1221,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         var startAngle = parseFloat(this.reader.getString(children[i], 'startang'));
         var rotationAngle = parseFloat(this.reader.getString(children[i], 'rotang'));
         this.animations[animationID] = new CircularAnimation(this.scene,center,radius,startAngle,rotationAngle,speed);
-        break;
+      break;
 
       case 'bezier':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
@@ -1230,7 +1230,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
           return "must have 4 Control Points";
         }
         this.animations[animationID] = new BezierAnimation(this.scene,CPoints,speed);
-        break;
+      break;
 
       case 'combo':
         var animations = [];
@@ -1252,7 +1252,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
           }
         }
         this.animations[animationID] = new ComboAnimation(this.scene,animations);
-        break;
+      break;
     }
   }
 }
@@ -1634,5 +1634,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
 MySceneGraph.prototype.displayScene = function() {
 	//entry point for graph rendering
 	this.renderNode(this.nodes[this.idRoot], this.nodes[this.idRoot].transformMatrix);
+	//this.setUpdatePeriod (FPSToUpdate/this.currentFPS);
 
 }

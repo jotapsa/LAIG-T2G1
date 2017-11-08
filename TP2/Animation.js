@@ -3,7 +3,8 @@
 * @constructor
 */
 class Animation {
-  constructor(scene){
+  constructor(scene, speed){
     this.scene = scene;
+    this.speed = speed || 0;
   }
 }
