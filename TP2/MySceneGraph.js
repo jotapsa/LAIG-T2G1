@@ -1635,5 +1635,16 @@ MySceneGraph.prototype.displayScene = function() {
 	//entry point for graph rendering
 	this.renderNode(this.nodes[this.idRoot], this.nodes[this.idRoot].transformMatrix);
 	//this.setUpdatePeriod (FPSToUpdate/this.currentFPS);
+  this.updateAnimations();
 
+}
+
+/**
+ * Instead of processing each node, just update all animations that exists.
+ */
+MySceneGraph.prototype.updateAnimations = function() {
+  for(let animation in this.animations){
+    //animation is index of this.animations
+    //this.animations[animation].update()
+  }
 }
