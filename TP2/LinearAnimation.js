@@ -14,6 +14,9 @@ class LinearAnimation extends Animation {
       if (this.CPoints.length>=2){
         this.currentPointIndex = 1;
       }
+      else{
+        throw new Error('CPoints vector has invalid length.');
+      }
 
       this.resetAnimation();
     }
@@ -42,7 +45,7 @@ class LinearAnimation extends Animation {
     resetAnimation(){
       this.angleXZ = 0;
       this.angleYZ = 0;
-
+      this.currentPointIndex = 1;
       this.position = this.CPoints[0];
 
       this.updateAnimation();
@@ -51,7 +54,10 @@ class LinearAnimation extends Animation {
     /**
      * Updates the animation when a new control point has been reached.
      */
-    updateState() {
+    updateState(){
+      if (this.currentPointIndex<this.CPoints.length){
+        this.currentPointIndex++;
+      }
     }
 
     /**
@@ -59,11 +65,11 @@ class LinearAnimation extends Animation {
     */
     updateAnimation(){
       this.elapsedTime = 0;
-      this.expectedTime = distance(this.CPoints[0], this.CPoints[1])/this.speed;
+      this.expectedTime = distance(this.CPoints[currentPointIndex-1], this.CPoints[currentPointIndex])/this.speed;
 
 
       //How much the animation moves per second
-      this.direction = divVector(subtractPoints(this.CPoints[0], this.CPoints[1]), this.speed);
+      this.direction = divVector(subtractPoints(this.CPoints[currentPointIndex-1], this.CPoints[currentPointIndex]), this.speed);
 
       //this.angleXZ = Math.atan2(this.currentDirection[0], this.currentDirection[2]);
       //this.angleYZ = -Math.atan2(this.currentDirection[1], this.currentDirection[2]);
