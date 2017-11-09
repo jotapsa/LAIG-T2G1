@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }
 
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
+serialInclude(['../lib/CGF.js', 'Utils.js', 'XMLscene.js', 'MySceneGraph.js',
 			 'MyGraphNode.js', 'MyGraphLeaf.js', 'MyInterface.js',
 			 'Rectangle.js', 'Triangle.js', 'Sphere.js',
 			 'Cylinder.js', 'Patch.js', 'Animation.js', 'CircularAnimation.js',

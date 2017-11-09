@@ -11,24 +11,47 @@ class LinearAnimation extends Animation {
       super(scene, speed);
       this.CPoints = controlPoints;
 
+      if (this.CPoints.length>=2){
+        this.currentPointIndex = 1;
+      }
+
       this.resetAnimation();
     }
 
+    /**
+     *
+     */
     update(){
 
+      if (this.elapsedTime >= this.expectedTime) {
+          this.updateState();
+      }
     }
 
+    /**
+     * Applies the transformations according to the current state of the animation.
+     */
     display(){
       this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
     }
 
+
+    /**
+     * Resets the animation.
+     */
     resetAnimation(){
       this.angleXZ = 0;
       this.angleYZ = 0;
 
-      this.currentPoint = this.CPoints[0];
+      this.position = this.CPoints[0];
 
       this.updateAnimation();
+    }
+
+    /**
+     * Updates the animation when a new control point has been reached.
+     */
+    updateState() {
     }
 
     /**
