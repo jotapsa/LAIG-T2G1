@@ -11,6 +11,13 @@ function subtractPoints(point1, point2){
 }
 
 /**
+ * Returns the addition of point1 with point2.
+ */
+function addPoints(point1, point2) {
+    return [point1[X] + point2[X], point1[Y] + point2[Y], point1[Z] + point2[Z]];
+}
+
+/**
  * Computes the 3D distance between two 3D points
  */
 function distance(point1, point2){

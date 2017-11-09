@@ -264,7 +264,7 @@
 
   <ANIMATION id="linearexample"  speed="1"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="1"   yy="1"   zz="1"   />
+    <controlpoint   xx="20"   yy="20"   zz="20"   />
     <controlpoint   xx="5"   yy="2"   zz="3"   />
   </ANIMATION>
 </ANIMATIONS>

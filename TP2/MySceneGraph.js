@@ -1585,10 +1585,11 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 
-MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture){
+MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture, animation){
    var texture = this.textures[node.textureID] || texture;
    var appearance = this.materials[node.materialID] || appearance;
    var renderTransformMatrix = mat4.create();
+   var animation = this.animations[node.animationID] || animation;
 
    mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
@@ -1607,7 +1608,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     }
 }
 
-MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
+MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture, animation){
 
     this.scene.pushMatrix();
        /* if the leaf doesn't inherit a texture, lets remove any texture previously loaded on to the appearance*/
@@ -1624,6 +1625,11 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
        }
 
        this.scene.multMatrix(renderTransformMatrix);
+
+       if (animation!=null){
+         animation.display();
+       }
+
        leaf.object.display();
     this.scene.popMatrix();
 }
@@ -1634,17 +1640,14 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
 MySceneGraph.prototype.displayScene = function() {
 	//entry point for graph rendering
 	this.renderNode(this.nodes[this.idRoot], this.nodes[this.idRoot].transformMatrix);
-	//this.setUpdatePeriod (FPSToUpdate/this.currentFPS);
-  this.updateAnimations();
-
 }
 
 /**
  * Instead of processing each node, just update all animations that exists.
  */
-MySceneGraph.prototype.updateAnimations = function() {
+MySceneGraph.prototype.updateAnimations = function(currTime) {
   for(let animation in this.animations){
     //animation is index of this.animations
-    //this.animations[animation].update()
+    this.animations[animation].update(currTime);
   }
 }

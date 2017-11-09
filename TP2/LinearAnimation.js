@@ -24,7 +24,18 @@ class LinearAnimation extends Animation {
     /**
      *
      */
-    update(){
+    update(currTime){
+      //If the animation is already complete, just return.
+      if (this.isDone()){
+        return ;
+      }
+
+      var deltaTime = currTime - this.oldCurrTime;
+      this.oldCurrTime = currTime;
+
+      this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
+
+      this.elapsedTime += deltaTime/1000;
 
       if (this.elapsedTime >= this.expectedTime) {
           this.updateState();
@@ -36,6 +47,8 @@ class LinearAnimation extends Animation {
      */
     display(){
       this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
+      //rotate
+      //rotate
     }
 
 
@@ -47,6 +60,7 @@ class LinearAnimation extends Animation {
       this.angleYZ = 0;
       this.currentPointIndex = 1;
       this.position = this.CPoints[0];
+      this.done = false;
 
       this.updateAnimation();
     }
@@ -55,9 +69,14 @@ class LinearAnimation extends Animation {
      * Updates the animation when a new control point has been reached.
      */
     updateState(){
-      if (this.currentPointIndex<this.CPoints.length){
+      //this.CPoints has .length number of points, starting at 0
+      if (this.currentPointIndex < (this.CPoints.length-1)){
         this.currentPointIndex++;
+      }else {
+        this.done = true;
       }
+
+      this.updateAnimation();
     }
 
     /**
@@ -65,11 +84,11 @@ class LinearAnimation extends Animation {
     */
     updateAnimation(){
       this.elapsedTime = 0;
-      this.expectedTime = distance(this.CPoints[currentPointIndex-1], this.CPoints[currentPointIndex])/this.speed;
+      this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
 
-
+      this.position = this.CPoints[this.currentPointIndex-1];
       //How much the animation moves per second
-      this.direction = divVector(subtractPoints(this.CPoints[currentPointIndex-1], this.CPoints[currentPointIndex]), this.speed);
+      this.direction = divVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]), this.speed);
 
       //this.angleXZ = Math.atan2(this.currentDirection[0], this.currentDirection[2]);
       //this.angleYZ = -Math.atan2(this.currentDirection[1], this.currentDirection[2]);
