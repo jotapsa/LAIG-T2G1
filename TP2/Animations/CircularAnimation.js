@@ -11,7 +11,7 @@ class CircularAnimation extends Animation {
       this.rotationAngle = rotationAngle;
     }
 
-    update(){
+    update(currTime){
 
     }
 

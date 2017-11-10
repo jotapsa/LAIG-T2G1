@@ -8,7 +8,7 @@ class BezierAnimation extends Animation {
       this.CPoints = controlPoints;
     }
 
-    update(){
+    update(currTime){
 
     }
 

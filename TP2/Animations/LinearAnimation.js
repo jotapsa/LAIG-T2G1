@@ -47,8 +47,8 @@ class LinearAnimation extends Animation {
      */
     display(){
       this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
-      //rotate
-      //rotate
+      this.scene.rotate(this.angleXZ, 0, 1, 0);
+      this.scene.rotate(this.angleYZ, 1, 0, 0);
     }
 
 
@@ -84,7 +84,8 @@ class LinearAnimation extends Animation {
     */
     updateAnimation(){
       this.elapsedTime = 0;
-      this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
+      //expectedTime in seconds
+      this.expectedTime = (distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed)/1000;
 
       this.position = this.CPoints[this.currentPointIndex-1];
       //How much the animation moves per second
