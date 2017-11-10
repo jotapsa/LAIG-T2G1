@@ -32,10 +32,9 @@ class LinearAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
+      this.elapsedTime += deltaTime;
 
       this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
-
-      this.elapsedTime += deltaTime/1000;
 
       if (this.elapsedTime >= this.expectedTime) {
           this.updateState();
@@ -85,7 +84,7 @@ class LinearAnimation extends Animation {
     updateAnimation(){
       this.elapsedTime = 0;
       //expectedTime in seconds
-      this.expectedTime = (distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed)/1000;
+      this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
 
       this.position = this.CPoints[this.currentPointIndex-1];
       //How much the animation moves per second
