@@ -1,11 +1,11 @@
-var L1=0;
-var L2=1;
-var L3=2;
-var L4=3;
-var R1=4;
-var R2=5;
-var R3=6;
-var R4=7;
+var l1=0;
+var l2=1;
+var l3=2;
+var l4=3;
+var r1=4;
+var r2=5;
+var r3=6;
+var r4=7;
 
 /**
  * BezierAnimation
@@ -15,12 +15,13 @@ class BezierAnimation extends Animation {
     constructor(scene,controlPoints,speed) {
       super(scene, speed);
       this.CPoints = controlPoints;
-      console.log(controlPoints.length);
+      console.log(this.CPoints.length);
 
       this.casteljau = deCasteljau (this.CPoints);
-      this.curveLength = distance (this.casteljau[L1], this.casteljau[L2]) + distance (this.casteljau[L2], this.casteljau[L3]) + distance (this.casteljau[L3], this.casteljau[L4]) +
-        distance (this.casteljau[R1], this.casteljau[R2]) + distance (this.casteljau[R2], this.casteljau[R3]) + distance (this.casteljau[R3], this.casteljau[R4]);
+      this.curveLength = distance (this.casteljau[l1], this.casteljau[l2]) + distance (this.casteljau[l2], this.casteljau[l3]) + distance (this.casteljau[l3], this.casteljau[l4]) +
+        distance (this.casteljau[r1], this.casteljau[r2]) + distance (this.casteljau[r2], this.casteljau[r3]) + distance (this.casteljau[r3], this.casteljau[r4]);
       this.expectedTime = this.curveLength / this.speed;
+
 
       this.resetAnimation();
     }

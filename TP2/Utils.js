@@ -52,22 +52,21 @@ function normalizeVector(vector){
 * in this case line segments.
 */
 
-function deCasteljau(controlPoints){
-  let L1 = controlPoints[0];
-  let R4 = controlPoints[3];
+function deCasteljau(CPoints){
+  let left1 = CPoints[0];
+  let right4 = CPoints[3];
   //L2 = (P1+P2)/2
-  let L2 = divVector(addPoints(controlPoints[0], controlPoints[1]), 2);
+  let left2 = divVector(addPoints(CPoints[0], CPoints[1]), 2);
   //R3 = (P3+P4)/2
-  let R3 = divVector(addPoints(controlPoints[2], controlPoints[3]), 2);
+  let right3 = divVector(addPoints(CPoints[2], CPoints[3]), 2);
   //H = (P2+P3)/2
-  let H = divVector(addPoints(controlPoints[1], controlPoints[2]), 2);
+  let H = divVector(addPoints(CPoints[1], CPoints[2]), 2);
   //L3 = (L2+H)/2
-  let L3 = divVector(addPoints(L2, H), 2);
+  let left3 = divVector(addPoints(left2, H), 2);
   //R2 = (H+R3)/2
-  let R2 = divVector(addPoints(H, R3), 2);
+  let right2 = divVector(addPoints(H, right3), 2);
   //L4= R1 = (L3+R2)/2
-  let L4 = divVector(addPoints(L3, R2, 2);
-  let R1 = L4;
-
-  return [L1, L2, L3, L4, R1, R2, R3, R4];
+  let left4 = divVector(addPoints(left3, right2), 2);
+  let right1 = left4;
+  return [left1, left2, left3, left4, right1, right2, right3, right4];
 }
