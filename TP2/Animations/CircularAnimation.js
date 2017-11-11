@@ -27,7 +27,7 @@ class CircularAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
-      this.timeElapsed += deltaTime;
+      this.elapsedTime += deltaTime;
 
       this.currentRotAng += this.angleSpeed * (deltaTime/1000);
 
@@ -51,7 +51,7 @@ class CircularAnimation extends Animation {
      */
     resetAnimation(){
       this.currentRotationAngle = 0;
-      this.timeElapsed = 0;
+      this.elapsedTime = 0;
       this.done = false;
     }
 
