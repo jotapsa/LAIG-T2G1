@@ -1593,14 +1593,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
    var texture = this.textures[node.textureID] || texture;
    var appearance = this.materials[node.materialID] || appearance;
    var renderTransformMatrix = mat4.create();
-
-   if (animations == null && node.animations.length>0){
-     animations = node.animations;
-   }
-   else if (animations != null && node.animations.length>0){
-     animations.concat(node.animations);
-   }
-
+   
    mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
    if(appearance != null && texture != null){
