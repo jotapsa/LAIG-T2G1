@@ -46,3 +46,27 @@ function normalizeVector(vector){
    let norm = distance([0, 0, 0], vector);
     return [vector[0]/norm, vector[1]/norm, vector[2]/norm];
 }
+
+/*
+* Using deCasteljau algorithm we can split a single Bezier curve into two bezier curves,
+* in this case line segments.
+*/
+
+function deCasteljau(CPoints){
+  let left1 = CPoints[0];
+  let right4 = CPoints[3];
+  //L2 = (P1+P2)/2
+  let left2 = divVector(addPoints(CPoints[0], CPoints[1]), 2);
+  //R3 = (P3+P4)/2
+  let right3 = divVector(addPoints(CPoints[2], CPoints[3]), 2);
+  //H = (P2+P3)/2
+  let H = divVector(addPoints(CPoints[1], CPoints[2]), 2);
+  //L3 = (L2+H)/2
+  let left3 = divVector(addPoints(left2, H), 2);
+  //R2 = (H+R3)/2
+  let right2 = divVector(addPoints(H, right3), 2);
+  //L4= R1 = (L3+R2)/2
+  let left4 = divVector(addPoints(left3, right2), 2);
+  let right1 = left4;
+  return [left1, left2, left3, left4, right1, right2, right3, right4];
+}

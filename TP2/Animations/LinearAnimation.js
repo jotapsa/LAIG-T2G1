@@ -32,10 +32,9 @@ class LinearAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
+      this.elapsedTime += deltaTime;
 
       this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
-
-      this.elapsedTime += deltaTime/1000;
 
       if (this.elapsedTime >= this.expectedTime) {
           this.updateState();
@@ -47,8 +46,8 @@ class LinearAnimation extends Animation {
      */
     display(){
       this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
-      //rotate
-      //rotate
+      this.scene.rotate(this.angleXZ, 0, 1, 0);
+      this.scene.rotate(this.angleYZ, 1, 0, 0);
     }
 
 
@@ -84,6 +83,7 @@ class LinearAnimation extends Animation {
     */
     updateAnimation(){
       this.elapsedTime = 0;
+      //expectedTime in seconds
       this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
 
       this.position = this.CPoints[this.currentPointIndex-1];
