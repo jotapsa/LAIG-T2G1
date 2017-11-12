@@ -31,7 +31,7 @@ function MyGraphNode(graph, nodeID) {
  * Adds the reference (ID) of Animation to this node's animation array.
  */
 MyGraphNode.prototype.addAnimation = function(animationID) {
-    this.animations.push(animationID);
+    this.animationsID.push(animationID);
 }
 
 /**
