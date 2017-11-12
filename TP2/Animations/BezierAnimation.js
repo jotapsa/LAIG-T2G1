@@ -67,4 +67,12 @@ class BezierAnimation extends Animation {
       this.position = this.CPoints[0];
       this.done = false;
     }
+
+    /**
+     * Creates a new Bezier Animation from the current parameters.
+     * @return {BezierAnimation} A Bezier Animation that is a clone of this one.
+     */
+    clone() {
+        return new BezierAnimation(this.scene, this.CPoints, this.speed);
+    }
 }

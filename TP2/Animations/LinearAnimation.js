@@ -93,4 +93,12 @@ class LinearAnimation extends Animation {
       //this.angleXZ = Math.atan2(this.currentDirection[0], this.currentDirection[2]);
       //this.angleYZ = -Math.atan2(this.currentDirection[1], this.currentDirection[2]);
     }
+
+    /**
+     * Creates a new Linear Animation from the current parameters.
+     * @return {LinearAnimation} A Linear Animation that is a clone of this one.
+     */
+    clone() {
+        return new LinearAnimation(this.scene, this.CPoints, this.speed);
+    }
 }

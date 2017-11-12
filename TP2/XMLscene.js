@@ -158,7 +158,6 @@ XMLscene.prototype.display = function() {
 		this.axis.display();
 	}
 
-
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
@@ -167,5 +166,5 @@ XMLscene.prototype.display = function() {
 }
 
 XMLscene.prototype.update = function (currTime){
-  //
+  this.graph.updateNode(this.graph.nodes[this.graph.idRoot], currTime);
 };

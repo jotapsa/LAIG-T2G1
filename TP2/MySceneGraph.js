@@ -1447,7 +1447,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
               for (let j = 0; j < animations.length; j++) {
                 if (animations[j].nodeName == "ANIMATIONREF"){
                   var animationID = this.reader.getString(animations[j], 'id');
-                  this.nodes[nodeID].addAnimation(animationID);
+                  this.nodes[nodeID].addAnimation(this.animations[animationID]);
                 }
               }
             }
@@ -1588,30 +1588,50 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-
-MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture, animations){
-   var texture = this.textures[node.textureID] || texture;
-   var appearance = this.materials[node.materialID] || appearance;
-   var renderTransformMatrix = mat4.create();
-   
-   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
-
-   if(appearance != null && texture != null){
-        appearance.setTexture(texture[0]);
-   }
-   for (var i = 0; i<node.children.length; i++){
-        //Render all child nodes of node
-        this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture, animations);
+MySceneGraph.prototype.updateNode = function (node, currTime){
+  let updated = 0;
+  //Does the node have animations ?
+  if (node.animations!=null){
+    //Let's find the first one that hasn't been completed
+    for (let i = 0; i<node.animations.length && updated != 1; i++){
+      if (!node.animations[i].isDone()){
+        node.animations[i].update(currTime);
+        updated = 1;
+      }
     }
+  }
 
-    //Render all leaves of node if exists
-    for(var i=0;i<node.leaves.length;i++){
-        if(node.leaves[i].object != null)
-            this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture, animations);
-    }
+  //Try to update children animations
+  for (var i = 0; i<node.children.length; i++){
+       //Render all child nodes of node
+       this.updateNode(this.nodes[node.children[i]], currTime);
+  }
 }
 
-MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture, animations){
+MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture){
+  var texture = this.textures[node.textureID] || texture;
+  var appearance = this.materials[node.materialID] || appearance;
+  var renderTransformMatrix = mat4.create();
+
+  mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
+
+  if(appearance != null && texture != null){
+    appearance.setTexture(texture[0]);
+  }
+  for (var i = 0; i<node.children.length; i++){
+    //Render all child nodes of node
+    this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture);
+  }
+
+  //Render all leaves of node if exists
+  for(var i=0;i<node.leaves.length;i++){
+    if(node.leaves[i].object != null){
+      this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
+    }
+  }
+}
+
+MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
     this.scene.pushMatrix();
        /* if the leaf doesn't inherit a texture, lets remove any texture previously loaded on to the appearance*/
        if (appearance!=null && texture==null){
@@ -1627,8 +1647,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
        }
 
        this.scene.multMatrix(renderTransformMatrix);
-
-       //animation stuff
 
        leaf.object.display();
     this.scene.popMatrix();

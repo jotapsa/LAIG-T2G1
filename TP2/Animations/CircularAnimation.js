@@ -55,4 +55,12 @@ class CircularAnimation extends Animation {
       this.done = false;
     }
 
+    /**
+     * Creates a new Circular Animation from the current parameters.
+     * @return {CircularAnimation} A Circular Animation that is a clone of this one.
+     */
+    clone() {
+        return new CircularAnimation(this.scene, this.center, this.radius, this.startAngle, this.rotationAngle, this.speed);
+    }
+
 }
