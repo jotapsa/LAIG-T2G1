@@ -37,13 +37,19 @@ class CircularAnimation extends Animation {
     }
 
     /**
-     * Applies the transformations according to the current state of the animation.
+     * Returns the transformationMatrix according to the current state of the animation.
      */
-    display(){
-      this.scene.translate(this.center[X], this.center[Y], this.center[Z]);
-      this.scene.translate(this.radius*Math.cos(this.startAngle+this.currentRotationAngle), 0, this.radius*Math.sin(this.startAngle+this.currentRotationAngle));
+    getTransformMatrix(){
+      //this.scene.translate(this.center[X], this.center[Y], this.center[Z]);
+      //this.scene.translate(this.radius*Math.cos(this.startAngle+this.currentRotationAngle), 0, this.radius*Math.sin(this.startAngle+this.currentRotationAngle));
+      //this.scene.rotate(Math.PI/2 + this.startAngle + this.currentRotationAngle, 0, 1, 0);
 
-      this.scene.rotate(Math.PI/2 + this.startAngle + this.currentRotationAngle, 0, 1, 0);
+      mat4.identity(this.transformMatrix);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.center[X], this.center[Y], this.center[Z]]);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.radius*Math.cos(this.startAngle+this.currentRotationAngle), 0, this.radius*Math.sin(this.startAngle+this.currentRotationAngle));
+      mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI/2 + this.startAngle + this.currentRotationAngle, this.axisCoords['y']);
+
+      return this.transformMatrix;
     }
 
     /**

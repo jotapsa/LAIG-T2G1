@@ -1615,6 +1615,14 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
+  if(node.animations!=null){
+    for (let animation in node.animations){
+      //mat4.multiply(renderTransformMatrix, transformMatrix, animation.getTransformMatrix());
+      //console.log(node.nodeID);
+      //console.log(animation.speed);
+    }
+  }
+
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
   }

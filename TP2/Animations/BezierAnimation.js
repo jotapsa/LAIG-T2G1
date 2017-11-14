@@ -50,12 +50,16 @@ class BezierAnimation extends Animation {
     }
 
     /**
-     * Applies the transformations according to the current state of the animation.
+     * Returns the transformationMatrix according to the current state of the animation.
      */
-    display(){
-      this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
+    getTransformMatrix(){
+      //this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
 
+      mat4.identity(this.transformMatrix);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
       //rotate
+      
+      return this.transformMatrix;
     }
 
 

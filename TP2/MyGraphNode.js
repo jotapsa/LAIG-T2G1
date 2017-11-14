@@ -32,11 +32,14 @@ function MyGraphNode(graph, nodeID) {
  */
 MyGraphNode.prototype.addAnimation = function(animation){
   //null
+  //console.log(animation);
+  //console.log(animation.clone());
+  
   if (this.animations==null){
     this.animations=[animation.clone()];
   }else {
     this.animations.push(animation.clone());
-  }  
+  }
 }
 
 /**

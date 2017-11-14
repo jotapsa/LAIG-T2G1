@@ -42,12 +42,16 @@ class LinearAnimation extends Animation {
     }
 
     /**
-     * Applies the transformations according to the current state of the animation.
+     * Returns the transformationMatrix according to the current state of the animation.
      */
-    display(){
-      this.scene.translate(this.position[X], this.position[Y], this.position[Z]);
-      this.scene.rotate(this.angleXZ, 0, 1, 0);
-      this.scene.rotate(this.angleYZ, 1, 0, 0);
+    getTransformMatrix(){
+      
+      mat4.identity(this.transformMatrix);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
+      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleXZ, this.axisCoords['y']);
+      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleYZ, this.axisCoords['x']);
+
+      return this.transformMatrix();
     }
 
 
