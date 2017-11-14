@@ -1224,7 +1224,6 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         var startAngle = parseFloat(this.reader.getString(children[i], 'startang'));
         var rotationAngle = parseFloat(this.reader.getString(children[i], 'rotang'));
         this.animations[animationID] = new CircularAnimation(this.scene,center,radius,startAngle,rotationAngle,speed);
-        console.log(speed, center, radius, startAngle, rotationAngle);
       break;
 
       case 'bezier':

@@ -31,9 +31,6 @@ function MyGraphNode(graph, nodeID) {
  *
  */
 MyGraphNode.prototype.addAnimation = function(animation){
-  //null
-  //console.log(animation);
-  //console.log(animation.clone());
   this.animations.push(animation.clone());
 }
 

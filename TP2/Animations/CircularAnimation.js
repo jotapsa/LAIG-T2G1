@@ -1,6 +1,7 @@
 var X = 0;
 var Y = 1;
 var Z = 2;
+var degToRad = Math.PI / 180.0;
 
 /**
  * CircularAnimation
@@ -13,6 +14,8 @@ class CircularAnimation extends Animation {
       this.radius = radius;
       this.startAngle = startAngle;
       this.rotationAngle = rotationAngle;
+
+      //expectedTime in seconds
       this.expectedTime = (2*Math.PI*this.radius*(this.rotationAngle/360.0))/this.speed;
       this.angleSpeed = this.rotationAngle/this.expectedTime; // (angle/s)
 
@@ -27,9 +30,8 @@ class CircularAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
-      this.elapsedTime += deltaTime;
-
-      this.currentRotAng += this.angleSpeed * (deltaTime/1000);
+      this.elapsedTime += deltaTime/1000;
+      this.currentRotationAngle += this.angleSpeed * (deltaTime/1000);
 
       if (this.elapsedTime >= this.expectedTime) {
           this.done=true;
@@ -40,14 +42,10 @@ class CircularAnimation extends Animation {
      * Returns the transformationMatrix according to the current state of the animation.
      */
     getTransformMatrix(){
-      //this.scene.translate(this.center[X], this.center[Y], this.center[Z]);
-      //this.scene.translate(this.radius*Math.cos(this.startAngle+this.currentRotationAngle), 0, this.radius*Math.sin(this.startAngle+this.currentRotationAngle));
-      //this.scene.rotate(Math.PI/2 + this.startAngle + this.currentRotationAngle, 0, 1, 0);
-
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.center[X], this.center[Y], this.center[Z]]);
-      mat4.translate(this.transformMatrix, this.transformMatrix, [this.radius*Math.cos(this.startAngle+this.currentRotationAngle), 0, this.radius*Math.sin(this.startAngle+this.currentRotationAngle)]);
-      mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI/2 + this.startAngle + this.currentRotationAngle, this.axisCoords['y']);
+      mat4.translate(this.transformMatrix, this.transformMatrix, [this.radius*Math.cos((this.startAngle+this.currentRotationAngle)*degToRad), 0, this.radius*Math.sin((this.startAngle+this.currentRotationAngle)*degToRad)]);
+      mat4.rotate(this.transformMatrix, this.transformMatrix, Math.PI/2 + (this.startAngle + this.currentRotationAngle)*degToRad, this.axisCoords['y']);
 
       return this.transformMatrix;
     }
