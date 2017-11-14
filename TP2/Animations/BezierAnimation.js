@@ -15,7 +15,7 @@ class BezierAnimation extends Animation {
     constructor(scene,controlPoints,speed) {
       super(scene, speed);
       this.CPoints = controlPoints;
-      console.log(this.CPoints.length);
+      //console.log(this.CPoints.length);
 
       this.casteljau = deCasteljau (this.CPoints);
       this.curveLength = distance (this.casteljau[l1], this.casteljau[l2]) + distance (this.casteljau[l2], this.casteljau[l3]) + distance (this.casteljau[l3], this.casteljau[l4]) +
@@ -58,7 +58,7 @@ class BezierAnimation extends Animation {
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
       //rotate
-      
+
       return this.transformMatrix;
     }
 

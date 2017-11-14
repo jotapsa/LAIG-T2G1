@@ -1591,15 +1591,13 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.updateNode = function (node, currTime){
   let updated = 0;
   //Does the node have animations ?
-  if (node.animations!=null){
     //Let's find the first one that hasn't been completed
-    for (let i = 0; i<node.animations.length && updated != 1; i++){
+    for (let i=0;i < node.animations.length && updated != 1; i++){
       if (!node.animations[i].isDone()){
         node.animations[i].update(currTime);
         updated = 1;
       }
     }
-  }
 
   //Try to update children animations
   for (var i = 0; i<node.children.length; i++){
@@ -1615,13 +1613,9 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
-  if(node.animations!=null){
-    for (let animation in node.animations){
-      //mat4.multiply(renderTransformMatrix, transformMatrix, animation.getTransformMatrix());
-      //console.log(node.nodeID);
-      //console.log(animation.speed);
+    for (let i=0;i < node.animations.length; i++){
+      mat4.multiply(renderTransformMatrix, transformMatrix, node.animations[i].getTransformMatrix());
     }
-  }
 
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
