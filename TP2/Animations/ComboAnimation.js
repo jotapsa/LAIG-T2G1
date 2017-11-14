@@ -27,11 +27,12 @@ class ComboAnimation extends Animation {
     }
 
     getTransformMatrix(){
+      mat4.identity(this.transformMatrix);
+
       for(let i = 0; i < this.animations.length; i++){
-        if (!this.animations[i].isDone()){
-          return this.animations[i].getTransformMatrix();
-        }
+          mat4.multiply(this.transformMatrix, this.transformMatrix,this.animations[i].getTransformMatrix());
       }
+      return this.transformMatrix;
     }
 
     /**

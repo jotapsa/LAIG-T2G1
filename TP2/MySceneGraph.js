@@ -1595,7 +1595,6 @@ MySceneGraph.prototype.updateNode = function (node, currTime){
   //Let's find the first one that hasn't been completed
   for (let i=0;i < node.animations.length && updated != 1; i++){
     if (!node.animations[i].isDone()){
-      node.currAnimation = i;
       node.animations[i].update(currTime);
       updated = 1;
     }
@@ -1615,8 +1614,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
-  if(node.animations.length != 0 && !node.animations[node.currAnimation].isDone())
-    mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimation].getTransformMatrix());
+  for (let i=0;i < node.animations.length; i++){
+    console.log(node.animations[i]);
+    mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[i].getTransformMatrix());
+  }
 
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
