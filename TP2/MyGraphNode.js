@@ -23,6 +23,9 @@ function MyGraphNode(graph, nodeID) {
     //The animations
     this.animations = [];
 
+    //The Current Animation
+    this.currAnimation = null;
+
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
 }
@@ -32,6 +35,7 @@ function MyGraphNode(graph, nodeID) {
  */
 MyGraphNode.prototype.addAnimation = function(animation){
   this.animations.push(animation.clone());
+  this.currAnimation = 0;
 }
 
 /**

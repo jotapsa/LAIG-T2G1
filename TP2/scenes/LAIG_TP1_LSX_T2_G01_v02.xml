@@ -255,7 +255,7 @@
 
 <!-- The animations -->
 <ANIMATIONS>
-  <ANIMATION id="linearexample"  speed="1"   type="linear">
+  <ANIMATION id="linearexample"  speed="3"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
     <controlpoint   xx="20"   yy="20"   zz="20"   />
     <controlpoint   xx="5"   yy="2"   zz="3"   />
@@ -275,6 +275,11 @@
     <controlpoint xx="0" yy="0" zz="20"/>
     <controlpoint xx="20" yy="0" zz="20"/>
     <controlpoint xx="0" yy="0" zz="0"/>
+  </ANIMATION>
+
+  <ANIMATION id="comboexample" type="combo">
+    <SPANREF id="circularexample"/>
+    <SPANREF id="linearexample"/>
   </ANIMATION>
 </ANIMATIONS>
 
@@ -341,6 +346,10 @@
      <NODE id="lamp">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
+
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="comboexample" />
+        </ANIMATIONREFS>
 
         <DESCENDANTS>
           <NODEREF id="abajur" />
