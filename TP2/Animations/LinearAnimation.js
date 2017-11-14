@@ -32,7 +32,7 @@ class LinearAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
-      this.elapsedTime += deltaTime;
+      this.elapsedTime += deltaTime/1000;
 
       this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
 
@@ -45,7 +45,7 @@ class LinearAnimation extends Animation {
      * Returns the transformationMatrix according to the current state of the animation.
      */
     getTransformMatrix(){
-      
+
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
       mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleXZ, this.axisCoords['y']);
@@ -90,9 +90,8 @@ class LinearAnimation extends Animation {
       //expectedTime in seconds
       this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
 
-      this.position = this.CPoints[this.currentPointIndex-1];
       //How much the animation moves per second
-      this.direction = divVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]), this.speed);
+      this.direction = divVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]), this.expectedTime);
 
       //this.angleXZ = Math.atan2(this.currentDirection[0], this.currentDirection[2]);
       //this.angleYZ = -Math.atan2(this.currentDirection[1], this.currentDirection[2]);
