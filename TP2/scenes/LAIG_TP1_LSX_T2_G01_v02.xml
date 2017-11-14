@@ -261,6 +261,11 @@
     <controlpoint   xx="5"   yy="2"   zz="3"   />
   </ANIMATION>
 
+  <ANIMATION id="chair_front"  speed="1"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="0"   yy="0"   zz="-2"   />
+  </ANIMATION>
+
   <ANIMATION id="circularexample" speed="5" type="circular"
             centerx="0" centery="0" centerz="0"
             radius="10" startang="0" rotang="360"/>
@@ -418,6 +423,7 @@
         <ANIMATIONREFS>
           <ANIMATIONREF id="circularexample" />
         </ANIMATIONREFS>
+
         <DESCENDANTS>
            <NODEREF id="ball_sphere" />
         </DESCENDANTS>
@@ -646,6 +652,10 @@
     <NODE id="chairs">
       <MATERIAL id="null" />
       <TEXTURE id="wood" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="chair_front" />
+      </ANIMATIONREFS>
 
         <DESCENDANTS>
             <NODEREF id="chair1" />
