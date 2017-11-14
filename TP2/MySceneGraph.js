@@ -1615,7 +1615,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
   for (let i=0;i < node.animations.length; i++){
-    console.log(node.animations[i]);
+    //console.log(node.animations[i]);
     mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[i].getTransformMatrix());
   }
 

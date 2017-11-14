@@ -21,7 +21,16 @@ class BezierAnimation extends Animation {
         distance (this.casteljau[r1], this.casteljau[r2]) + distance (this.casteljau[r2], this.casteljau[r3]) + distance (this.casteljau[r3], this.casteljau[r4]);
       //expectedTime in seconds
       this.expectedTime = this.curveLength / this.speed;
-      console.log(this.expectedTime);
+
+      this.v1 = addPoints(addPoints(multVector(this.CPoints[1], 9),multVector (this.CPoints[0], -3)), addPoints(multVector(this.CPoints[3], 3), multVector(this.CPoints[2], -9)));
+      this.v2 = addPoints(addPoints(multVector(this.CPoints[0], 6), multVector(this.CPoints[1], -12)), multVector(this.CPoints[2], 6));
+      this.v3 = addPoints(multVector(this.CPoints[0], -3), multVector(this.CPoints[1], 3));
+      //console.log(this.v1);
+      //console.log(this.v2);
+      //console.log(this.v3);
+
+      this.t0 = 0;
+      this.t1 = 0;
       this.resetAnimation();
     }
 
@@ -33,18 +42,24 @@ class BezierAnimation extends Animation {
 
       var deltaTime = currTime - this.oldCurrTime;
       this.oldCurrTime = currTime;
-      this.elapsedTime += deltaTime/1000;
+
+      this.dist = this.speed*(deltaTime/1000);
 
       //since in Bezier curves 0 >= t >= 1
-      this.t=this.elapsedTime/this.expectedTime;
-      console.log(this.t);
+      this.t0 = this.t1;
+      this.velocity = distance(multVector(this.v1, Math.pow(this.t0, 2)), [0,0,0]) + distance(multVector(this.v2,this.t0), [0,0,0]) + distance(this.v3, [0,0,0]);
+      this.t1 = this.t0 + (this.dist/this.velocity);
+
+
       for (let i=0; i<3; i++){
-        this.position[i] = Math.pow((1-this.t),3)*this.CPoints[0][i]+
-          3*this.t*Math.pow((1-this.t),2)*this.CPoints[1][i]+
-          3*Math.pow(this.t,2)*(1-this.t)*this.CPoints[2][i]+
-          Math.pow(this.t,3)*this.CPoints[3][i];
+        this.position[i] = Math.pow((1-this.t1),3)*this.CPoints[0][i]+
+          3*this.t1*Math.pow((1-this.t1),2)*this.CPoints[1][i]+
+          3*Math.pow(this.t1,2)*(1-this.t1)*this.CPoints[2][i]+
+          Math.pow(this.t1,3)*this.CPoints[3][i];
       }
-      console.log (this.position);
+      console.log(this.position);
+
+      this.elapsedTime += deltaTime/1000;
 
       if (this.elapsedTime >= this.expectedTime) {
           this.done=true;
