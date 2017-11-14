@@ -57,7 +57,7 @@ class BezierAnimation extends Animation {
           3*Math.pow(this.t1,2)*(1-this.t1)*this.CPoints[2][i]+
           Math.pow(this.t1,3)*this.CPoints[3][i];
       }
-      console.log(this.position);
+      //console.log (this.position);
 
       this.elapsedTime += deltaTime/1000;
 

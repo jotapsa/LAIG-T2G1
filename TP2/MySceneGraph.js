@@ -1254,6 +1254,9 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
             }
           }
         }
+        if(animations.length < 1){
+          return "must have 1 Animation";
+        }
         this.animations[animationID] = new ComboAnimation(this.scene,animations);
       break;
     }
@@ -1615,7 +1618,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
   for (let i=0;i < node.animations.length; i++){
-    //console.log(node.animations[i]);
     mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[i].getTransformMatrix());
   }
 
