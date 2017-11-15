@@ -255,6 +255,7 @@
 
 <!-- The animations -->
 <ANIMATIONS>
+
   <ANIMATION id="linearexample"  speed="5"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
     <controlpoint   xx="15"   yy="10"   zz="0"   />
@@ -276,9 +277,9 @@
 
   <ANIMATION id="bezierexample" speed="2" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
-    <controlpoint xx="0" yy="0" zz="20"/>
-    <controlpoint xx="20" yy="0" zz="20"/>
-    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="5" yy="0" zz="0"/>
+    <controlpoint xx="5" yy="0" zz="5"/>
+    <controlpoint xx="0" yy="0" zz="5"/>
   </ANIMATION>
 
   <ANIMATION id="comboexample" type="combo">

@@ -47,8 +47,19 @@ class BezierAnimation extends Animation {
 
       //since in Bezier curves 0 >= t >= 1
       this.t0 = this.t1;
-      this.velocity = distance(addPoints(addPoints(multVector(this.v1, Math.pow(this.t0, 2)), multVector(this.v2,this.t0)), this.v3), [0,0,0]);
-      this.t1 = this.t0 + (this.dist/this.velocity);
+      this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t0, 2)), multVector(this.v2,this.t0)), this.v3);
+      this.velMOD = distance(this.velocity, [0,0,0])
+      this.t1 = this.t0 + (this.dist/this.velMOD);
+      console.log(this.t1);
+      console.log(this.velMOD + "velocity mod");
+
+      // for(let i=0 ; i<10; i++){
+      //   this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t1, 2)), multVector(this.v2,this.t1)), this.v3);
+      //   this.velMOD = distance(this.velocity, [0,0,0])
+      //   this.t1 = this.t1 + ((this.dist/10)/this.velMOD);
+      //   console.log(this.t1);
+      //   console.log(this.velMOD + "velocity mod");
+      // }
 
 
       for (let i=0; i<3; i++){
@@ -58,10 +69,11 @@ class BezierAnimation extends Animation {
           Math.pow(this.t1,3)*this.CPoints[3][i];
       }
       //console.log (this.position);
+      this.angleZX = Math.atan2(this.velocity[X], this.velocity[Z]);
 
       this.elapsedTime += deltaTime/1000;
 
-      if (this.elapsedTime >= this.expectedTime) {
+      if (this.t1 >= 1) {
           this.done=true;
       }
 
@@ -73,6 +85,7 @@ class BezierAnimation extends Animation {
     getTransformMatrix(){
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
+      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
 
       return this.transformMatrix;
     }
@@ -82,6 +95,7 @@ class BezierAnimation extends Animation {
      * Resets the animation.
      */
     resetAnimation(){
+      this.angleZX = 0;
       this.elapsedTime = 0;
       this.position = this.CPoints[0];
       this.done = false;
