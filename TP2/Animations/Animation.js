@@ -16,6 +16,7 @@ class Animation {
     //Get the time in ms so we can update the clock relatively to this
   	var d = new Date();
   	this.oldCurrTime = d.getTime();
+    this.elapsedTime = 0;
 
     this.done = false;
   }

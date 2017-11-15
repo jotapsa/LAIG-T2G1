@@ -47,7 +47,7 @@ class BezierAnimation extends Animation {
 
       //since in Bezier curves 0 >= t >= 1
       this.t0 = this.t1;
-      this.velocity = distance(multVector(this.v1, Math.pow(this.t0, 2)), [0,0,0]) + distance(multVector(this.v2,this.t0), [0,0,0]) + distance(this.v3, [0,0,0]);
+      this.velocity = distance(addPoints(addPoints(multVector(this.v1, Math.pow(this.t0, 2)), multVector(this.v2,this.t0)), this.v3), [0,0,0]);
       this.t1 = this.t0 + (this.dist/this.velocity);
 
 

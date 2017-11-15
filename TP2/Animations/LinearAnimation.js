@@ -48,8 +48,7 @@ class LinearAnimation extends Animation {
 
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
-      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleXZ, this.axisCoords['y']);
-      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleYZ, this.axisCoords['x']);
+      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
 
       return this.transformMatrix;
     }
@@ -59,8 +58,7 @@ class LinearAnimation extends Animation {
      * Resets the animation.
      */
     resetAnimation(){
-      this.angleXZ = 0;
-      this.angleYZ = 0;
+      this.angleZX = 0;
       this.currentPointIndex = 1;
       this.position = this.CPoints[0];
       this.done = false;
@@ -92,9 +90,7 @@ class LinearAnimation extends Animation {
 
       //How much the animation moves per second
       this.direction = divVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]), this.expectedTime);
-
-      //this.angleXZ = Math.atan2(this.currentDirection[0], this.currentDirection[2]);
-      //this.angleYZ = -Math.atan2(this.currentDirection[1], this.currentDirection[2]);
+      this.angleZX = Math.atan2(this.direction[X], this.direction[Z]);
     }
 
     /**
