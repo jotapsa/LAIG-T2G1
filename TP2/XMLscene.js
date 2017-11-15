@@ -42,6 +42,11 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.axis = new CGFaxis(this);
+
+    this.shaders = [
+      new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
+      new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag")];
+    this.selectShader = null;
 }
 
 /**
@@ -103,6 +108,14 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+
+    //Adds selectable nodes list
+    this.interface.addSelectableNodes(this.graph.selectables);
+
+    //Adds shaders list
+    this.interface.addShaders();
+
+    //Shaders
 }
 
 /**

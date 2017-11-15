@@ -1296,6 +1296,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
     // Traverses nodes.
     var children = nodesNode.children;
 
+    //Selectable Nodes
+    this.selectables = [];
+    this.selectNode = null;
+
     for (var i = 0; i < children.length; i++) {
         var nodeName;
         if ((nodeName = children[i].nodeName) == "ROOT") {
@@ -1322,6 +1326,14 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+
+            //Selectable Option
+            if(this.reader.hasAttribute(children[i],'selectable')){
+              var nodeSelectable = this.reader.getBoolean(children[i], 'selectable');
+              if(nodeSelectable == true){
+                this.selectables.push(nodeID);
+              }
+            }
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1624,6 +1636,12 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
   }
+
+  //SHADERS
+  if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
+    this.scene.setActiveShader(this.scene.shaders[this.scene.selectShader]);
+  }
+
   for (var i = 0; i<node.children.length; i++){
     //Render all child nodes of node
     this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture);
@@ -1634,6 +1652,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     if(node.leaves[i].object != null){
       this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
     }
+  }
+
+  if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
+    this.scene.setActiveShader(this.scene.defaultShader);
   }
 }
 
@@ -1656,6 +1678,7 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
 
        leaf.object.display();
     this.scene.popMatrix();
+    //this.scene.setActiveShader(this.scene.defaultShader);
 }
 
 /**
