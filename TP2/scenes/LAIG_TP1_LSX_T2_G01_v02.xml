@@ -258,7 +258,11 @@
 
   <ANIMATION id="linearexample"  speed="5"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="15"   yy="10"   zz="0"   />
+    <controlpoint   xx="15"   yy="10"   zz="10"   />
+  </ANIMATION>
+
+  <ANIMATION id="linearexample2"  speed="2"   type="linear">
+    <controlpoint   xx="15"   yy="10"   zz="10"   />
     <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
 
@@ -284,7 +288,7 @@
 
   <ANIMATION id="comboexample" type="combo">
     <SPANREF id="linearexample"/>
-    <SPANREF id="circularexample"/>
+    <SPANREF id="linearexample2"/>
   </ANIMATION>
 </ANIMATIONS>
 
@@ -436,6 +440,7 @@
 
         <ANIMATIONREFS>
           <ANIMATIONREF id="linearexample" />
+          <ANIMATIONREF id="linearexample2" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>

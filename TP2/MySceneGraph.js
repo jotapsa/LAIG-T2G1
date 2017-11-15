@@ -1606,12 +1606,16 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.updateNode = function (node, currTime){
   let updated = 0;
 
-  //Does the node have animations ?
-  //Let's find the first one that hasn't been completed
-  for (let i=0;i < node.animations.length && updated != 1; i++){
-    if (!node.animations[i].isDone()){
-      node.animations[i].update(currTime);
-      updated = 1;
+  //Does the node have animations?
+  if (node.animations.length!=0){
+    if (!node.animations[node.currAnimationIndex].isDone()){
+      node.animations[node.currAnimationIndex].update(currTime);
+    }
+    else if (node.animations.length > node.currAnimationIndex+1){
+      node.currAnimationIndex++;
+    }
+    else{
+      //don't update... everything done
     }
   }
 
@@ -1629,8 +1633,9 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
-  for (let i=0;i < node.animations.length; i++){
-    mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[i].getTransformMatrix());
+  //Does the node have animations?
+  if (node.animations.length!=0){
+    mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimationIndex].getTransformMatrix());
   }
 
   if(appearance != null && texture != null){

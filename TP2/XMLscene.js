@@ -176,8 +176,15 @@ XMLscene.prototype.display = function() {
     // ---- END Background, camera and axis setup
 
     this.setUpdatePeriod(FPSToUpdate/this.currentFPS);
+
+    //Get the time in ms so we can update the clock relatively to this
+  	var d = new Date();
+  	this.oldCurrTime = d.getTime();
 }
 
 XMLscene.prototype.update = function (currTime){
-  this.graph.updateNode(this.graph.nodes[this.graph.idRoot], currTime);
+  var deltaTime = currTime - this.oldCurrTime;
+  this.oldCurrTime = currTime;
+
+  this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 };

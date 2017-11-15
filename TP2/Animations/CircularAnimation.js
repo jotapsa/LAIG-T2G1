@@ -22,14 +22,12 @@ class CircularAnimation extends Animation {
       this.resetAnimation();
     }
 
-    update(currTime){
+    update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){
         return ;
       }
 
-      var deltaTime = currTime - this.oldCurrTime;
-      this.oldCurrTime = currTime;
       this.elapsedTime += deltaTime/1000;
       this.currentRotationAngle += this.angleSpeed * (deltaTime/1000);
 

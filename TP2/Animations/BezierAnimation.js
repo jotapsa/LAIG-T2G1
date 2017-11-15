@@ -34,14 +34,11 @@ class BezierAnimation extends Animation {
       this.resetAnimation();
     }
 
-    update(currTime){
+    update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){
         return ;
       }
-
-      var deltaTime = currTime - this.oldCurrTime;
-      this.oldCurrTime = currTime;
 
       this.dist = this.speed*(deltaTime/1000);
 

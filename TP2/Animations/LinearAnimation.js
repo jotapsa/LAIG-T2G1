@@ -24,14 +24,12 @@ class LinearAnimation extends Animation {
     /**
      *
      */
-    update(currTime){
+    update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){
         return ;
       }
-
-      var deltaTime = currTime - this.oldCurrTime;
-      this.oldCurrTime = currTime;
+      
       this.elapsedTime += deltaTime/1000;
 
       this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
