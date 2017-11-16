@@ -15,17 +15,15 @@ class ComboAnimation extends Animation {
         return;
       }
 
-      if (this.animations.length!=0){
-        if (!this.animations[this.currAnimationIndex].isDone()){
-          this.animations[this.currAnimationIndex].update(deltaTime);
-        }
-        else if (this.animations.length > this.currAnimationIndex+1){
-          this.currAnimationIndex++;
-          this.animations[this.currAnimationIndex].update(deltaTime);
-        }
-        else{
-          //don't update... everything done
-        }
+      if (!this.animations[this.currAnimationIndex].isDone()){
+        this.animations[this.currAnimationIndex].update(deltaTime);
+      }
+      else if (this.animations.length > this.currAnimationIndex+1){
+        this.currAnimationIndex++;
+        this.animations[this.currAnimationIndex].update(deltaTime);
+      }
+      else{
+        this.done = true;
       }
     }
 
@@ -40,6 +38,8 @@ class ComboAnimation extends Animation {
       for(let i=0; i<this.animations.length; i++){
         this.animations[i].resetAnimation();
       }
+      this.currAnimationIndex = 0;
+      this.done = false;
     }
 
 

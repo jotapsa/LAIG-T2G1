@@ -37,7 +37,7 @@ class BezierAnimation extends Animation {
     update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){
-        return ;
+        return;
       }
 
       this.dist = this.speed*(deltaTime/1000);
@@ -50,7 +50,7 @@ class BezierAnimation extends Animation {
       //console.log(this.t1);
       //console.log(this.velMOD + "velocity mod");
 
-      
+
       // for(let i=0 ; i<10; i++){
       //   this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t1, 2)), multVector(this.v2,this.t1)), this.v3);
       //   this.velMOD = distance(this.velocity, [0,0,0])
@@ -97,6 +97,7 @@ class BezierAnimation extends Animation {
       this.elapsedTime = 0;
       this.position = this.CPoints[0];
       this.done = false;
+      this.t1 = 0;
     }
 
     /**

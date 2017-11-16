@@ -1178,6 +1178,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
   var children = animationsNode.children;
 
   this.animations = [];
+  this.resetAnimation = false;
 
   for (var i = 0; i < children.length; i++) {
     if (children[i].nodeName != "ANIMATION") {
@@ -1604,8 +1605,6 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 MySceneGraph.prototype.updateNode = function (node, deltaTime){
-  let updated = 0;
-
   //Does the node have animations?
   if (node.animations.length!=0){
     if (!node.animations[node.currAnimationIndex].isDone()){
@@ -1613,10 +1612,13 @@ MySceneGraph.prototype.updateNode = function (node, deltaTime){
     }
     else if (node.animations.length > node.currAnimationIndex+1){
       node.currAnimationIndex++;
-      this.animations[this.currAnimationIndex].update(deltaTime);
+      node.animations[node.currAnimationIndex].update(deltaTime);
     }
-    else{
-      //don't update... everything done
+    else if(this.resetAnimation){
+      for(let i=0;i < node.animations.length;i++){
+        node.animations[i].resetAnimation();
+      }
+      node.currAnimationIndex=0;
     }
   }
 
@@ -1656,7 +1658,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     }
   }
   */
-  
+
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
   }

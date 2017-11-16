@@ -51,17 +51,28 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 }
 
 MyInterface.prototype.addSelectableNodes = function(nodes) {
+  var group = this.gui.addFolder("Shaders");
+  group.open();
+
   list = {};
   for(let i=0;i < nodes.length; i++){
     list[nodes[i]] = i;
   }
 
-  this.gui.add(this.scene.graph, 'selectNode',list).name('Selectable Nodes');
+  group.add(this.scene.graph, 'selectNode',list).name('Selectable Nodes');
+  this.addShaders(group);
 }
 
-MyInterface.prototype.addShaders = function(){
-  this.gui.add(this.scene, 'selectShader',{
+MyInterface.prototype.addShaders = function(group){
+  group.add(this.scene, 'selectShader',{
     'Vertex Shader':0,
     'Fragment Shader':1
   }).name('Shader');
+}
+
+MyInterface.prototype.addAnimationsOptions = function(){
+  var group = this.gui.addFolder("Animations");
+  group.open();
+
+  group.add(this.scene.graph,'resetAnimation');
 }

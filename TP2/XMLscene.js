@@ -109,11 +109,11 @@ XMLscene.prototype.onGraphLoaded = function()
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
 
+    //Adds Animations Reset
+    this.interface.addAnimationsOptions();
+
     //Adds selectable nodes list
     this.interface.addSelectableNodes(this.graph.selectables);
-
-    //Adds shaders list
-    this.interface.addShaders();
 
     //Shaders
 }
