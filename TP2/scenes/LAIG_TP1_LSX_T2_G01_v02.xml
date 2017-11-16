@@ -259,11 +259,7 @@
   <ANIMATION id="linearexample"  speed="5"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
     <controlpoint   xx="15"   yy="10"   zz="10"   />
-  </ANIMATION>
-
-  <ANIMATION id="linearexample2"  speed="2"   type="linear">
-    <controlpoint   xx="15"   yy="10"   zz="10"   />
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="0"    yy="0"    zz="0"  />
   </ANIMATION>
 
   <ANIMATION id="chair_front"  speed="1"   type="linear">
@@ -272,12 +268,8 @@
   </ANIMATION>
 
   <ANIMATION id="circularexample" speed="5" type="circular"
-            centerx="0" centery="0" centerz="0"
-            radius="10" startang="0" rotang="360"/>
-
-  <ANIMATION id="treeAnim" speed="3" type="circular"
-            centerx="0" centery="0" centerz="0"
-            radius="0" startang="0" rotang="360"/>
+            centerx="5" centery="0" centerz="0"
+            radius="5" startang="180" rotang="360"/>
 
   <ANIMATION id="bezierexample" speed="2" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
@@ -288,7 +280,7 @@
 
   <ANIMATION id="comboexample" type="combo">
     <SPANREF id="linearexample"/>
-    <SPANREF id="linearexample2"/>
+    <SPANREF id="circularexample"/>
   </ANIMATION>
 </ANIMATIONS>
 
@@ -355,10 +347,6 @@
      <NODE id="lamp">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="comboexample" />
-        </ANIMATIONREFS>
 
         <DESCENDANTS>
           <NODEREF id="abajur" />
@@ -439,8 +427,7 @@
         <TRANSLATION x="2" y="0" z="25" />
 
         <ANIMATIONREFS>
-          <ANIMATIONREF id="linearexample" />
-          <ANIMATIONREF id="linearexample2" />
+          <ANIMATIONREF id="comboexample" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -672,9 +659,9 @@
       <MATERIAL id="null" />
       <TEXTURE id="wood" />
 
-      <ANIMATIONREFS>
+      <!-- <ANIMATIONREFS>
         <ANIMATIONREF id="chair_front" />
-      </ANIMATIONREFS>
+      </ANIMATIONREFS> -->
 
         <DESCENDANTS>
             <NODEREF id="chair1" />
@@ -1173,10 +1160,6 @@
 
         <TRANSLATION x="0" y="3" z="0" />
         <ROTATION axis="x" angle="-90" />
-
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="treeAnim" />
-        </ANIMATIONREFS>
 
         <DESCENDANTS>
           <LEAF type="cylinder" args="8 3 0 60 60 1 1" />

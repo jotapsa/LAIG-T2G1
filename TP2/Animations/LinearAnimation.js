@@ -29,11 +29,10 @@ class LinearAnimation extends Animation {
       if (this.isDone()){
         return ;
       }
-      
+
       this.elapsedTime += deltaTime/1000;
 
-      this.position = addPoints (this.position, multVector(this.direction, deltaTime/1000));
-
+      this.position = addPoints (this.position, multVector(multVector(this.direction, this.speed), deltaTime/1000));
       if (this.elapsedTime >= this.expectedTime) {
           this.updateState();
       }
@@ -46,7 +45,7 @@ class LinearAnimation extends Animation {
 
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
-      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
+      //mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
 
       return this.transformMatrix;
     }
@@ -70,6 +69,7 @@ class LinearAnimation extends Animation {
     updateState(){
       //this.CPoints has .length number of points, starting at 0
       if (this.currentPointIndex < (this.CPoints.length-1)){
+        this.position = this.CPoints[this.currentPointIndex];
         this.currentPointIndex++;
       }else {
         this.done = true;
@@ -86,8 +86,8 @@ class LinearAnimation extends Animation {
       //expectedTime in seconds
       this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
 
-      //How much the animation moves per second
-      this.direction = divVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]), this.expectedTime);
+      this.direction = normalizeVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]));
+
       this.angleZX = Math.atan2(this.direction[X], this.direction[Z]);
     }
 

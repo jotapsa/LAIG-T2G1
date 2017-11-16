@@ -47,9 +47,10 @@ class BezierAnimation extends Animation {
       this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t0, 2)), multVector(this.v2,this.t0)), this.v3);
       this.velMOD = distance(this.velocity, [0,0,0])
       this.t1 = this.t0 + (this.dist/this.velMOD);
-      console.log(this.t1);
-      console.log(this.velMOD + "velocity mod");
+      //console.log(this.t1);
+      //console.log(this.velMOD + "velocity mod");
 
+      
       // for(let i=0 ; i<10; i++){
       //   this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t1, 2)), multVector(this.v2,this.t1)), this.v3);
       //   this.velMOD = distance(this.velocity, [0,0,0])

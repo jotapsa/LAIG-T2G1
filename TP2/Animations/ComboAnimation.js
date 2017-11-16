@@ -6,43 +6,42 @@ class ComboAnimation extends Animation {
     constructor(scene,animations) {
       super(scene);
       this.animations = animations;
-      this.currAnimation = 0;
+      this.currAnimationIndex = 0;
     }
 
-    update(currTime){
+    update(deltaTime){
 
       if (this.isDone()){
         return;
       }
 
-      let updated = 0;
-      for(let i = 0;i < this.animations.length && updated != 1; i++){
-        if (!this.animations[i].isDone()){
-          this.animations[i].update(currTime);
-          this.currAnimation = i;
-          updated = 1;
+      if (this.animations.length!=0){
+        if (!this.animations[this.currAnimationIndex].isDone()){
+          this.animations[this.currAnimationIndex].update(deltaTime);
+        }
+        else if (this.animations.length > this.currAnimationIndex+1){
+          this.currAnimationIndex++;
+          this.animations[this.currAnimationIndex].update(deltaTime);
+        }
+        else{
+          //don't update... everything done
         }
       }
-
-      if(!updated){
-        this.done = true;
-      }
-
     }
 
     getTransformMatrix(){
-      mat4.identity(this.transformMatrix);
-
-      for(let i = 0; i <= this.currAnimation; i++){
-          mat4.multiply(this.transformMatrix,this.transformMatrix, this.animations[i].getTransformMatrix());
-      }
-
-      // for(let i = this.currAnimation; i >= 0; i--){
-      //     mat4.multiply(this.transformMatrix,this.transformMatrix, this.animations[i].getTransformMatrix());
-      // }
-
-      return this.transformMatrix;
+      return this.animations[this.currAnimationIndex].getTransformMatrix();
     }
+
+    /**
+     * Resets the animation.
+     */
+    resetAnimation(){
+      for(let i=0; i<this.animations.length; i++){
+        this.animations[i].resetAnimation();
+      }
+    }
+
 
     /**
      * Creates a new Circular Animation from the current parameters.

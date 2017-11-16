@@ -1603,16 +1603,17 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-MySceneGraph.prototype.updateNode = function (node, currTime){
+MySceneGraph.prototype.updateNode = function (node, deltaTime){
   let updated = 0;
 
   //Does the node have animations?
   if (node.animations.length!=0){
     if (!node.animations[node.currAnimationIndex].isDone()){
-      node.animations[node.currAnimationIndex].update(currTime);
+      node.animations[node.currAnimationIndex].update(deltaTime);
     }
     else if (node.animations.length > node.currAnimationIndex+1){
       node.currAnimationIndex++;
+      this.animations[this.currAnimationIndex].update(deltaTime);
     }
     else{
       //don't update... everything done
@@ -1622,7 +1623,7 @@ MySceneGraph.prototype.updateNode = function (node, currTime){
   //Try to update children animations
   for (var i = 0; i<node.children.length; i++){
        //Render all child nodes of node
-       this.updateNode(this.nodes[node.children[i]], currTime);
+       this.updateNode(this.nodes[node.children[i]], deltaTime);
   }
 }
 
@@ -1633,11 +1634,29 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
+
+  //End on the "last" animation
   //Does the node have animations?
   if (node.animations.length!=0){
     mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimationIndex].getTransformMatrix());
   }
 
+
+  /*
+  //Reset when everything done
+  //Does the node have animations?
+  if (node.animations.length!=0){
+    if (node.animations.length == (node.currAnimationIndex-1) && node.animations[node.currAnimationIndex].isDone()){
+      for(let i=0 ; i<node.animations.length; i++){
+        node.animations[i].resetAnimation();
+      }
+    }
+    else{
+      mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimationIndex].getTransformMatrix());
+    }
+  }
+  */
+  
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
   }
