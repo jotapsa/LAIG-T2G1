@@ -45,7 +45,7 @@ class LinearAnimation extends Animation {
 
       mat4.identity(this.transformMatrix);
       mat4.translate(this.transformMatrix, this.transformMatrix, [this.position[X], this.position[Y], this.position[Z]]);
-      //mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
+      mat4.rotate(this.transformMatrix, this.transformMatrix,this.angleZX, this.axisCoords['y']);
 
       return this.transformMatrix;
     }

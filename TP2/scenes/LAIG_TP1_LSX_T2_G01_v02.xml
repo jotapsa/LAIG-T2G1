@@ -161,6 +161,12 @@
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
+    <!-- Decorative Ball -->
+    <TEXTURE id="decorative_ball_texture">
+        <file path="images/ball_pattern.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
 </TEXTURES>
 
 
@@ -276,6 +282,21 @@
     <controlpoint xx="5" yy="0" zz="0"/>
     <controlpoint xx="5" yy="0" zz="5"/>
     <controlpoint xx="0" yy="0" zz="5"/>
+  </ANIMATION>
+
+
+  <ANIMATION id="goDownTree"  speed="2"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="-3"   yy="-8"   zz="0"   />
+  </ANIMATION>
+
+  <ANIMATION id="goRoundTree" speed="2" type="circular"
+            centerx="0" centery="-8" centerz="0"
+            radius="3" startang="180" rotang="360"/>
+
+  <ANIMATION id="goUpTree"  speed="2"   type="linear">
+    <controlpoint   xx="-3"   yy="-8"   zz="0"   />
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
 
   <ANIMATION id="comboexample" type="combo">
@@ -425,10 +446,6 @@
         <TEXTURE id="basketball" />
 
         <TRANSLATION x="2" y="0" z="25" />
-
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="comboexample" />
-        </ANIMATIONREFS>
 
         <DESCENDANTS>
            <NODEREF id="ball_sphere" />
@@ -1137,6 +1154,7 @@
         <DESCENDANTS>
             <NODEREF id="tree_trunk" />
             <NODEREF id="tree_body" />
+            <NODEREF id="decorative_ball" />
         </DESCENDANTS>
     </NODE>
 
@@ -1163,6 +1181,24 @@
 
         <DESCENDANTS>
           <LEAF type="cylinder" args="8 3 0 60 60 1 1" />
+        </DESCENDANTS>
+    </NODE>
+
+    <!-- Tree trunk -->
+    <NODE id="decorative_ball">
+        <MATERIAL id="null" />
+        <TEXTURE id="decorative_ball_texture" />
+
+        <TRANSLATION x="0" y="11.5" z="0" />
+
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="goDownTree" />
+          <ANIMATIONREF id="goRoundTree"   />
+          <ANIMATIONREF id="goUpTree"  />
+        </ANIMATIONREFS>
+
+        <DESCENDANTS>
+		        <LEAF type="sphere" args="0.5 100 100" />
         </DESCENDANTS>
     </NODE>
 
