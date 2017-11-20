@@ -31,6 +31,8 @@ class BezierAnimation extends Animation {
 
       this.t0 = 0;
       this.t1 = 0;
+
+      this.t = 0;
       this.resetAnimation();
     }
 
@@ -39,6 +41,16 @@ class BezierAnimation extends Animation {
       if (this.isDone()){
         return;
       }
+
+      // this.elapsedTime += deltaTime/1000;
+      // this.t = (this.elapsedTime*this.speed)/this.curveLength;
+      //
+      // for (let i=0; i<3; i++){
+      //   this.position[i] = Math.pow((1-this.t),3)*this.CPoints[0][i]+
+      //     3*this.t*Math.pow((1-this.t),2)*this.CPoints[1][i]+
+      //     3*Math.pow(this.t,2)*(1-this.t)*this.CPoints[2][i]+
+      //     Math.pow(this.t,3)*this.CPoints[3][i];
+      // }
 
       this.dist = this.speed*(deltaTime/1000);
 
@@ -69,7 +81,6 @@ class BezierAnimation extends Animation {
       //console.log (this.position);
       this.angleZX = Math.atan2(this.velocity[X], this.velocity[Z]);
 
-      this.elapsedTime += deltaTime/1000;
 
       if (this.t1 >= 1) {
           this.done=true;
@@ -94,10 +105,11 @@ class BezierAnimation extends Animation {
      */
     resetAnimation(){
       this.angleZX = 0;
-      this.elapsedTime = 0;
+      //this.elapsedTime = 0;
       this.position = this.CPoints[0];
       this.done = false;
       this.t1 = 0;
+      //this.t = 0
     }
 
     /**

@@ -277,11 +277,23 @@
             centerx="5" centery="0" centerz="0"
             radius="5" startang="180" rotang="360"/>
 
-  <ANIMATION id="bezierexample" speed="2" type="bezier">
+  <ANIMATION id="bezier1" speed="30" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
-    <controlpoint xx="5" yy="0" zz="0"/>
-    <controlpoint xx="5" yy="0" zz="5"/>
-    <controlpoint xx="0" yy="0" zz="5"/>
+    <controlpoint xx="15" yy="0" zz="0"/>
+    <controlpoint xx="15" yy="0" zz="-13"/>
+    <controlpoint xx="26" yy="0" zz="-9"/>
+  </ANIMATION>
+
+  <ANIMATION id="topToBottom"  speed="20"   type="linear">
+    <controlpoint   xx="26"   yy="0"   zz="-9"   />
+    <controlpoint   xx="26"   yy="0"   zz="9"   />
+  </ANIMATION>
+
+  <ANIMATION id="bezier2" speed="5" type="bezier">
+    <controlpoint xx="26" yy="0" zz="9"/>
+    <controlpoint xx="15" yy="0" zz="0"/>
+    <controlpoint xx="15" yy="0" zz="0"/>
+    <controlpoint xx="0" yy="0" zz="0"/>
   </ANIMATION>
 
 
@@ -432,7 +444,9 @@
         <TRANSLATION x="2" y="0" z="22" />
 
         <ANIMATIONREFS>
-          <ANIMATIONREF id="bezierexample" />
+          <ANIMATIONREF id="bezier1" />
+          <ANIMATIONREF id="topToBottom" />
+          <ANIMATIONREF id="bezier2" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
