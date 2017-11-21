@@ -24,9 +24,6 @@ class BezierAnimation extends Animation {
       this.v1 = addPoints(addPoints(multVector(this.CPoints[1], 9),multVector (this.CPoints[0], -3)), addPoints(multVector(this.CPoints[3], 3), multVector(this.CPoints[2], -9)));
       this.v2 = addPoints(addPoints(multVector(this.CPoints[0], 6), multVector(this.CPoints[1], -12)), multVector(this.CPoints[2], 6));
       this.v3 = addPoints(multVector(this.CPoints[0], -3), multVector(this.CPoints[1], 3));
-      //console.log(this.v1);
-      //console.log(this.v2);
-      //console.log(this.v3);
 
       this.t0 = 0;
       this.t1 = 0;
@@ -58,18 +55,6 @@ class BezierAnimation extends Animation {
       this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t0, 2)), multVector(this.v2,this.t0)), this.v3);
       this.velMOD = distance(this.velocity, [0,0,0])
       this.t1 = this.t0 + (this.dist/this.velMOD);
-      //console.log(this.t1);
-      //console.log(this.velMOD + "velocity mod");
-
-
-      // for(let i=0 ; i<10; i++){
-      //   this.velocity = addPoints(addPoints(multVector(this.v1, Math.pow(this.t1, 2)), multVector(this.v2,this.t1)), this.v3);
-      //   this.velMOD = distance(this.velocity, [0,0,0])
-      //   this.t1 = this.t1 + ((this.dist/10)/this.velMOD);
-      //   console.log(this.t1);
-      //   console.log(this.velMOD + "velocity mod");
-      // }
-
 
       for (let i=0; i<3; i++){
         this.position[i] = Math.pow((1-this.t1),3)*this.CPoints[0][i]+

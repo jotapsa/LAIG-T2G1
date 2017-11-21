@@ -1658,7 +1658,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   //SHADERS
   if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
     this.scene.setActiveShader(this.scene.shaders[this.scene.selectShader]);
-    //this.scene.updateScaleFactor(this.scene.scaleFactor);
   }
 
   for (var i = 0; i<node.children.length; i++){

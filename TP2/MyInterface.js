@@ -69,7 +69,14 @@ MyInterface.prototype.addShaders = function(group){
     'Varying':1
   }).name('Shader');
 
-  this.gui.add(this.scene, 'scaleFactor',-50,50);
+  group.add(this.scene, 'selectedColor',{
+    'Red':0,
+    'Green':1,
+    'Blue':2,
+    'Yellow':3,
+    'Magenta':4,
+    'Cyan':5,
+  }).name('Color');
 }
 
 MyInterface.prototype.addAnimationsOptions = function(){

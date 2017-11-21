@@ -47,9 +47,20 @@ XMLscene.prototype.init = function(application) {
 
     this.shaders = [
       new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag"),
-      new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag")];
+      new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag")
+    ];
     this.selectShader = null;
-    this.scaleFactor = 0;
+
+    this.satColors = [
+      [1, 0, 0], //RED
+      [0, 1, 0], //GREEN
+      [0, 0, 1], //BLUE
+      [1, 1, 0], //YELLOW
+      [1, 0, 1], //MAGENTA
+      [0, 1, 1] //CYAN
+    ];
+
+    this.selectedColor = 4; //MAGENTA
 }
 
 /**
@@ -191,7 +202,12 @@ XMLscene.prototype.update = function (currTime){
   this.oldCurrTime = currTime;
   this.timeFactor = Math.sin(this.oldCurrTime/1000);
 
-  this.shaders[0].setUniformsValues({timeFactor: this.timeFactor, r: 1, b:0, g:0});
+  this.shaders[0].setUniformsValues({
+    timeFactor: this.timeFactor,
+    r:this.satColors[this.selectedColor][0],
+    g:this.satColors[this.selectedColor][1],
+    b:this.satColors[this.selectedColor][2]
+  });
 
 
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);

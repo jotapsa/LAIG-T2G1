@@ -262,17 +262,12 @@
 <!-- The animations -->
 <ANIMATIONS>
 
-  <ANIMATION id="linearexample"  speed="5"   type="linear">
+  <ANIMATION id="goAround"  speed="2"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
     <controlpoint   xx="5"   yy="0"   zz="0"   />
     <controlpoint   xx="5"    yy="0"    zz="-5"  />
     <controlpoint   xx="0"   yy="0"   zz="-5"   />
     <controlpoint   xx="0"   yy="0"   zz="0"   />
-  </ANIMATION>
-
-  <ANIMATION id="chair_front"  speed="1"   type="linear">
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="0"   yy="0"   zz="-2"   />
   </ANIMATION>
 
   <ANIMATION id="bezierexample" speed="5" type="bezier">
@@ -283,42 +278,46 @@
   </ANIMATION>
 
 
-  <ANIMATION id="bezier1" speed="2" type="bezier">
+  <ANIMATION id="bezier1" speed="5" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
-    <controlpoint xx="15" yy="0" zz="0"/>
-    <controlpoint xx="15" yy="0" zz="-13"/>
-    <controlpoint xx="26" yy="0" zz="-9"/>
-  </ANIMATION>
-
-  <ANIMATION id="topToBottom"  speed="20"   type="linear">
-    <controlpoint   xx="26"   yy="0"   zz="-9"   />
-    <controlpoint   xx="26"   yy="0"   zz="9"   />
+    <controlpoint xx="20" yy="0" zz="5"/>
+    <controlpoint xx="15" yy="0" zz="-20"/>
+    <controlpoint xx="25" yy="0" zz="-10"/>
   </ANIMATION>
 
   <ANIMATION id="bezier2" speed="5" type="bezier">
-    <controlpoint xx="26" yy="0" zz="9"/>
-    <controlpoint xx="15" yy="0" zz="0"/>
-    <controlpoint xx="15" yy="0" zz="0"/>
+    <controlpoint xx="25" yy="0" zz="-10"/>
+    <controlpoint xx="30" yy="0" zz="0"/>
+    <controlpoint xx="25" yy="0" zz="0"/>
+    <controlpoint xx="25" yy="0" zz="10"/>
+  </ANIMATION>
+
+  <ANIMATION id="bezier3" speed="5" type="bezier">
+    <controlpoint xx="25" yy="0" zz="10"/>
+    <controlpoint xx="15" yy="0" zz="15"/>
+    <controlpoint xx="10" yy="0" zz="-5"/>
     <controlpoint xx="0" yy="0" zz="0"/>
   </ANIMATION>
 
 
-  <ANIMATION id="goDownTree"  speed="2"   type="linear">
+  <ANIMATION id="goDownTree"  speed="4"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
     <controlpoint   xx="-3"   yy="-8"   zz="0"   />
   </ANIMATION>
 
-  <ANIMATION id="goRoundTree" speed="2" type="circular"
+  <ANIMATION id="goRoundTree" speed="4" type="circular"
             centerx="0" centery="-8" centerz="0"
             radius="3" startang="180" rotang="360"/>
 
-  <ANIMATION id="goUpTree"  speed="2"   type="linear">
+  <ANIMATION id="goUpTree"  speed="4"   type="linear">
     <controlpoint   xx="-3"   yy="-8"   zz="0"   />
     <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
 
-  <ANIMATION id="comboexample" type="combo">
-    <SPANREF id="linearexample"/>
+  <ANIMATION id="bezierCombo" type="combo">
+    <SPANREF id="bezier1"/>
+    <SPANREF id="bezier2"/>
+    <SPANREF id="bezier3"/>
   </ANIMATION>
 </ANIMATIONS>
 
@@ -450,9 +449,7 @@
         <TRANSLATION x="1" y="1" z="1" />
 
         <ANIMATIONREFS>
-          <ANIMATIONREF id="bezier1" />
-          <ANIMATIONREF id="topToBottom" />
-          <ANIMATIONREF id="bezier2" />
+          <ANIMATIONREF id="bezierCombo" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -465,11 +462,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="basketball" />
 
-        <!-- <TRANSLATION x="2" y="0" z="25" />
-        <TRANSLATION x="1" y="1" z="1" /> -->
+        <TRANSLATION x="2" y="0" z="25" />
+        <TRANSLATION x="1" y="1" z="1" />
 
         <ANIMATIONREFS>
-          <ANIMATIONREF id="bezierexample" />
+          <ANIMATIONREF id="goAround" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
