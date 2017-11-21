@@ -68,11 +68,13 @@ MyInterface.prototype.addShaders = function(group){
     'Vertex Shader':0,
     'Fragment Shader':1
   }).name('Shader');
+
+  this.gui.add(this.scene, 'scaleFactor',-50,50);
 }
 
 MyInterface.prototype.addAnimationsOptions = function(){
   var group = this.gui.addFolder("Animations");
   group.open();
 
-  group.add(this.scene.graph,'resetAnimation');
+  group.add(this.scene,'resetAnimation');
 }

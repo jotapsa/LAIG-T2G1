@@ -43,10 +43,13 @@ XMLscene.prototype.init = function(application) {
 
     this.axis = new CGFaxis(this);
 
+    this.resetAnimation = false;
+
     this.shaders = [
       new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
       new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag")];
     this.selectShader = null;
+    this.scaleFactor = 0;
 }
 
 /**
@@ -186,5 +189,9 @@ XMLscene.prototype.update = function (currTime){
   var deltaTime = currTime - this.oldCurrTime;
   this.oldCurrTime = currTime;
 
-  this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
+  let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
+
+  if(!anim && this.resetAnimation){
+    this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
+  }
 };

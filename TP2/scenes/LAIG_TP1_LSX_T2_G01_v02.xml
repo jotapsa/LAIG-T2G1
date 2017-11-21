@@ -277,7 +277,7 @@
             centerx="5" centery="0" centerz="0"
             radius="5" startang="180" rotang="360"/>
 
-  <ANIMATION id="bezier1" speed="30" type="bezier">
+  <ANIMATION id="bezier1" speed="2" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
     <controlpoint xx="15" yy="0" zz="0"/>
     <controlpoint xx="15" yy="0" zz="-13"/>
