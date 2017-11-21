@@ -47,7 +47,8 @@ XMLscene.prototype.init = function(application) {
 
     this.shaders = [
       new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
-      new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag")];
+      new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag"),
+      new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag")];
     this.selectShader = null;
     this.scaleFactor = 0;
 }

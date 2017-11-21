@@ -18,7 +18,7 @@ class ComboAnimation extends Animation {
       if (!this.animations[this.currAnimationIndex].isDone()){
         this.animations[this.currAnimationIndex].update(deltaTime);
       }
-      else if (this.animations.length > this.currAnimationIndex+1){
+      else if (this.animations.length > (this.currAnimationIndex+1)){
         this.currAnimationIndex++;
         this.animations[this.currAnimationIndex].update(deltaTime);
       }

@@ -428,7 +428,7 @@
     </NODE>
 
     <!-- Balls -->
-     <NODE id="balls" selectable="true" >
+     <NODE id="balls">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="null" />
 
@@ -525,7 +525,7 @@
     </NODE>
 
     <!-- Third table (Teacher) -->
-    <NODE id="table3">
+    <NODE id="table3" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -692,20 +692,16 @@
     </NODE>
 
     <!-- Chairs -->
-    <NODE id="chairs">
+    <NODE id="chairs" selectable="true">
       <MATERIAL id="null" />
       <TEXTURE id="wood" />
 
-      <!-- <ANIMATIONREFS>
-        <ANIMATIONREF id="chair_front" />
-      </ANIMATIONREFS> -->
-
-        <DESCENDANTS>
-            <NODEREF id="chair1" />
-            <NODEREF id="chair2" />
-            <NODEREF id="chair3" />
-            <NODEREF id="chair4" />
-        </DESCENDANTS>
+      <DESCENDANTS>
+          <NODEREF id="chair1" />
+          <NODEREF id="chair2" />
+          <NODEREF id="chair3" />
+          <NODEREF id="chair4" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- First chair -->
@@ -1061,7 +1057,7 @@
         </DESCENDANTS>
     </NODE>
 
-    <NODE id="board" selectable="true">
+    <NODE id="board">
         <MATERIAL id="boardMaterial" />
         <TEXTURE id="board" />
 

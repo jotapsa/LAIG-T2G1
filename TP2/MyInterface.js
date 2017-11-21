@@ -66,7 +66,8 @@ MyInterface.prototype.addSelectableNodes = function(nodes) {
 MyInterface.prototype.addShaders = function(group){
   group.add(this.scene, 'selectShader',{
     'Vertex Shader':0,
-    'Fragment Shader':1
+    'Fragment Shader':1,
+    'Grupo 1':2
   }).name('Shader');
 
   this.gui.add(this.scene, 'scaleFactor',-50,50);
