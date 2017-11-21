@@ -264,8 +264,10 @@
 
   <ANIMATION id="linearexample"  speed="5"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="15"   yy="10"   zz="10"   />
-    <controlpoint   xx="0"    yy="0"    zz="0"  />
+    <controlpoint   xx="5"   yy="0"   zz="0"   />
+    <controlpoint   xx="5"    yy="0"    zz="-5"  />
+    <controlpoint   xx="0"   yy="0"   zz="-5"   />
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
 
   <ANIMATION id="chair_front"  speed="1"   type="linear">
@@ -442,6 +444,7 @@
         <TEXTURE id="football" />
 
         <TRANSLATION x="2" y="0" z="22" />
+        <TRANSLATION x="1" y="1" z="1" />
 
         <ANIMATIONREFS>
           <ANIMATIONREF id="bezier1" />
@@ -460,6 +463,11 @@
         <TEXTURE id="basketball" />
 
         <TRANSLATION x="2" y="0" z="25" />
+        <TRANSLATION x="1" y="1" z="1" />
+
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="linearexample" />
+        </ANIMATIONREFS>
 
         <DESCENDANTS>
            <NODEREF id="ball_sphere" />
@@ -470,8 +478,6 @@
     <NODE id="ball_sphere">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-
-        <TRANSLATION x="1" y="1" z="1" />
 
         <DESCENDANTS>
 						<LEAF type="sphere" args="1 100 100" />

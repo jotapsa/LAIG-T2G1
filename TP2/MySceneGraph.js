@@ -1636,28 +1636,10 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   mat4.multiply(renderTransformMatrix, transformMatrix, node.transformMatrix);
 
-
-  //End on the "last" animation
   //Does the node have animations?
   if (node.animations.length!=0){
     mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimationIndex].getTransformMatrix());
   }
-
-
-  /*
-  //Reset when everything done
-  //Does the node have animations?
-  if (node.animations.length!=0){
-    if (node.animations.length == (node.currAnimationIndex-1) && node.animations[node.currAnimationIndex].isDone()){
-      for(let i=0 ; i<node.animations.length; i++){
-        node.animations[i].resetAnimation();
-      }
-    }
-    else{
-      mat4.multiply(renderTransformMatrix, renderTransformMatrix, node.animations[node.currAnimationIndex].getTransformMatrix());
-    }
-  }
-  */
 
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);

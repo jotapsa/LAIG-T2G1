@@ -50,7 +50,6 @@ class LinearAnimation extends Animation {
       return this.transformMatrix;
     }
 
-
     /**
      * Resets the animation.
      */
@@ -83,9 +82,9 @@ class LinearAnimation extends Animation {
     */
     updateAnimation(){
       this.elapsedTime = 0;
+
       //expectedTime in seconds
       this.expectedTime = distance(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex])/this.speed;
-
       this.direction = normalizeVector(subtractPoints(this.CPoints[this.currentPointIndex-1], this.CPoints[this.currentPointIndex]));
 
       this.angleZX = Math.atan2(this.direction[X], this.direction[Z]);
