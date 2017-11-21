@@ -1178,7 +1178,6 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
   var children = animationsNode.children;
 
   this.animations = [];
-  this.resetAnimation = false;
 
   for (var i = 0; i < children.length; i++) {
     if (children[i].nodeName != "ANIMATION") {
@@ -1605,27 +1604,38 @@ MySceneGraph.generateRandomString = function(length) {
 }
 
 MySceneGraph.prototype.updateNode = function (node, deltaTime){
+  let animation = 0;
   //Does the node have animations?
   if (node.animations.length!=0){
     if (!node.animations[node.currAnimationIndex].isDone()){
       node.animations[node.currAnimationIndex].update(deltaTime);
+      animation = 1;
     }
     else if (node.animations.length > node.currAnimationIndex+1){
       node.currAnimationIndex++;
       node.animations[node.currAnimationIndex].update(deltaTime);
-    }
-    else if(this.resetAnimation){
-      for(let i=0;i < node.animations.length;i++){
-        node.animations[i].resetAnimation();
-      }
-      node.currAnimationIndex=0;
+      animation = 1;
     }
   }
 
   //Try to update children animations
-  for (var i = 0; i<node.children.length; i++){
+  for (let i = 0; i<node.children.length; i++){
        //Render all child nodes of node
-       this.updateNode(this.nodes[node.children[i]], deltaTime);
+       animation += this.updateNode(this.nodes[node.children[i]], deltaTime);
+  }
+
+  return animation;
+}
+
+MySceneGraph.prototype.resetAnimations = function (node){
+  //Reset all animations of Node
+  for(let i=0;i < node.animations.length;i++){
+        node.animations[i].resetAnimation();
+      }
+  node.currAnimationIndex=0;
+
+  for (let i = 0; i<node.children.length; i++){
+       this.resetAnimations(this.nodes[node.children[i]]);
   }
 }
 
@@ -1648,6 +1658,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   //SHADERS
   if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
     this.scene.setActiveShader(this.scene.shaders[this.scene.selectShader]);
+    //this.scene.updateScaleFactor(this.scene.scaleFactor);
   }
 
   for (var i = 0; i<node.children.length; i++){
