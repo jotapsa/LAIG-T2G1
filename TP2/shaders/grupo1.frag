@@ -3,16 +3,13 @@ precision highp float;
 #endif
 
 uniform float timeFactor;
+uniform float	r;
+uniform float g;
+uniform float b;
 
 varying vec4 coords;
 varying vec4 normal;
 
 void main() {
-	if (coords.x > 0.0)
-		gl_FragColor =  normal;
-	else
-	{
-		gl_FragColor.rgb = abs(coords.xyz)/3.0;
-		gl_FragColor.a = 1.0;
-	}
+	gl_FragColor = vec4(r*timeFactor, g*timeFactor, b*timeFactor, 1.0);
 }

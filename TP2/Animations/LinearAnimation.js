@@ -56,7 +56,7 @@ class LinearAnimation extends Animation {
     resetAnimation(){
       this.angleZX = 0;
       this.currentPointIndex = 1;
-      this.position = this.CPoints[0];
+      this.position = this.CPoints[0].slice(0);
       this.done = false;
 
       this.updateAnimation();

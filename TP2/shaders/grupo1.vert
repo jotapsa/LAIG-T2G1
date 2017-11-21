@@ -4,24 +4,23 @@ precision highp float;
 
 uniform float timeFactor;
 
-attribute vec3 aVertexPosition;
-attribute vec3 aVertexNormal;
-attribute vec2 aTextureCoord;
+attribute vec3 aVertexPosition;	//Vertex Position
+attribute vec3 aVertexNormal;	//Vertex Normal
+attribute vec2 aTextureCoord;	//Texture Coordinates
 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat4 uNMatrix;
+uniform mat4 uMVMatrix;	//Model-View Matrix
+uniform mat4 uPMatrix;	//Projection Matrix
+uniform mat4 uNMatrix;	//Normal Transformation Matrix
 
-uniform float normScale;
 varying vec4 coords;
 varying vec4 normal;
 
 void main() {
-	vec4 vertex=vec4(aVertexPosition+aVertexNormal*normScale*0.1, 1.0);
+	vec4 vertex=vec4(aVertexPosition+aVertexNormal*timeFactor*0.1, 1.0);
 
 	gl_Position = uPMatrix * uMVMatrix * vertex;
 
 	normal = vec4(aVertexNormal, 1.0);
 
-	coords=vertex/10.0;
+	coords  = vertex/10.0;
 }

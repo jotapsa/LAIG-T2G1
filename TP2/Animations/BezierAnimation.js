@@ -15,7 +15,6 @@ class BezierAnimation extends Animation {
     constructor(scene,controlPoints,speed) {
       super(scene, speed);
       this.CPoints = controlPoints;
-
       this.casteljau = deCasteljau (this.CPoints);
       this.curveLength = distance (this.casteljau[l1], this.casteljau[l2]) + distance (this.casteljau[l2], this.casteljau[l3]) + distance (this.casteljau[l3], this.casteljau[l4]) +
         distance (this.casteljau[r1], this.casteljau[r2]) + distance (this.casteljau[r2], this.casteljau[r3]) + distance (this.casteljau[r3], this.casteljau[r4]);
@@ -32,7 +31,7 @@ class BezierAnimation extends Animation {
       this.t0 = 0;
       this.t1 = 0;
 
-      this.t = 0;
+      //this.t = 0;
       this.resetAnimation();
     }
 
@@ -106,7 +105,7 @@ class BezierAnimation extends Animation {
     resetAnimation(){
       this.angleZX = 0;
       //this.elapsedTime = 0;
-      this.position = this.CPoints[0];
+      this.position = this.CPoints[0].slice(0);
       this.done = false;
       this.t1 = 0;
       //this.t = 0

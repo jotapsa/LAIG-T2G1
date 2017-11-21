@@ -46,9 +46,8 @@ XMLscene.prototype.init = function(application) {
     this.resetAnimation = false;
 
     this.shaders = [
-      new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
-      new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag"),
-      new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag")];
+      new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag"),
+      new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag")];
     this.selectShader = null;
     this.scaleFactor = 0;
 }
@@ -184,11 +183,16 @@ XMLscene.prototype.display = function() {
     //Get the time in ms so we can update the clock relatively to this
   	var d = new Date();
   	this.oldCurrTime = d.getTime();
+    this.timeFactor = Math.cos(this.oldCurrTime/10000);
 }
 
 XMLscene.prototype.update = function (currTime){
   var deltaTime = currTime - this.oldCurrTime;
   this.oldCurrTime = currTime;
+  this.timeFactor = Math.sin(this.oldCurrTime/1000);
+
+  this.shaders[0].setUniformsValues({timeFactor: this.timeFactor, r: 1, b:0, g:0});
+
 
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 

@@ -275,9 +275,13 @@
     <controlpoint   xx="0"   yy="0"   zz="-2"   />
   </ANIMATION>
 
-  <ANIMATION id="circularexample" speed="5" type="circular"
-            centerx="5" centery="0" centerz="0"
-            radius="5" startang="180" rotang="360"/>
+  <ANIMATION id="bezierexample" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="0" yy="0" zz="20"/>
+    <controlpoint xx="20" yy="0" zz="20"/>
+    <controlpoint xx="20" yy="0" zz="0"/>
+  </ANIMATION>
+
 
   <ANIMATION id="bezier1" speed="2" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
@@ -315,7 +319,6 @@
 
   <ANIMATION id="comboexample" type="combo">
     <SPANREF id="linearexample"/>
-    <SPANREF id="circularexample"/>
   </ANIMATION>
 </ANIMATIONS>
 
@@ -391,7 +394,7 @@
     </NODE>
 
     <!-- Lamp Abajur -->
-     <NODE id="abajur">
+     <NODE id="abajur" selectable="true">
         <MATERIAL id="abajurMaterial" />
         <TEXTURE id="null" />
 
@@ -428,7 +431,7 @@
     </NODE>
 
     <!-- Balls -->
-     <NODE id="balls">
+     <NODE id="balls" >
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="null" />
 
@@ -462,11 +465,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="basketball" />
 
-        <TRANSLATION x="2" y="0" z="25" />
-        <TRANSLATION x="1" y="1" z="1" />
+        <!-- <TRANSLATION x="2" y="0" z="25" />
+        <TRANSLATION x="1" y="1" z="1" /> -->
 
         <ANIMATIONREFS>
-          <ANIMATIONREF id="linearexample" />
+          <ANIMATIONREF id="bezierexample" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -525,7 +528,7 @@
     </NODE>
 
     <!-- Third table (Teacher) -->
-    <NODE id="table3" selectable="true">
+    <NODE id="table3">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -692,7 +695,7 @@
     </NODE>
 
     <!-- Chairs -->
-    <NODE id="chairs" selectable="true">
+    <NODE id="chairs">
       <MATERIAL id="null" />
       <TEXTURE id="wood" />
 
