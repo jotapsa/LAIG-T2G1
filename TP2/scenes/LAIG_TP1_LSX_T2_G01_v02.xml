@@ -287,8 +287,8 @@
 
   <ANIMATION id="bezier2" speed="5" type="bezier">
     <controlpoint xx="25" yy="0" zz="-10"/>
-    <controlpoint xx="30" yy="0" zz="0"/>
-    <controlpoint xx="25" yy="0" zz="0"/>
+    <controlpoint xx="35" yy="0" zz="-5"/>
+    <controlpoint xx="35" yy="0" zz="5"/>
     <controlpoint xx="25" yy="0" zz="10"/>
   </ANIMATION>
 
@@ -441,7 +441,7 @@
     </NODE>
 
     <!-- First ball -->
-     <NODE id="ball1">
+     <NODE id="ball1" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="football" />
 

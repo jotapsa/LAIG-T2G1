@@ -37,7 +37,7 @@ MyInterface.prototype.init = function(application) {
 MyInterface.prototype.addLightsGroup = function(lights) {
 
     var group = this.gui.addFolder("Lights");
-    group.open();
+    group.close();
 
     // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
     // e.g. this.option1=true; this.option2=false;
@@ -50,24 +50,19 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-MyInterface.prototype.addSelectableNodes = function(nodes) {
+MyInterface.prototype.addShaderGroup = function(selectableNodes) {
   var group = this.gui.addFolder("Shaders");
   group.open();
 
   list = {};
-  for(let i=0;i < nodes.length; i++){
-    list[nodes[i]] = i;
+  list["None"] = -1;
+  for(let i=0;i < selectableNodes.length; i++){
+    list[selectableNodes[i]]= i;
   }
 
-  group.add(this.scene.graph, 'selectNode',list).name('Selectable Nodes');
-  this.addShaders(group);
-}
-
-MyInterface.prototype.addShaders = function(group){
-  group.add(this.scene, 'selectShader',{
-    'Grupo_1':0,
-    'Varying':1
-  }).name('Shader');
+  group.add(this.scene, 'selectedNode',
+    list
+  ).name('Selected Node');
 
   group.add(this.scene, 'selectedColor',{
     'Red':0,

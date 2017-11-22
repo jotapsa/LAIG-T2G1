@@ -45,11 +45,9 @@ XMLscene.prototype.init = function(application) {
 
     this.resetAnimation = false;
 
-    this.shaders = [
-      new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag"),
-      new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag")
-    ];
-    this.selectShader = null;
+    this.shader = new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag");
+
+    this.selectedNode = -1;
 
     this.satColors = [
       [1, 0, 0], //RED
@@ -123,13 +121,11 @@ XMLscene.prototype.onGraphLoaded = function()
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
 
+    //Shader
+    this.interface.addShaderGroup(this.graph.selectables);
+
     //Adds Animations Reset
     this.interface.addAnimationsOptions();
-
-    //Adds selectable nodes list
-    this.interface.addSelectableNodes(this.graph.selectables);
-
-    //Shaders
 }
 
 /**
@@ -202,7 +198,7 @@ XMLscene.prototype.update = function (currTime){
   this.oldCurrTime = currTime;
   this.timeFactor = Math.sin(this.oldCurrTime/1000);
 
-  this.shaders[0].setUniformsValues({
+  this.shader.setUniformsValues({
     timeFactor: this.timeFactor,
     r:this.satColors[this.selectedColor][0],
     g:this.satColors[this.selectedColor][1],

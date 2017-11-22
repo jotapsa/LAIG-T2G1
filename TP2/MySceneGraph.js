@@ -1656,8 +1656,8 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   }
 
   //SHADERS
-  if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
-    this.scene.setActiveShader(this.scene.shaders[this.scene.selectShader]);
+  if(this.scene.selectedNode != -1 && this.selectables[this.scene.selectedNode] == node.nodeID){
+    this.scene.setActiveShader(this.scene.shader);
   }
 
   for (var i = 0; i<node.children.length; i++){
@@ -1672,7 +1672,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     }
   }
 
-  if(this.selectNode != null && this.scene.selectShader != null && this.selectables[this.selectNode] == node.nodeID){
+  if(this.scene.selectedNode != -1 && this.selectables[this.scene.selectedNode] == node.nodeID){
     this.scene.setActiveShader(this.scene.defaultShader);
   }
 }
