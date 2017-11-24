@@ -3,7 +3,7 @@ precision highp float;
 #endif
 
 uniform float timeFactor;
-uniform float	r;
+uniform float r;
 uniform float g;
 uniform float b;
 
