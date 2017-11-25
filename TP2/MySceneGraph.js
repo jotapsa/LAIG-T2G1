@@ -1696,7 +1696,6 @@ MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appea
 
        leaf.object.display();
     this.scene.popMatrix();
-    //this.scene.setActiveShader(this.scene.defaultShader);
 }
 
 /**
