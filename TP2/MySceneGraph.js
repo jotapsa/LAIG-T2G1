@@ -1204,7 +1204,10 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
     else
       this.warn("Error in animation");
 
+    //Check and create animation by type.
     switch(type){
+
+      //Linear Animation
       case 'linear':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
         var CPoints = this.parseAnimationsCPoints(children[i]);
@@ -1214,6 +1217,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         this.animations[animationID] = new LinearAnimation(this.scene,CPoints,speed);
       break;
 
+      //Circular Animation
       case 'circular':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
         var centerX = parseFloat(this.reader.getString(children[i], 'centerx'));
@@ -1226,6 +1230,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         this.animations[animationID] = new CircularAnimation(this.scene,center,radius,startAngle,rotationAngle,speed);
       break;
 
+      //Bezier Animation
       case 'bezier':
         var speed = parseFloat(this.reader.getString(children[i], 'speed'));
         var CPoints = this.parseAnimationsCPoints(children[i]);
@@ -1235,6 +1240,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         this.animations[animationID] = new BezierAnimation(this.scene,CPoints,speed);
       break;
 
+      //Combo Animation
       case 'combo':
         var animations = [];
 
@@ -1265,7 +1271,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
 
 
 /**
- * Parses the <ANIMATION> controlpoints.
+ * Parses the <ANIMATION> controlpoints (LinearAnimation or BezierAnimation).
  */
 MySceneGraph.prototype.parseAnimationsCPoints = function(animationNode){
   var cplines = animationNode.children;
@@ -1527,6 +1533,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
     return null ;
 }
 
+/**
+ * Parses the NURBS ControlPoints.
+ */
 MySceneGraph.prototype.parseCPLines = function(leaf) {
     var cplines = leaf.children;
     var cLines = [];
@@ -1603,6 +1612,10 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
+/**
+ * Updates all Animations of each node of the graph.
+ * @return animation - Number of Animations updated.
+ */
 MySceneGraph.prototype.updateNode = function (node, deltaTime){
   let animation = 0;
   //Does the node have animations?
@@ -1627,6 +1640,9 @@ MySceneGraph.prototype.updateNode = function (node, deltaTime){
   return animation;
 }
 
+/**
+ * Reset all Animations of each node.
+ */
 MySceneGraph.prototype.resetAnimations = function (node){
   //Reset all animations of Node
   for(let i=0;i < node.animations.length;i++){
@@ -1639,6 +1655,9 @@ MySceneGraph.prototype.resetAnimations = function (node){
   }
 }
 
+/**
+ * Render each node of graph, calling renderLeaf for every leaf, multiplying transformation's matrix, activate shader.
+ */
 MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture){
   var texture = this.textures[node.textureID] || texture;
   var appearance = this.materials[node.materialID] || appearance;
@@ -1677,6 +1696,9 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
   }
 }
 
+/**
+ * Render a node's leaf, applying respective material and texture, multiplying final transformation matrix.
+ */
 MySceneGraph.prototype.renderLeaf = function (leaf, renderTransformMatrix, appearance, texture){
     this.scene.pushMatrix();
        /* if the leaf doesn't inherit a texture, lets remove any texture previously loaded on to the appearance*/

@@ -32,21 +32,14 @@ class BezierAnimation extends Animation {
       this.resetAnimation();
     }
 
+    /**
+     * Updates positions according to the current state of the animation and deltaTime.
+     */
     update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){
         return;
       }
-
-      // this.elapsedTime += deltaTime/1000;
-      // this.t = (this.elapsedTime*this.speed)/this.curveLength;
-      //
-      // for (let i=0; i<3; i++){
-      //   this.position[i] = Math.pow((1-this.t),3)*this.CPoints[0][i]+
-      //     3*this.t*Math.pow((1-this.t),2)*this.CPoints[1][i]+
-      //     3*Math.pow(this.t,2)*(1-this.t)*this.CPoints[2][i]+
-      //     Math.pow(this.t,3)*this.CPoints[3][i];
-      // }
 
       this.dist = this.speed*(deltaTime/1000);
 

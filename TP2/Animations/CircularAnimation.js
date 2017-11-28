@@ -22,6 +22,9 @@ class CircularAnimation extends Animation {
       this.resetAnimation();
     }
 
+    /**
+     * Updates rotationAngle and elapsedTime according to the current state of the animation and deltaTime.
+     */
     update(deltaTime){
       //If the animation is already complete, just return.
       if (this.isDone()){

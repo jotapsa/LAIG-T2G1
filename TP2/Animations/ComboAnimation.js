@@ -9,6 +9,10 @@ class ComboAnimation extends Animation {
       this.currAnimationIndex = 0;
     }
 
+
+    /**
+     * Updates currentAnimation according to the current state of the animation and deltaTime.
+     */
     update(deltaTime){
 
       if (this.isDone()){

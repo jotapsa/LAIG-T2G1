@@ -22,7 +22,7 @@ class LinearAnimation extends Animation {
     }
 
     /**
-     *
+     * Updates elapsedTime and position according to the current state of the animation and deltaTime.
      */
     update(deltaTime){
       //If the animation is already complete, just return.

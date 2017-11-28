@@ -121,10 +121,10 @@ XMLscene.prototype.onGraphLoaded = function()
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
 
-    //Shader
+    //Adds Selectable Nodes and Shader Color
     this.interface.addShaderGroup(this.graph.selectables);
 
-    //Adds Animations Reset
+    //Adds Animations Reset Option
     this.interface.addAnimationsOptions();
 }
 
@@ -193,6 +193,10 @@ XMLscene.prototype.display = function() {
     this.timeFactor = Math.cos(this.oldCurrTime/10000);
 }
 
+
+/**
+ * Updates the scene, shader and animations.
+ */
 XMLscene.prototype.update = function (currTime){
   var deltaTime = currTime - this.oldCurrTime;
   this.oldCurrTime = currTime;

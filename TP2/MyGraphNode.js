@@ -22,15 +22,17 @@ function MyGraphNode(graph, nodeID) {
 
     //The animations
     this.animations = [];
+
     //The Current Animation
     this.currAnimationIndex = null;
 
+    // The Transformation Matrix
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
 }
 
 /**
- *
+ * Adds a clone of an animation of this node.
  */
 MyGraphNode.prototype.addAnimation = function(animation){
   this.animations.push(animation.clone());
