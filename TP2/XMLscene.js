@@ -23,7 +23,7 @@ XMLscene.prototype.constructor = XMLscene;
 XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
 
-    this.currentFPS = 144;
+    this.currentFPS = 120;
 
   	this.fpsList = {
   		'30' : 30,

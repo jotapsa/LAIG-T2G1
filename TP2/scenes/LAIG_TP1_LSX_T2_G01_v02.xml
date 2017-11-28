@@ -270,6 +270,11 @@
     <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
 
+  <ANIMATION id="goUp"  speed="2"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="0"   yy="5"   zz="0"   />
+  </ANIMATION>
+
   <ANIMATION id="bezierexample" speed="5" type="bezier">
     <controlpoint xx="0" yy="0" zz="0"/>
     <controlpoint xx="0" yy="0" zz="20"/>
@@ -433,6 +438,10 @@
      <NODE id="balls" selectable="true">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="null" />
+
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="goUp" />
+        </ANIMATIONREFS>
 
         <DESCENDANTS>
             <NODEREF id="ball1" />
