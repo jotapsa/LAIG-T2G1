@@ -930,6 +930,8 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
         else
             this.onXMLMinorError("unknown tag name <" + nodeName + ">");
     }
+    //So we can bind a texture to the shader
+    this.scene.shader.setUniformsValues({uSampler: 1});
 
     if (!oneTextureDefined)
         return "at least one texture must be defined in the TEXTURES block";
@@ -1672,6 +1674,7 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
+    texture[0].bind(1);
   }
 
   //SHADERS

@@ -200,7 +200,7 @@ XMLscene.prototype.display = function() {
 XMLscene.prototype.update = function (currTime){
   var deltaTime = currTime - this.oldCurrTime;
   this.oldCurrTime = currTime;
-  this.timeFactor = Math.sin(this.oldCurrTime/1000);
+  this.timeFactor = Math.abs(Math.sin(this.oldCurrTime/1000));
 
   this.shader.setUniformsValues({
     timeFactor: this.timeFactor,
