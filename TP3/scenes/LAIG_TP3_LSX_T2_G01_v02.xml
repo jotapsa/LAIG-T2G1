@@ -1,0 +1,372 @@
+<SCENE>
+
+<!-- Initial values -->
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="1" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+</INITIALS>
+
+
+<!-- Illumination and clear colour -->
+<ILLUMINATION>
+    <ambient r="0.2" g="0.2" b="0.2" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+</ILLUMINATION>
+
+
+<!-- Lights -->
+<LIGHTS>
+	<LIGHT id="light0">
+        <enable value ="1" />
+        <position x="36" y="18" z="0.5" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light1">
+          <enable value ="1" />
+          <position x="0.5" y="18" z="36" w="1" />
+          <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+          <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+          <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+      </LIGHT>
+
+      <LIGHT id="light2">
+            <enable value ="1" />
+            <position x="17" y="18" z="19" w="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value ="1" />
+        <position x="3" y="8" z="18" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="0.8" a="0.5" />
+        <specular r="1.0" g="1.0" b="1.0" a="0.5" />
+    </LIGHT>
+
+    <LIGHT id="light4">
+        <enable value ="1" />
+        <position x="18" y="17" z="0.5" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="0.8" a="0.5" />
+        <specular r="1.0" g="1.0" b="1.0" a="0.5" />
+    </LIGHT>
+
+</LIGHTS>
+
+<!-- Textures -->
+<TEXTURES>
+	<!-- Window -->
+    <TEXTURE id="window">
+        <file path="images/sky.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+     <!-- Floor -->
+    <TEXTURE id="floor">
+        <file path="images/wood_floor.jpg" />
+        <amplif_factor s="0.1" t="0.2" />
+    </TEXTURE>
+
+    <!-- Wood -->
+    <TEXTURE id="wood">
+        <file path="images/wood.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Black-Board -->
+    <TEXTURE id="board">
+        <file path="images/black_board.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Walls -->
+    <TEXTURE id="wall">
+        <file path="images/wall.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Tree -->
+    <TEXTURE id="tree">
+        <file path="images/leaves.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Tree Trunk -->
+    <TEXTURE id="treeTrunk">
+        <file path="images/trunk-image.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Football ball -->
+    <TEXTURE id="football">
+        <file path="images/football.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Basketball ball -->
+    <TEXTURE id="basketball">
+        <file path="images/basketball.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Keyboard -->
+    <TEXTURE id="keyboard">
+        <file path="images/keyboard.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Desktop -->
+    <TEXTURE id="desktop">
+        <file path="images/desktop.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Chalk -->
+    <TEXTURE id="chalk">
+        <file path="images/chalk.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- LAIG book -->
+    <TEXTURE id="laig">
+        <file path="images/laig.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Lined Sheet -->
+    <TEXTURE id="paper">
+        <file path="images/paper.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Door -->
+    <TEXTURE id="door">
+        <file path="images/door.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Power Socket -->
+    <TEXTURE id="powerSocket">
+        <file path="images/power_socket.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Decorative Ball -->
+    <TEXTURE id="decorative_ball_texture">
+        <file path="images/ball_pattern.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+</TEXTURES>
+
+
+<MATERIALS>
+	<!-- Window Material -->
+    <MATERIAL id="windowMaterial">
+        <shininess value="1" />
+        <specular r="0" g="0" b="0" a="1" />
+        <diffuse r="1.0" g="0.68" b="0.4" a="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+	<!-- Floor material -->
+	<MATERIAL id="floorMaterial">
+        <shininess value="1" />
+        <specular r="0.2" g="0.2" b="0.2" a="1" />
+        <diffuse r="0.0" g="0.207" b="0.0" a="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Light material -->
+    <MATERIAL id="lightMaterial">
+        <shininess value="100" />
+        <specular r="0.5" g="0.5" b="0.5" a="1" />
+        <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+        <ambient r="0.0" g="0.0" b="0.0" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+	<!-- Wood material -->
+	<MATERIAL id="woodMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.6" g="0.298" b="0.0" a="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Board material -->
+    <MATERIAL id="boardMaterial">
+        <shininess value="100" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.447" g="0.416" b="0.416" a="1" />
+        <ambient r="0.0" g="0.0" b="0.0" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Wall material -->
+    <MATERIAL id="wallMaterial">
+        <shininess value="100" />
+        <specular r="0.5" g="0.5" b="0.5" a="1" />
+        <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+        <ambient r="0.0" g="0.0" b="0.0" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- A default material -->
+    <MATERIAL id="defaultMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Tree material -->
+    <MATERIAL id="treeMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Abajur material -->
+    <MATERIAL id="abajurMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="1" g="1" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0" g="0" b="0.0" a="1" />
+    </MATERIAL>
+
+</MATERIALS>
+
+
+<!-- The leaves -->
+<LEAVES>
+</LEAVES>
+
+<!-- The animations -->
+<ANIMATIONS>
+
+  <ANIMATION id="goAround"  speed="2"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="5"   yy="0"   zz="0"   />
+    <controlpoint   xx="5"    yy="0"    zz="-5"  />
+    <controlpoint   xx="0"   yy="0"   zz="-5"   />
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+  </ANIMATION>
+
+  <ANIMATION id="goUp"  speed="0.2"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="0"   yy="1"   zz="0"   />
+  </ANIMATION>
+
+  <ANIMATION id="bezierexample" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="0" yy="0" zz="20"/>
+    <controlpoint xx="20" yy="0" zz="20"/>
+    <controlpoint xx="20" yy="0" zz="0"/>
+  </ANIMATION>
+
+
+  <ANIMATION id="bezier1" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="0"/>
+    <controlpoint xx="20" yy="0" zz="5"/>
+    <controlpoint xx="15" yy="0" zz="-20"/>
+    <controlpoint xx="25" yy="0" zz="-10"/>
+  </ANIMATION>
+
+  <ANIMATION id="bezier2" speed="5" type="bezier">
+    <controlpoint xx="25" yy="0" zz="-10"/>
+    <controlpoint xx="35" yy="0" zz="-5"/>
+    <controlpoint xx="35" yy="0" zz="5"/>
+    <controlpoint xx="25" yy="0" zz="10"/>
+  </ANIMATION>
+
+  <ANIMATION id="bezier3" speed="5" type="bezier">
+    <controlpoint xx="25" yy="0" zz="10"/>
+    <controlpoint xx="15" yy="0" zz="15"/>
+    <controlpoint xx="10" yy="0" zz="-10"/>
+    <controlpoint xx="0" yy="0" zz="0"/>
+  </ANIMATION>
+
+
+  <ANIMATION id="goDownTree"  speed="4"   type="linear">
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+    <controlpoint   xx="-3"   yy="-8"   zz="0"   />
+  </ANIMATION>
+
+  <ANIMATION id="goRoundTree" speed="4" type="circular"
+            centerx="0" centery="-8" centerz="0"
+            radius="3" startang="180" rotang="360"/>
+
+  <ANIMATION id="goUpTree"  speed="4"   type="linear">
+    <controlpoint   xx="-3"   yy="-8"   zz="0"   />
+    <controlpoint   xx="0"   yy="0"   zz="0"   />
+  </ANIMATION>
+
+  <ANIMATION id="bezierCombo" type="combo">
+    <SPANREF id="bezier1"/>
+    <SPANREF id="bezier2"/>
+    <SPANREF id="bezier3"/>
+  </ANIMATION>
+</ANIMATIONS>
+
+
+<!-- The nodes -->
+<NODES>
+
+    <ROOT id="root" />
+
+    <!-- The root node -->
+    <NODE id="root">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="floor" />
+            <NODEREF id="piece" />
+        </DESCENDANTS>
+    </NODE>
+
+    <!-- The floor -->
+    <NODE id="floor">
+        <MATERIAL id="null" />
+        <TEXTURE id="floor" />
+
+        <TRANSLATION x="0" y="0" z="8" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 8 8 0" />
+				</DESCENDANTS>
+    </NODE>
+
+    <NODE id="piece">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+					<LEAF type="cylinder" args="0.1 0.5 0.5 30 30 1 1" />
+				</DESCENDANTS>
+    </NODE>
+
+</NODES>
+
+</SCENE>
