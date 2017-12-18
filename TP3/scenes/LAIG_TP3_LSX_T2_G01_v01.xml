@@ -42,8 +42,8 @@
 <!-- Textures -->
 <TEXTURES>
   <!-- Floor -->
- <TEXTURE id="floor">
-     <file path="images/wood_floor.jpg" />
+ <TEXTURE id="blackMarble">
+     <file path="images/black_marble.jpg" />
      <amplif_factor s="0.1" t="0.2" />
  </TEXTURE>
 </TEXTURES>
@@ -99,7 +99,7 @@
     <TEXTURE id="null" />
 
     <DESCENDANTS>
-      <LEAF type="board" args=""/>
+      <LEAF type="board" args="8 12"/>
     </DESCENDANTS>
   </NODE>
 

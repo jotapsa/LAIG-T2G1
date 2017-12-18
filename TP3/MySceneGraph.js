@@ -1511,6 +1511,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.warn("Error in leaf");
 
 						//parse leaf
+            // if(this.reader.hasAttribute(children[i],'args')){
+            // }
 						this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
 						if(type == 'patch'){
                             this.CPLines = this.parseCPLines(descendants[j]);
