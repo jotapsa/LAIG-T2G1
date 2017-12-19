@@ -28,33 +28,20 @@ function Board(scene, sizeN, pieces){
 	this.whiteMaterial.setShininess(1);
 	this.whiteMaterial.loadTexture ("scenes/images/white_marble.jpg");
 
-	this.whitePieceMaterial = new CGFappearance(this.scene);
-	this.whitePieceMaterial.setAmbient(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setSpecular(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setShininess(1);
-	this.whitePieceMaterial.loadTexture ("scenes/images/white_checker.jpg");
-
   this.blackMaterial = new CGFappearance(this.scene);
   this.blackMaterial.setAmbient(0.5, 0.5, 0.5,1);
   this.blackMaterial.setSpecular(0.5, 0.5, 0.5,1);
   this.blackMaterial.setDiffuse(0.5, 0.5, 0.5,1);
   this.blackMaterial.setShininess(1);
   this.blackMaterial.loadTexture("scenes/images/black_marble.jpg");
-
-	this.blackPieceMaterial = new CGFappearance(this.scene);
-	this.blackPieceMaterial.setAmbient(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setSpecular(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setDiffuse(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setShininess(1);
-	this.blackPieceMaterial.loadTexture("scenes/images/black_checker.jpg");
-
 };
 
 Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor=Board;
 
 Board.prototype.display = function () {
+	let i;
+	i=0;
 
   for(let y=(-this.sizeN/2); y<(this.sizeN/2); y++){
     for(let x=(-this.sizeN/2); x<(this.sizeN/2); x++){
@@ -85,6 +72,8 @@ Board.prototype.display = function () {
         }
 				this.blackSquareFlag = !this.blackSquareFlag;
 
+				this.scene.registerForPick(i, this.cube);
+				i++;
         this.cube.display();
       this.scene.popMatrix();
     }

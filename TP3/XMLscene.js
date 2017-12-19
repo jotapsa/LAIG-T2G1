@@ -23,15 +23,6 @@ XMLscene.prototype.constructor = XMLscene;
 XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
 
-    this.currentFPS = 120;
-
-  	this.fpsList = {
-  		'30' : 30,
-  		'60' : 60,
-  		'120' : 120,
-  		'144' : 144
-  	}
-
     this.initCameras();
 
     this.enableTextures(true);
@@ -42,6 +33,15 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.axis = new CGFaxis(this);
+
+    this.currentFPS = 120;
+
+    this.fpsList = {
+      '30' : 30,
+      '60' : 60,
+      '120' : 120,
+      '144' : 144
+    }
 
     this.resetAnimation = false;
 
@@ -59,6 +59,8 @@ XMLscene.prototype.init = function(application) {
     ];
 
     this.selectedColor = 4; //MAGENTA
+
+    this.setPickEnabled(true);
 }
 
 /**
@@ -128,7 +130,7 @@ XMLscene.prototype.onGraphLoaded = function()
     this.interface.addAnimationsOptions();
 }
 
-LightingScene.prototype.logPicking = function ()
+XMLscene.prototype.logPicking = function ()
 {
 	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
@@ -151,6 +153,7 @@ LightingScene.prototype.logPicking = function ()
 XMLscene.prototype.display = function() {
     this.logPicking();
     this.clearPickRegistration();
+
     // ---- BEGIN Background, camera and axis setup
 
     // Clear image and depth buffer everytime we update the scene
