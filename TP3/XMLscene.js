@@ -109,101 +109,82 @@ XMLscene.prototype.onGraphLoaded = function()
     this.interface.addConfigurationGroup();
 }
 
-XMLscene.prototype.createMove = function(){
-  this.startingPos, this.finalPos;
-
+XMLscene.prototype.handlePicking = function(){
   if (this.pickMode == false){
-    if (this.pickResults != null && this.pickResults.length > 0){
-      for (let i=0; i< this.pickResults.length; i++){
-        let x, y, id;
-        if (this.pickResults[i][0]){
-          id = this.pickResults[i][1];
-          y = Math.floor(id / 8);
-          x = id % 8;
-          console.log ("Y: " + y + " X: " + x + " ID: " +id);
-          if (this.startingPos == null){
-            this.startingPos = [y, x];
-          }
-          else if (this.finalPos == null){
-            this.finalPos = [y, x];
-            new Move (this.startingPos, this.finalPos);
-            this.startingPos = null;
-            this.finalPos = null;
-          }
-        }
+    for (let picked of this.pickResults){
+      if(picked[0]){
+        console.log("ID: " + picked[1]);
+        this.game.picked(picked[1]);
       }
-      this.pickResults.splice(0,this.pickResults.length);
     }
+    this.pickResults.splice(0,this.pickResults.length);
   }
-
 }
 
 /**
- * Displays the scene.
- */
+* Displays the scene.
+*/
 XMLscene.prototype.display = function() {
-    this.createMove();
-    this.clearPickRegistration();
+  // ---- BEGIN Background, camera and axis setup
 
-    // ---- BEGIN Background, camera and axis setup
+  // Clear image and depth buffer everytime we update the scene
+  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+  this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    // Clear image and depth buffer everytime we update the scene
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+  // Initialize Model-View matrix as identity (no transformation
+  this.updateProjectionMatrix();
+  this.loadIdentity();
 
-    // Initialize Model-View matrix as identity (no transformation
-    this.updateProjectionMatrix();
-    this.loadIdentity();
+  this.handlePicking();
+  this.clearPickRegistration();
 
-    // Apply transformations corresponding to the camera position relative to the origin
-    this.applyViewMatrix();
+  // Apply transformations corresponding to the camera position relative to the origin
+  this.applyViewMatrix();
 
-    this.pushMatrix();
+  this.pushMatrix();
 
-    if (this.graph.loadedOk)
-    {
-        // Applies initial transformations.
-        this.multMatrix(this.graph.initialTransforms);
+  if (this.graph.loadedOk){
+    // Applies initial transformations.
+    this.multMatrix(this.graph.initialTransforms);
 
-		// Draw axis
-		this.axis.display();
+    // Draw axis
+    this.axis.display();
 
-        var i = 0;
-        for (var key in this.lightValues) {
-            if (this.lightValues.hasOwnProperty(key)) {
-                if (this.lightValues[key]) {
-                    this.lights[i].setVisible(true);
-                    this.lights[i].enable();
-                }
-                else {
-                    this.lights[i].setVisible(false);
-                    this.lights[i].disable();
-                }
-                this.lights[i].update();
-                i++;
-            }
+    var i = 0;
+    for (var key in this.lightValues) {
+      if (this.lightValues.hasOwnProperty(key)) {
+        if (this.lightValues[key]) {
+          this.lights[i].setVisible(true);
+          this.lights[i].enable();
         }
-
-        // Displays the scene.
-        this.graph.displayScene();
-
+        else {
+          this.lights[i].setVisible(false);
+          this.lights[i].disable();
+        }
+        this.lights[i].update();
+        i++;
+      }
     }
-	else
-	{
-		// Draw axis
-		this.axis.display();
-	}
 
-    this.popMatrix();
+    // Displays the scene.
+    this.graph.displayScene();
 
-    // ---- END Background, camera and axis setup
+  }
+  else{
+    // Draw axis
+    this.axis.display();
+  }
 
-    this.setUpdatePeriod(FPSToUpdate/this.FPS);
+  this.popMatrix();
 
-    //Get the time in ms so we can update the clock relatively to this
-  	var d = new Date();
-  	this.oldCurrTime = d.getTime();
-    this.timeFactor = Math.cos(this.oldCurrTime/10000);
+  // ---- END Background, camera and axis setup
+
+  this.setUpdatePeriod(FPSToUpdate/this.FPS);
+
+  //Get the time in ms so we can update the clock relatively to this
+  var d = new Date();
+  this.oldCurrTime = d.getTime();
+  this.timeFactor = Math.cos(this.oldCurrTime/10000);
 }
 
 

@@ -1,4 +1,9 @@
 GAMESTATE = {
+  WHITES_TURN: 0,
+  WHITES_SELECTED: 1,
+  BLACKS_TURN: 2,
+  BLACKS_SELECTED: 3,
+  GAME_FINISHED: 4,
 };
 
 GAMEMODE = {
@@ -19,12 +24,33 @@ THEME = {
  */
 function DraughtGame(){
   //construtor
+  this.moves = [];
+  this.gameState = GAMESTATE.BLACKS_TURN;
+
   this.board = new DraughtMap();
 };
 
-DraughtGame.prototype.makeMove = function(move){
-  console.log(move.getStartingPos);
-  console.log(move.getFinalPos);
+DraughtGame.prototype.picked = function (id){
+  let y = Math.floor(id / 8);
+  let x = id % 8;
+  console.log ("Y: " + y + " X: " + x);
+
+  switch (this.gameState){
+    case GAMESTATE.WHITES_TURN:
+    {
+
+    }
+    break;
+    case GAMESTATE.BLACKS_TURN:
+    {
+
+    }
+    break;
+    case GAMESTATE.GAME_FINISHED:
+    break;
+    default:
+    break;
+  }
 }
 
 DraughtGame.prototype.getPos = function(y, x){
