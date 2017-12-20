@@ -11,7 +11,7 @@ var blackPiece = 2;
 function Board(scene){
 	CGFobject.call(this,scene);
 
-	this.game = new DraughtLogic ();
+	this.game = new DraughtMap ();
 	this.sizeN = this.game.getsizeN();
 
 	this.cube= new UnitCube(this.scene);

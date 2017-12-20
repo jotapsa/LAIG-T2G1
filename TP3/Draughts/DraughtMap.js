@@ -4,11 +4,11 @@ var whitePiece = 1;
 var blackPiece = 2;
 
 /**
- * DraughtLogic
+ * DraughtMap
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtLogic(){
+function DraughtMap(){
   //construtor
   this.map =[
     [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
@@ -20,11 +20,11 @@ function DraughtLogic(){
     [blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare],
     [invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece],
   ];
-  
+
   this.sizeN = this.map.length;
 };
 
-DraughtLogic.prototype.resetMap = function (){
+DraughtMap.prototype.resetMap = function (){
   this.map =[
     [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
     [invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece],
@@ -37,10 +37,10 @@ DraughtLogic.prototype.resetMap = function (){
   ];
 }
 
-DraughtLogic.prototype.getsizeN = function(){
+DraughtMap.prototype.getsizeN = function(){
   return this.sizeN;
 }
 
-DraughtLogic.prototype.getPos = function (y, x){
+DraughtMap.prototype.getPos = function (y, x){
   return this.map[y][x];
 }
