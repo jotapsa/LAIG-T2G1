@@ -1,9 +1,7 @@
 GAMESTATE = {
   WHITES_TURN: 0,
-  WHITES_SELECTED: 1,
-  BLACKS_TURN: 2,
-  BLACKS_SELECTED: 3,
-  GAME_FINISHED: 4,
+  BLACKS_TURN: 1,
+  GAME_FINISHED: 2,
 };
 
 GAMEMODE = {
@@ -28,22 +26,54 @@ function DraughtGame(){
   this.gameState = GAMESTATE.BLACKS_TURN;
 
   this.board = new DraughtMap();
+  this.selectedPiece = false;
+  this.startingPos = null;
+  this.finalPos = null;
 };
 
 DraughtGame.prototype.picked = function (id){
-  let y = Math.floor(id / 8);
-  let x = id % 8;
+  let move=null; //reset move everytime
+  let y, x;
+
+  y = Math.floor(id / 8);
+  x = id % 8;
   console.log ("Y: " + y + " X: " + x);
 
   switch (this.gameState){
     case GAMESTATE.WHITES_TURN:
     {
-
+      if(this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING){
+        this.startingPos = [y, x];
+        this.selectedPiece = true;
+      }
+      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
+        this.finalPos = [y, x];
+        this.selecedPiece = false;
+        move = new Move(this.startingPos, this.finalPos);
+      }
+      //if valid move
+      if (move){
+        this.gameState = GAMESTATE.BLACKS_TURN;
+        this.board.movePiece(move);
+      }
     }
     break;
     case GAMESTATE.BLACKS_TURN:
     {
-
+      if(this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING){
+        this.startingPos = [y, x];
+        this.selectedPiece = true;
+      }
+      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
+        this.finalPos = [y, x];
+        this.selecedPiece = false;
+        move = new Move(this.startingPos, this.finalPos);
+      }
+      //if valid move
+      if (move){
+        this.gameState = GAMESTATE.WHITES_TURN;
+        this.board.movePiece(move);
+      }
     }
     break;
     case GAMESTATE.GAME_FINISHED:

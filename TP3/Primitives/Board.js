@@ -37,19 +37,19 @@ Board.prototype.display = function () {
 			this.scene.pushMatrix();
 				this.scene.translate(x-(this.sizeN/2)+0.5, y-(this.sizeN/2)+0.5, 0); //+0.5 because the cubes are centered
 				switch (this.scene.game.getPos(y, x)){
-					case CELL.INVALIDSQUARE:{
+					case CELL.INVALID_SQUARE:{
 						this.whiteMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);
 						this.cube.display();
 					}
 					break;
-					case CELL.EMPTYSQUARE:{
+					case CELL.EMPTY_SQUARE:{
 						this.blackMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);
 						this.cube.display();
 					}
 					break;
-					case CELL.WHITEPIECE:{
+					case CELL.WHITE_PIECE:{
 						this.blackMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);
 						this.cube.display();
@@ -58,7 +58,7 @@ Board.prototype.display = function () {
 					}
 
 					break;
-					case CELL.BLACKPIECE:
+					case CELL.BLACK_PIECE:
 					{
 						this.blackMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);
