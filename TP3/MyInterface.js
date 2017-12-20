@@ -48,7 +48,17 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 
 
 MyInterface.prototype.addConfigurationGroup = function() {
-  var group = this.gui.addFolder("Configuration");
-  group.open();
+  var configGroup = this.gui.addFolder("Configuration");
+  configGroup.open();
 
+  configGroup.add(this.scene.gameConfig, 'gameMode', {
+       'Human vs Human': GAMEMODE.HUMAN_VS_HUMAN,
+       'Human vs CPU': GAMEMODE.HUMAN_VS_CPU,
+       'CPU vs CPU': GAMEMODE.CPU_VS_CPU,
+   }).name('Game Mode');
+
+   configGroup.add(this.scene.gameConfig, 'theme', {
+        'SSE Legacy ': THEME.LEGACY,
+        'Normal Small Star Empires': THEME.NORMAL
+    }).name('Theme');
 }

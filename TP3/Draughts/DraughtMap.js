@@ -1,7 +1,9 @@
-var invalidSquare = -1;
-var emptySquare = 0;
-var whitePiece = 1;
-var blackPiece = 2;
+CELL = {
+  INVALIDSQUARE : -1,
+  EMPTYSQUARE : 0,
+  WHITEPIECE : 1,
+  BLACKPIECE : 2,
+};
 
 /**
  * DraughtMap
@@ -11,14 +13,14 @@ var blackPiece = 2;
 function DraughtMap(){
   //construtor
   this.map =[
-    [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
-    [invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece],
-    [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
-    [invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare],
-    [emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare],
-    [invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece],
-    [blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare],
-    [invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece],
+    [CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE],
+    [CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE],
+    [CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE],
+    [CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE],
   ];
 
   this.sizeN = this.map.length;
@@ -26,14 +28,14 @@ function DraughtMap(){
 
 DraughtMap.prototype.resetMap = function (){
   this.map =[
-    [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
-    [invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece],
-    [whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare, whitePiece, invalidSquare],
-    [invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare],
-    [emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare, emptySquare, invalidSquare],
-    [invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece],
-    [blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare],
-    [invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece, invalidSquare, blackPiece],
+    [CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE],
+    [CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE, CELL.WHITEPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE],
+    [CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE, CELL.EMPTYSQUARE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE],
+    [CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE],
+    [CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE, CELL.INVALIDSQUARE, CELL.BLACKPIECE],
   ];
 }
 

@@ -36,6 +36,11 @@ XMLscene.prototype.init = function(application) {
 
     this.FPS = 120;
 
+    this.gameConfig = {
+      gameMode : GAMEMODE.HUMAN_VS_HUMAN,
+      theme : THEME.LEGACY,
+    }
+
     this.setPickEnabled(true);
 }
 
