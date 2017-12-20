@@ -1,21 +1,18 @@
+var invalidSquare = -1;
+var emptySquare = 0;
+var whitePiece = 1;
+var blackPiece = 2;
+
 /**
  * Board
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Board(scene, sizeN, pieces){
-  //sizeN tem q ser par
-  //As pecas estao sempre nos blocos pretos
-  //O lado das brancas começa por um bloco pretos
-
+function Board(scene){
 	CGFobject.call(this,scene);
 
-  this.sizeN = sizeN || 8;
-	this.totalBlackSquares = Math.pow(this.sizeN, 2)/2;
-	this.blackSquareFlag = true;
-	this.pieces = pieces;
-	this.whitePieces = pieces || 12;
-	this.blackPieces = pieces || 12;
+	this.game = new DraughtLogic ();
+	this.sizeN = this.game.getsizeN();
 
 	this.cube= new UnitCube(this.scene);
 	this.blackPiece = new Piece(this.scene, "black");
@@ -40,49 +37,46 @@ Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor=Board;
 
 Board.prototype.display = function () {
-	let i;
-	i=0;
 
-  for(let y=(-this.sizeN/2); y<(this.sizeN/2); y++){
-    for(let x=(-this.sizeN/2); x<(this.sizeN/2); x++){
-      this.scene.pushMatrix();
-        this.scene.translate(x+0.5, y+0.5, 0); //+0.5 because the cubes are centered
-
-        if(this.blackSquareFlag){
-					if(this.whitePieces>0){
-						this.scene.pushMatrix();
-							this.scene.translate(0, 0, 0.5);
-							this.whitePiece.display();
-						this.scene.popMatrix();
-						this.whitePieces--;
+	for(let y=0; y<this.sizeN; y++){
+		for(let x=0; x<this.sizeN; x++){
+			this.scene.pushMatrix();
+				this.scene.translate(x-(this.sizeN/2)+0.5, y-(this.sizeN/2)+0.5, 0); //+0.5 because the cubes are centered
+				switch (this.game.getPos(y, x)){
+					case invalidSquare:{
+						this.whiteMaterial.apply();
+						this.scene.registerForPick(y*this.sizeN+x, this.cube);
+						this.cube.display();
 					}
-					else if(this.blackPieces>0 && this.totalBlackSquares == this.blackPieces){
-						this.scene.pushMatrix();
-							this.scene.translate(0, 0, 0.5);
-							this.blackPiece.display();
-						this.scene.popMatrix();
-						this.blackPieces--;
+					break;
+					case emptySquare:{
+						this.blackMaterial.apply();
+						this.scene.registerForPick(y*this.sizeN+x, this.cube);
+						this.cube.display();
 					}
-					this.totalBlackSquares--;
+					break;
+					case whitePiece:{
+						this.blackMaterial.apply();
+						this.scene.registerForPick(y*this.sizeN+x, this.cube);
+						this.cube.display();
+						this.scene.translate(0,0,0.5);
+						this.whitePiece.display();
+					}
 
-          this.blackMaterial.apply();
-        }
-        else{
-          this.whiteMaterial.apply();
-        }
-				this.blackSquareFlag = !this.blackSquareFlag;
-
-				this.scene.registerForPick(i, this.cube);
-				i++;
-        this.cube.display();
-      this.scene.popMatrix();
-    }
-		this.blackSquareFlag = !this.blackSquareFlag;
-  }
-
-	this.whitePieces= this.pieces;
-	this.blackPieces = this.pieces;
-	this.totalBlackSquares = Math.pow(this.sizeN, 2)/2;
-
-
-};
+					break;
+					case blackPiece:
+					{
+						this.blackMaterial.apply();
+						this.scene.registerForPick(y*this.sizeN+x, this.cube);
+						this.cube.display();
+						this.scene.translate(0,0,0.5);
+						this.blackPiece.display();
+					}
+					break;
+					default:
+					break;
+				}
+			this.scene.popMatrix();
+			}
+		}
+	};

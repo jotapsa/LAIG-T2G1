@@ -53,7 +53,7 @@ function MyGraphLeaf(graph, type, args,argsP) {
             }
             break;
         case 'board':
-          if(this.args.length != 2){
+          if(this.args.length != 1){
             console.log("error: number of arguments");
           }
           else{

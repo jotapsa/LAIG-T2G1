@@ -99,7 +99,7 @@
     <TEXTURE id="null" />
 
     <DESCENDANTS>
-      <LEAF type="board" args="8 12"/>
+      <LEAF type="board" args=""/>
     </DESCENDANTS>
   </NODE>
 
