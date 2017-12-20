@@ -24,9 +24,6 @@ MyInterface.prototype.init = function(application) {
 
     this.gui = new dat.GUI();
 
-    // add a group of controls (and open/expand by defult)
-    this.gui.add(this.scene, 'currentFPS', this.scene.fpsList);
-
     return true;
 };
 
@@ -50,39 +47,8 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 }
 
 
-/**
- * Adds a folder containing the IDs of the selectable nodes passed as parameter and the color to apply to our shader.
- */
-MyInterface.prototype.addShaderGroup = function(selectableNodes) {
-  var group = this.gui.addFolder("Shaders");
+MyInterface.prototype.addConfigurationGroup = function() {
+  var group = this.gui.addFolder("Configuration");
   group.open();
 
-  list = {};
-  list["None"] = -1;
-  for(let i=0;i < selectableNodes.length; i++){
-    list[selectableNodes[i]]= i;
-  }
-
-  group.add(this.scene, 'selectedNode',
-    list
-  ).name('Selected Node');
-
-  group.add(this.scene, 'selectedColor',{
-    'Red':0,
-    'Green':1,
-    'Blue':2,
-    'Yellow':3,
-    'Magenta':4,
-    'Cyan':5,
-  }).name('Color');
-}
-
-/**
- * Adds a folder containing the checkbox to reset all animations.
- */
-MyInterface.prototype.addAnimationsOptions = function(){
-  var group = this.gui.addFolder("Animations");
-  group.open();
-
-  group.add(this.scene,'resetAnimation');
 }

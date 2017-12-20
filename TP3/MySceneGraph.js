@@ -930,8 +930,6 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
         else
             this.onXMLMinorError("unknown tag name <" + nodeName + ">");
     }
-    //So we can bind a texture to the shader
-    this.scene.shader.setUniformsValues({uSampler: 1});
 
     if (!oneTextureDefined)
         return "at least one texture must be defined in the TEXTURES block";
@@ -1660,7 +1658,7 @@ MySceneGraph.prototype.resetAnimations = function (node){
 }
 
 /**
- * Render each node of graph, calling renderLeaf for every leaf, multiplying transformation's matrix, activate shader.
+ * Render each node of graph, calling renderLeaf for every leaf, multiplying transformation's matrix.
  */
 MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance, texture){
   var texture = this.textures[node.textureID] || texture;
@@ -1679,11 +1677,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     texture[0].bind(1);
   }
 
-  //SHADERS
-  if(this.scene.selectedNode != -1 && this.selectables[this.scene.selectedNode] == node.nodeID){
-    this.scene.setActiveShader(this.scene.shader);
-  }
-
   for (var i = 0; i<node.children.length; i++){
     //Render all child nodes of node
     this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture);
@@ -1694,10 +1687,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     if(node.leaves[i].object != null){
       this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
     }
-  }
-
-  if(this.scene.selectedNode != -1 && this.selectables[this.scene.selectedNode] == node.nodeID){
-    this.scene.setActiveShader(this.scene.defaultShader);
   }
 }
 

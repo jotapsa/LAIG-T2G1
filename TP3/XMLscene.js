@@ -34,31 +34,7 @@ XMLscene.prototype.init = function(application) {
 
     this.axis = new CGFaxis(this);
 
-    this.currentFPS = 120;
-
-    this.fpsList = {
-      '30' : 30,
-      '60' : 60,
-      '120' : 120,
-      '144' : 144
-    }
-
-    this.resetAnimation = false;
-
-    this.shader = new CGFshader(this.gl, "shaders/grupo1.vert", "shaders/grupo1.frag");
-
-    this.selectedNode = -1;
-
-    this.satColors = [
-      [1, 0, 0], //RED
-      [0, 1, 0], //GREEN
-      [0, 0, 1], //BLUE
-      [1, 1, 0], //YELLOW
-      [1, 0, 1], //MAGENTA
-      [0, 1, 1] //CYAN
-    ];
-
-    this.selectedColor = 4; //MAGENTA
+    this.FPS = 120;
 
     this.setPickEnabled(true);
 }
@@ -123,11 +99,7 @@ XMLscene.prototype.onGraphLoaded = function()
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
 
-    //Adds Selectable Nodes and Shader Color
-    this.interface.addShaderGroup(this.graph.selectables);
-
-    //Adds Animations Reset Option
-    this.interface.addAnimationsOptions();
+    this.interface.addConfigurationGroup();
 }
 
 XMLscene.prototype.logPicking = function ()
@@ -207,7 +179,7 @@ XMLscene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
-    this.setUpdatePeriod(FPSToUpdate/this.currentFPS);
+    this.setUpdatePeriod(FPSToUpdate/this.FPS);
 
     //Get the time in ms so we can update the clock relatively to this
   	var d = new Date();
@@ -217,20 +189,12 @@ XMLscene.prototype.display = function() {
 
 
 /**
- * Updates the scene, shader and animations.
+ * Updates the scene and animations.
  */
 XMLscene.prototype.update = function (currTime){
   var deltaTime = currTime - this.oldCurrTime;
   this.oldCurrTime = currTime;
   this.timeFactor = Math.abs(Math.sin(this.oldCurrTime/1000));
-
-  this.shader.setUniformsValues({
-    timeFactor: this.timeFactor,
-    r:this.satColors[this.selectedColor][0],
-    g:this.satColors[this.selectedColor][1],
-    b:this.satColors[this.selectedColor][2]
-  });
-
 
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
