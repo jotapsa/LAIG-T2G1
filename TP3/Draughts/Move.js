@@ -4,10 +4,12 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Move(y1, x1, y2, x2){
+function Move(startingPos, finalPos){
   //construtor
-  this.startingPos = [y1, x1];
-  this.finalPos = [y2, x2];
+  this.startingPos = startingPos;
+  this.finalPos = finalPos;
+  console.log(this.startingPos);
+  console.log(this.finalPos);
 };
 
 Move.prototype.getStartingPos = function(){

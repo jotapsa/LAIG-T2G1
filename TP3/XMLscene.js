@@ -41,6 +41,8 @@ XMLscene.prototype.init = function(application) {
       theme : THEME.LEGACY,
     }
 
+    this.game = new DraughtGame();
+
     this.setPickEnabled(true);
 }
 
@@ -107,28 +109,40 @@ XMLscene.prototype.onGraphLoaded = function()
     this.interface.addConfigurationGroup();
 }
 
-XMLscene.prototype.logPicking = function ()
-{
-	if (this.pickMode == false) {
-		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
-				if (obj)
-				{
-					var customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
-				}
-			}
-			this.pickResults.splice(0,this.pickResults.length);
-		}
-	}
+XMLscene.prototype.createMove = function(){
+  this.startingPos, this.finalPos;
+
+  if (this.pickMode == false){
+    if (this.pickResults != null && this.pickResults.length > 0){
+      for (let i=0; i< this.pickResults.length; i++){
+        let x, y, id;
+        if (this.pickResults[i][0]){
+          id = this.pickResults[i][1];
+          y = Math.floor(id / 8);
+          x = id % 8;
+          console.log ("Y: " + y + " X: " + x + " ID: " +id);
+          if (this.startingPos == null){
+            this.startingPos = [y, x];
+          }
+          else if (this.finalPos == null){
+            this.finalPos = [y, x];
+            new Move (this.startingPos, this.finalPos);
+            this.startingPos = null;
+            this.finalPos = null;
+          }
+        }
+      }
+      this.pickResults.splice(0,this.pickResults.length);
+    }
+  }
+
 }
 
 /**
  * Displays the scene.
  */
 XMLscene.prototype.display = function() {
-    this.logPicking();
+    this.createMove();
     this.clearPickRegistration();
 
     // ---- BEGIN Background, camera and axis setup

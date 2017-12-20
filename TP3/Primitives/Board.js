@@ -1,8 +1,3 @@
-var invalidSquare = -1;
-var emptySquare = 0;
-var whitePiece = 1;
-var blackPiece = 2;
-
 /**
  * Board
  * @param gl {WebGLRenderingContext}
@@ -11,8 +6,7 @@ var blackPiece = 2;
 function Board(scene){
 	CGFobject.call(this,scene);
 
-	this.game = new DraughtMap ();
-	this.sizeN = this.game.getsizeN();
+	this.sizeN = this.scene.game.getsizeN();
 
 	this.cube= new UnitCube(this.scene);
 	this.blackPiece = new Piece(this.scene, "black");
@@ -42,7 +36,7 @@ Board.prototype.display = function () {
 		for(let x=0; x<this.sizeN; x++){
 			this.scene.pushMatrix();
 				this.scene.translate(x-(this.sizeN/2)+0.5, y-(this.sizeN/2)+0.5, 0); //+0.5 because the cubes are centered
-				switch (this.game.getPos(y, x)){
+				switch (this.scene.game.getPos(y, x)){
 					case CELL.INVALIDSQUARE:{
 						this.whiteMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);

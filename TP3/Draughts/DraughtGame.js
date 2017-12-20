@@ -27,6 +27,10 @@ DraughtGame.prototype.makeMove = function(move){
   console.log(move.getFinalPos);
 }
 
+DraughtGame.prototype.getPos = function(y, x){
+  return this.board.getPos(y,x);
+}
+
 DraughtGame.prototype.getsizeN = function(){
-  return this.sizeN;
+  return this.board.getsizeN();
 }
