@@ -52,7 +52,8 @@ DraughtGame.prototype.picked = function (id){
         move = new Move(this.startingPos, this.finalPos);
       }
       //if valid move
-      if (move){
+      if (move && Human.checkValidMove(move, this.board)){
+        this.moves.push(move);
         this.gameState = GAMESTATE.BLACKS_TURN;
         this.board.movePiece(move);
       }
@@ -70,7 +71,8 @@ DraughtGame.prototype.picked = function (id){
         move = new Move(this.startingPos, this.finalPos);
       }
       //if valid move
-      if (move){
+      if (move && Human.checkValidMove(move, this.board)){
+        this.moves.push(move);
         this.gameState = GAMESTATE.WHITES_TURN;
         this.board.movePiece(move);
       }
