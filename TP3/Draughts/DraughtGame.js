@@ -27,6 +27,7 @@ function DraughtGame(){
 
   this.board = new DraughtMap();
   this.selectedPiece = false;
+  this.selectLOCK = false;
   this.startingPos = null;
   this.finalPos = null;
 };
@@ -37,43 +38,50 @@ DraughtGame.prototype.picked = function (id){
 
   y = Math.floor(id / 8);
   x = id % 8;
-  console.log ("Y: " + y + " X: " + x);
+  console.log("Y: " + y + " X: " + x);
+  console.log("selectLOCK: " + this.selectLOCK);
 
   switch (this.gameState){
-    case GAMESTATE.WHITES_TURN:
-    {
-      if(this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING){
+    case GAMESTATE.WHITES_TURN:{
+      if((this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING) && !this.selectLOCK){
         this.startingPos = [y, x];
         this.selectedPiece = true;
       }
       else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
         this.finalPos = [y, x];
-        this.selecedPiece = false;
+        if(!this.selectLOCK){
+          this.selecedPiece = false;
+        }
         move = new Move(this.startingPos, this.finalPos);
       }
       //if valid move
-      if (move && Human.checkValidMove(move, this.board)){
+      if (move && Human.checkValidMove(this, move, this.board)){
         this.moves.push(move);
-        this.gameState = GAMESTATE.BLACKS_TURN;
+        if(!this.selectLOCK){
+          this.gameState = GAMESTATE.BLACKS_TURN;
+        }
         this.board.makeMove(move);
       }
     }
     break;
-    case GAMESTATE.BLACKS_TURN:
-    {
-      if(this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING){
+    case GAMESTATE.BLACKS_TURN:{
+      if((this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING) && !this.selectLOCK){
         this.startingPos = [y, x];
         this.selectedPiece = true;
       }
       else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
         this.finalPos = [y, x];
-        this.selecedPiece = false;
+        if(!this.selectLOCK){
+          this.selecedPiece = false;
+        }
         move = new Move(this.startingPos, this.finalPos);
       }
       //if valid move
-      if (move && Human.checkValidMove(move, this.board)){
+      if (move && Human.checkValidMove(this, move, this.board)){
         this.moves.push(move);
-        this.gameState = GAMESTATE.WHITES_TURN;
+        if(!this.selectLOCK){
+          this.gameState = GAMESTATE.WHITES_TURN;
+        }
         this.board.makeMove(move);
       }
     }
@@ -83,6 +91,16 @@ DraughtGame.prototype.picked = function (id){
     default:
     break;
   }
+}
+
+DraughtGame.prototype.forceConsecutiveMove = function(startingPos){
+  this.startingPos = startingPos;
+  this.selectedPiece = true;
+  this.selectLOCK = true;
+}
+
+DraughtGame.prototype.toggleOFFselectLOCK = function(){
+  this.selectLOCK = false;
 }
 
 DraughtGame.prototype.getPos = function(y, x){

@@ -1,10 +1,11 @@
 function Human(){
 };
 
-Human.checkValidMove = function(move, map){
-  let forcedMoves, startingPos, playerCell;
+Human.checkValidMove = function(game, move, map){
+  let forcedMoves, startingPos, finalPos, playerCell;
 
   startingPos = move.getStartingPos();
+  finalPos = move.getFinalPos();
   playerCell = map.getPos(startingPos[0], startingPos[1]);
 
   //Calculate forced moves for piece at startingPosition
@@ -14,7 +15,14 @@ Human.checkValidMove = function(move, map){
     for(let i=0; i<forcedMoves.length; i++){
       //Check if the move is a forced move
       if(move.Equals(forcedMoves[i])){
-        //mAYBE Check if further forced moves are possible ??
+        //Check if further forced moves are possible
+        let furtherForcedMoves = Human.ObtainForcedMovesForPiece(finalPos, map, playerCell);
+        if (furtherForcedMoves.length > 0){
+          game.forceConsecutiveMove(finalPos);
+        }
+        else{
+          game.toggleOFFselectLOCK();
+        }
         return true;
       }
     }
@@ -90,49 +98,50 @@ Human.ObtainAllForcedMovesForPlayer = function(playerCell, map){
   return forcedMoves;
 }
 
-Human.ObtainForcedMovesForPiece = function(startingPos, map){
+Human.ObtainForcedMovesForPiece = function(startingPos, map, playerCell){
   let forcedMoves = [], forcedMove = null;
-  
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  playerCell = playerCell || map.getPos(startingPos[0], startingPos[1]);
+
+  switch(playerCell){
     case CELL.BLACK_KING:{
-      if ((forcedMove = Human.UpLeftCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.UpLeftCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
-      if ((forcedMove = Human.UpRightCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.UpRightCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
     }
     //trickle
     case CELL.BLACK_PIECE:{
-      if ((forcedMove = Human.DownLeftCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.DownLeftCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
-      if ((forcedMove = Human.DownRightCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.DownRightCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
     }
     break;
     case CELL.WHITE_KING:{
-      if ((forcedMove = Human.DownLeftCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.DownLeftCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
-      if ((forcedMove = Human.DownRightCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.DownRightCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
     }
     //trickle
     case CELL.WHITE_PIECE:{
-      if ((forcedMove = Human.UpLeftCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.UpLeftCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
-      if ((forcedMove = Human.UpRightCapture(startingPos, map)) != null){
+      if ((forcedMove = Human.UpRightCapture(playerCell, startingPos, map)) != null){
         forcedMoves.push(forcedMove);
         forcedMove = null;
       }
@@ -145,11 +154,11 @@ Human.ObtainForcedMovesForPiece = function(startingPos, map){
   return forcedMoves;
 }
 
-Human.UpLeftCapture = function(startingPos, map){
+Human.UpLeftCapture = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]+2, startingPos[1]-2];
 
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  switch(playerCell){
     case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] < (map.getsizeN()-2)) && (startingPos[1] >= 2) &&
@@ -175,11 +184,11 @@ Human.UpLeftCapture = function(startingPos, map){
   return move;
 }
 
-Human.UpRightCapture = function(startingPos, map){
+Human.UpRightCapture = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]+2, startingPos[1]+2];
 
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  switch(playerCell){
     case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] < (map.getsizeN()-2)) && (startingPos[1] < (map.getsizeN()-2)) &&
@@ -205,11 +214,11 @@ Human.UpRightCapture = function(startingPos, map){
   return move;
 }
 
-Human.DownLeftCapture = function(startingPos, map){
+Human.DownLeftCapture = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]-2, startingPos[1]-2];
 
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  switch(playerCell){
     case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] >= 2) && (startingPos[1] >= 2) &&
@@ -235,11 +244,11 @@ Human.DownLeftCapture = function(startingPos, map){
   return move;
 }
 
-Human.DownRightCapture = function(startingPos, map){
+Human.DownRightCapture = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]-2, startingPos[1]+2];
 
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  switch(playerCell){
     case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] >= 2) && (startingPos[1] < (map.getsizeN()-2)) &&
