@@ -66,6 +66,7 @@ Board.prototype.display = function () {
 						this.scene.translate(0,0,0.21);
 						this.whitePiece.display();
 					}
+					break;
 					case CELL.BLACK_PIECE:{
 						this.blackMaterial.apply();
 						this.scene.registerForPick(y*this.sizeN+x, this.cube);
