@@ -2,20 +2,31 @@ function Human(){
 };
 
 Human.checkValidMove = function(move, map){
-  let forcedMoves;
+  let forcedMoves, startingPos, playerCell;
+
+  startingPos = move.getStartingPos();
+  playerCell = map.getPos(startingPos[0], startingPos[1]);
 
   //Calculate forced moves for piece at startingPosition
-  forcedMoves = Human.ObtainForcedMoves(move, map);
+  forcedMoves = Human.ObtainForcedMovesForPiece(startingPos, map);
 
   if(forcedMoves.length > 0){
-    //do stuff
+    for(let i=0; i<forcedMoves.length; i++){
+      //Check if the move is a forced move
+      if(move.Equals(forcedMoves[i])){
+        //mAYBE Check if further forced moves are possible ??
+        return true;
+      }
+    }
     return false;
   }
 
-  //Calculate all forced moves for player
+  //Calculate forced moves for the player
+  forcedMoves = Human.ObtainAllForcedMovesForPlayer(playerCell, map);
 
-  //If there are no forced moves for player
-
+  if(forcedMoves.length > 0){
+    return false;
+  }
 
   return Human.isValidStandardMove(move, map);
 }
@@ -57,10 +68,31 @@ Human.isValidStandardMove = function(move, map){
   return false;
 }
 
-Human.ObtainForcedMoves = function(move, map){
+Human.ObtainAllForcedMovesForPlayer = function(playerCell, map){
   let forcedMoves = [], forcedMove = null;
-  let startingPos = move.getStartingPos();
 
+  for(let y=0; y<map.getsizeN(); y++){
+    for(let x=0; x<map.getsizeN(); x++){
+      if ((playerCell == CELL.BLACK_KING || playerCell == CELL.BLACK_PIECE) &&
+      (map.getPos(y,x) == CELL.BLACK_KING || map.getPos(y,x) == CELL.BLACK_PIECE)){
+        forcedMoves = forcedMoves.concat(Human.ObtainForcedMovesForPiece([y, x], map));
+      }
+      else if ((playerCell == CELL.WHITE_KING || playerCell == CELL.WHITE_PIECE) &&
+      (map.getPos(y,x) == CELL.WHITE_KING || map.getPos(y,x) == CELL.WHITE_PIECE)){
+        forcedMoves = forcedMoves.concat(Human.ObtainForcedMovesForPiece([y,x], map));
+      }
+      else{
+        //do nothing
+      }
+    }
+  }
+
+  return forcedMoves;
+}
+
+Human.ObtainForcedMovesForPiece = function(startingPos, map){
+  let forcedMoves = [], forcedMove = null;
+  
   switch(map.getPos(startingPos[0], startingPos[1])){
     case CELL.BLACK_KING:{
       if ((forcedMove = Human.UpLeftCapture(startingPos, map)) != null){
@@ -109,7 +141,7 @@ Human.ObtainForcedMoves = function(move, map){
     default:
     break;
   }
-  
+
   return forcedMoves;
 }
 
