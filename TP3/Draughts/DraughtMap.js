@@ -28,16 +28,22 @@ function DraughtMap(){
   this.sizeN = this.map.length;
 };
 
-DraughtMap.prototype.movePiece = function (move){
+DraughtMap.prototype.makeMove = function (move){
   let startingPos, finalPos;
-  let placeHolder;
 
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
 
-  placeHolder = this.map[startingPos[0]][startingPos[1]];
+  this.map[finalPos[0]][finalPos[1]] = this.map[startingPos[0]][startingPos[1]];
   this.map[startingPos[0]][startingPos[1]] = CELL.EMPTY_SQUARE;
-  this.map[finalPos[0]][finalPos[1]] = placeHolder;
+
+  //Should we also promote it ?
+  if(finalPos[0] == 0 && this.map[finalPos[0]][finalPos[1]] == CELL.BLACK_PIECE){
+    this.map[finalPos[0]][finalPos[1]] = CELL.BLACK_KING;
+  }
+  else if(finalPos[0] == (this.sizeN-1) && this.map[finalPos[0]][finalPos[1]] == CELL.WHITE_PIECE){
+    this.map[finalPos[0]][finalPos[1]] = CELL.WHITE_KING;
+  }
 }
 
 DraughtMap.prototype.resetMap = function (){

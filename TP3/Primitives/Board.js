@@ -63,7 +63,7 @@ Board.prototype.display = function () {
 						this.cube.display();
 						this.scene.translate(0,0,0.5);
 						this.whitePiece.display();
-						this.scene.translate(0,0,0.2);
+						this.scene.translate(0,0,0.21);
 						this.whitePiece.display();
 					}
 					case CELL.BLACK_PIECE:{
@@ -80,7 +80,7 @@ Board.prototype.display = function () {
 						this.cube.display();
 						this.scene.translate(0,0,0.5);
 						this.blackPiece.display();
-						this.scene.translate(0,0,0.2);
+						this.scene.translate(0,0,0.21);
 						this.blackPiece.display();
 					}
 					break;

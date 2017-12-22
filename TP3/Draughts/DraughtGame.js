@@ -55,7 +55,7 @@ DraughtGame.prototype.picked = function (id){
       if (move && Human.checkValidMove(move, this.board)){
         this.moves.push(move);
         this.gameState = GAMESTATE.BLACKS_TURN;
-        this.board.movePiece(move);
+        this.board.makeMove(move);
       }
     }
     break;
@@ -74,7 +74,7 @@ DraughtGame.prototype.picked = function (id){
       if (move && Human.checkValidMove(move, this.board)){
         this.moves.push(move);
         this.gameState = GAMESTATE.WHITES_TURN;
-        this.board.movePiece(move);
+        this.board.makeMove(move);
       }
     }
     break;
