@@ -86,10 +86,21 @@ XMLscene.prototype.initLights = function() {
 }
 
 /**
- * Initializes the scene cameras.
- */
+* Initializes the scene cameras.
+*/
 XMLscene.prototype.initCameras = function() {
-    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+  this.cameraConfig = {
+    fov: 0.4,
+    near: 0.1,
+    far: 500
+  }
+
+  this.cameraPerspectives = [];
+  this.cameraPerspectives.push(new CameraPerspective('Blacks Player', vec3.fromValues(0, 15, 15), vec3.fromValues(-1, -1, 0)));
+  this.cameraPerspectives.push(new CameraPerspective('Whites Player', vec3.fromValues(0, 15, -15), vec3.fromValues(0, -1, -1)));
+  this.cameraPerspectives.push(new CameraPerspective('Neutral', vec3.fromValues(0, 20, 0), vec3.fromValues(0, -1, 0)));
+
+  this.camera = new CGFcamera(this.cameraConfig["fov"],this.cameraConfig["near"],this.cameraConfig["far"], this.cameraPerspectives[0].getPosition(), this.cameraPerspectives[0].getDirection());
 }
 
 /* Handler called when the graph is finally loaded.

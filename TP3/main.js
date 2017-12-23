@@ -20,20 +20,19 @@ serialInclude(['../lib/CGF.js', 'Utils.js', 'XMLscene.js', 'MySceneGraph.js',
        'Draughts/Move.js',
        'Animations/Animation.js', 'Animations/CircularAnimation.js',
        'Animations/LinearAnimation.js','Animations/BezierAnimation.js', 'Animations/ComboAnimation.js',
+       'Cameras/CameraPerspective.js',
 
 main=function()
 {
-	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+  // Standard application, scene and interface setup
+  var app = new CGFapplication(document.body);
+  var myInterface = new MyInterface();
+  var myScene = new XMLscene(myInterface);
 
-    app.init();
+  app.init();
 
-    app.setScene(myScene);
-    app.setInterface(myInterface);
-
-    myInterface.setActiveCamera(myScene.camera);
+  app.setScene(myScene);
+  app.setInterface(myInterface);
 
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
@@ -45,7 +44,7 @@ main=function()
 	var myGraph = new MySceneGraph(filename, myScene);
 
 	// start
-    app.run();
+  app.run();
 }
 
 ]);
