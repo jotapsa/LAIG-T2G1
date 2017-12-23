@@ -5,10 +5,17 @@ GAMESTATE = {
 };
 
 GAMEMODE = {
-    HUMAN_VS_HUMAN: 0,
-    HUMAN_VS_CPU: 1,
-    CPU_VS_CPU: 2
+  HUMAN_VS_HUMAN: 0,
+  HUMAN_VS_CPU: 1,
+  CPU_VS_CPU: 2
 };
+
+DIFICULTY = {
+  EASY: 0,
+  MEDIUM: 1,
+  HARD: 2,
+  IMPOSSIBLE: 3
+}
 
 THEME = {
     NORMAL: 0,
@@ -23,13 +30,24 @@ THEME = {
 function DraughtGame(){
   //construtor
   this.moves = [];
+  this.gameMode = GAMEMODE.HUMAN_VS_HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
+  this.dificulty = DIFICULTY.HARD;
 
   this.board = new DraughtMap();
   this.selectedPiece = false;
   this.selectLOCK = false;
   this.startingPos = null;
   this.finalPos = null;
+
+  //scoring variables
+  this.player1Wins = 0;
+  this.player2Wins = 0;
+  this.computerWins = 0;
+
+  this.whitePieces = 12;
+  this.blackPieces = 12;
+
 };
 
 DraughtGame.prototype.picked = function (id){
@@ -108,4 +126,17 @@ DraughtGame.prototype.getSelectedPiecePos = function(){
     return this.startingPos;
   }
   return null;
+}
+
+DraughtGame.prototype.resetGame = function(){
+  this.board.resetMap();
+
+  this.selectedPiece = false;
+  this.selectLOCK = false;
+  this.startingPos = null;
+  this.finalPos = null;
+
+  //scoring variables
+  this.whitePieces = 12;
+  this.blackPieces = 12;
 }

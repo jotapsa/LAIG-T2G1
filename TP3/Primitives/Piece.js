@@ -47,6 +47,7 @@ Piece.prototype.constructor=Piece;
 
 Piece.prototype.display = function () {
   this.scene.pushMatrix();
+		this.scene.rotate(-90 * degToRad, 1, 0, 0);
     this.pieceMaterial.apply();
     this.cylinder.display();
   this.scene.popMatrix();

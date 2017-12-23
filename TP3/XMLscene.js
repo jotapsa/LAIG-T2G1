@@ -44,11 +44,7 @@ XMLscene.prototype.init = function(application) {
       uSampler2: 2
     });
 
-
-    this.gameConfig = {
-      gameMode : GAMEMODE.HUMAN_VS_HUMAN,
-      theme : THEME.LEGACY,
-    }
+    this.theme = THEME.LEGACY;
 
     this.game = new DraughtGame();
 

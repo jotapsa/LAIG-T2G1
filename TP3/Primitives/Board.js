@@ -38,7 +38,7 @@ Board.prototype.display = function (){
 	for(let y=0; y<this.sizeN; y++){
 		for(let x=0; x<this.sizeN; x++){
 			this.scene.pushMatrix();
-			this.scene.translate(x-(this.sizeN/2)+0.5, y-(this.sizeN/2)+0.5, 0); //+0.5 because the cubes are centered
+			this.scene.translate(x-(this.sizeN/2)+0.5, 0, y-(this.sizeN/2)+0.5); //+0.5 because the cubes are centered
 			switch (this.scene.game.board.getPos(y, x)){
 				case CELL.INVALID_SQUARE:{
 					this.whiteMaterial.apply();
@@ -56,10 +56,9 @@ Board.prototype.display = function (){
 					this.blackMaterial.apply();
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
-					this.scene.translate(0,0,0.5);
+					this.scene.translate(0,0.5,0);
 					//Is there a selectedPiece ?
 					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
-						//console.log("ASD");
 						this.selectedPiece.display();
 					}
 					else{
@@ -71,16 +70,16 @@ Board.prototype.display = function (){
 					this.blackMaterial.apply();
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
-					this.scene.translate(0,0,0.5);
+					this.scene.translate(0,0.5,0);
 					//Is there a selectedPiece ?
 					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
 						this.selectedPiece.display();
-						this.scene.translate(0,0,0.21);
+						this.scene.translate(0,0.21,0);
 						this.selectedPiece.display();
 					}
 					else{
 						this.whitePiece.display();
-						this.scene.translate(0,0,0.21);
+						this.scene.translate(0,0.21,0);
 						this.whitePiece.display();
 					}
 				}
@@ -89,7 +88,7 @@ Board.prototype.display = function (){
 					this.blackMaterial.apply();
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
-					this.scene.translate(0,0,0.5);
+					this.scene.translate(0,0.5,0);
 					//Is there a selectedPiece ?
 					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
 						this.selectedPiece.display();
@@ -103,16 +102,16 @@ Board.prototype.display = function (){
 					this.blackMaterial.apply();
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
-					this.scene.translate(0,0,0.5);
+					this.scene.translate(0,0.5,0);
 					//Is there a selectedPiece ?
 					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
 						this.selectedPiece.display();
-						this.scene.translate(0,0,0.21);
+						this.scene.translate(0,0.21,0);
 						this.selectedPiece.display();
 					}
 					else{
 						this.blackPiece.display();
-						this.scene.translate(0,0,0.21);
+						this.scene.translate(0,0.21,0);
 						this.blackPiece.display();
 					}
 				}
