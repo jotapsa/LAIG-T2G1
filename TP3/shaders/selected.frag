@@ -10,8 +10,8 @@ varying vec2 vTextureCoord;
 
 void main() {
 	//vec4 texture = texture2D(uSampler, vTextureCoord);
-	//vec4 color = vec4(0*timeFactor, 0*timeFactor, 1.0*timeFactor, 1.0);
+	vec4 color = vec4(0.0*timeFactor, 0.0*timeFactor, 1.0*timeFactor, 1.0);
 	//color = color + texture;
 
-	gl_FragColor = vec4(0, 0, 0, 1);
+	gl_FragColor = color;
 }
