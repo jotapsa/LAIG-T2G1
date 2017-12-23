@@ -9,33 +9,45 @@ function Piece(scene, colour){
 	this.cylinder = new Cylinder(this.scene, 0.2, 0.4, 0.4, 20, 20, 1, 1);
   this.colour = colour;
 
-	this.whitePieceMaterial = new CGFappearance(this.scene);
-	this.whitePieceMaterial.setAmbient(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setSpecular(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
-	this.whitePieceMaterial.setShininess(1);
-	this.whitePieceMaterial.loadTexture ("scenes/images/white_checker.jpg");
-
-	this.blackPieceMaterial = new CGFappearance(this.scene);
-	this.blackPieceMaterial.setAmbient(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setSpecular(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setDiffuse(0.5, 0.5, 0.5,1);
-	this.blackPieceMaterial.setShininess(1);
-	this.blackPieceMaterial.loadTexture("scenes/images/black_checker.jpg");
-
-};
+	switch(this.colour){
+		case "white":{
+			this.pieceMaterial = new CGFappearance(this.scene);
+			this.pieceMaterial.setAmbient(0.5, 0.5, 0.5, 1);
+			this.pieceMaterial.setSpecular(0.5, 0.5, 0.5, 1);
+			this.pieceMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
+			this.pieceMaterial.setShininess(1);
+			this.pieceMaterial.loadTexture ("scenes/images/white_checker.jpg");
+		}
+		break;
+		case "black":{
+			this.pieceMaterial = new CGFappearance(this.scene);
+			this.pieceMaterial.setAmbient(0.5, 0.5, 0.5,1);
+			this.pieceMaterial.setSpecular(0.5, 0.5, 0.5,1);
+			this.pieceMaterial.setDiffuse(0.5, 0.5, 0.5,1);
+			this.pieceMaterial.setShininess(1);
+			this.pieceMaterial.loadTexture("scenes/images/black_checker.jpg");
+		}
+		break;
+		case "selected":{
+			this.pieceMaterial = new CGFappearance(this.scene);
+			this.pieceMaterial.setAmbient(1, 1, 1,1);
+			this.pieceMaterial.setSpecular(1, 1, 1,1);
+			this.pieceMaterial.setDiffuse(1, 1, 1,1);
+			this.pieceMaterial.setShininess(1);
+			this.pieceMaterial.loadTexture("scenes/images/sat_blue.png");
+		}
+		break;
+		default:
+		break;
+	}
+}
 
 Piece.prototype = Object.create(CGFobject.prototype);
 Piece.prototype.constructor=Piece;
 
 Piece.prototype.display = function () {
   this.scene.pushMatrix();
-    if(this.colour == "black"){
-      this.blackPieceMaterial.apply();
-    }
-    else if(this.colour == "white"){
-      this.whitePieceMaterial.apply();
-    }
+    this.pieceMaterial.apply();
     this.cylinder.display();
   this.scene.popMatrix();
 };
