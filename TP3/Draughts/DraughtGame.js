@@ -103,10 +103,9 @@ DraughtGame.prototype.toggleOFFselectLOCK = function(){
   this.selectLOCK = false;
 }
 
-DraughtGame.prototype.getPos = function(y, x){
-  return this.board.getPos(y,x);
-}
-
-DraughtGame.prototype.getsizeN = function(){
-  return this.board.getsizeN();
+DraughtGame.prototype.getSelectedPiecePos = function(){
+  if(this.selectedPiece){
+    return this.startingPos;
+  }
+  return null;
 }
