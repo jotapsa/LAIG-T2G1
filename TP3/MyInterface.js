@@ -46,12 +46,17 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-MyInterface.prototype.addCameraOptions = function(){
+MyInterface.prototype.addCameraGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
-  let cameraController = this.gui.add(this.scene, 'perspective', Object.keys(this.scene.cameraPerspectives)).name('Perspective');
+  var cameraGroup = this.gui.addFolder("Camera");
+  cameraGroup.open();
+
+  let cameraController = cameraGroup.add(this.scene, 'perspective', Object.keys(this.scene.cameraPerspectives)).name('Perspective');
   cameraController.onChange(function(){
     self.scene.changeCameraPerspective();
   });
+
+  cameraGroup.add(this.scene, 'cameraAnimationSpeed', 0, 20);
 }
 
 MyInterface.prototype.addConfigurationGroup = function() {

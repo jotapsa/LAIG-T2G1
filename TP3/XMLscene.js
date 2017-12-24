@@ -96,16 +96,17 @@ XMLscene.prototype.initCameras = function() {
   }
 
   this.cameraPerspectives = {
-    "Blacks Player": new CameraPerspective(vec3.fromValues(0, 15, 15), vec3.fromValues(-1, -1, 0)),
-    "Whites Player": new CameraPerspective(vec3.fromValues(0, 15, -15), vec3.fromValues(0, -1, -1)),
-    "Neutral": new CameraPerspective(vec3.fromValues(0, 20, 0), vec3.fromValues(0, -1, 0))
+    "Blacks Player": new CameraPerspective(vec3.fromValues(0, 15, 15), vec3.fromValues(0, 0, 0)),
+    "Whites Player": new CameraPerspective(vec3.fromValues(0, 15, -15), vec3.fromValues(0, 0, 0)),
+    "Neutral": new CameraPerspective(vec3.fromValues(0, 20, 0), vec3.fromValues(0, 0, 0))
   }
   this.perspective = "Blacks Player";
 
-  this.perspectiveChangeSpeed = 5;
-  this.perspectiveChange = null;
+  this.cameraAnimationSpeed = 10;
+  this.cameraAnimation = null;
 
-  this.camera = new CGFcamera(this.cameraConfig["fov"],this.cameraConfig["near"],this.cameraConfig["far"], this.cameraPerspectives[this.perspective].position, this.cameraPerspectives[this.perspective].direction);
+  this.camera = new CGFcamera(this.cameraConfig["fov"],this.cameraConfig["near"],this.cameraConfig["far"],
+    this.cameraPerspectives[this.perspective].position,this.cameraPerspectives[this.perspective].target);
 }
 
 /* Handler called when the graph is finally loaded.
@@ -126,7 +127,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addCameraOptions();
+    this.interface.addCameraGroup();
     this.interface.addConfigurationGroup();
 }
 
@@ -231,7 +232,10 @@ XMLscene.prototype.update = function (currTime){
 }
 
 XMLscene.prototype.changeCameraPerspective = function(){
-  this.perspectiveChange = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.perspectiveChangeSpeed);
+  console.log(this.camera);
+  console.log(this.cameraPerspectives[this.perspective]);
+  console.log(this.perspective);
+  this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
 
 /**
@@ -241,8 +245,11 @@ XMLscene.prototype.changeCameraPerspective = function(){
  */
 
 XMLscene.prototype.updateCamera = function(deltaTime){
-  if(this.perspectiveChange == null){
+  if(this.cameraAnimation == null){
     return;
   }
 
+  this.cameraAnimation.update(deltaTime);
+  this.camera.setPosition(this.cameraAnimation.currPos);
+  this.camera.setTarget(this.cameraAnimation.currTarget);
 }
