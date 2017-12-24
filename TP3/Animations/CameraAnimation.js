@@ -8,14 +8,14 @@ class CameraAnimation extends Animation{
     this.startPerspective = startPerspective;
     this.finalPerspective = finalPerspective;
 
-    this.targetCenter = midPoint(this.startPerspective.target, this.finalPerspective.target);
-    this.positionCenter = midPoint(this.startPerspective.position, this.finalPerspective.position);
-
-    this.targetRadius = distance(this.targetCenter, this.finalPerspective.target);
-    this.positionRadius = distance(this.positionCenter, this.finalPerspective.position);
-
-    this.length = Math.PI * this.positionRadius;
+    this.length = distance(this.startPerspective.position, this.finalPerspective.position);
     this.expectedTime = this.length / this.speed;
+
+    this.position = this.startPerspective.position.slice(0);
+    this.direction = normalizeVector(subtractPoints(this.startPerspective.position, this.finalPerspective.position));
+
+    this.target = this.startPerspective.target.slice(0);
+    this.targetdirection = normalizeVector(subtractPoints(this.startPerspective.target, this.finalPerspective.target));
 
     this.resetAnimation();
   }
@@ -27,42 +27,18 @@ class CameraAnimation extends Animation{
     }
 
     this.elapsedTime += deltaTime/1000;
+    this.position = addPoints(this.position, multVector(multVector(this.direction, this.speed),deltaTime/1000));
+    this.target = addPoints(this.target, multVector(multVector(this.targetdirection, this.speed), deltaTime/1000));
 
-    this.cameraAngle = Math.PI * this.elapsedTime/this.expectedTime;
-
-    this.currTarget = [
-      this.targetCenter[0] + this.targetRadius*Math.sin(this.cameraAngle),
-      this.targetCenter[1],
-      this.targetCenter[2] + this.targetRadius*Math.cos(this.cameraAngle),
-    ];
-
-    this.currPos = [
-      this.positionCenter[0] + this.positionRadius*Math.sin(this.cameraAngle),
-      this.positionCenter[1],
-      this.positionCenter[2] + this.positionRadius*Math.cos(this.cameraAngle),
-    ];
-
-    if (this.elapsedTime >= this.expectedTime) {
+    if (this.elapsedTime >= (this.expectedTime*0.95)) {
         this.done=true;
     }
-    deltaTime = deltaTime /1000;
   }
 
   resetAnimation(){
     this.elapsedTime = 0;
-    this.cameraAngle = Math.PI * this.elapsedTime/this.expectedTime;
-
-    this.currTarget = [
-      this.targetCenter[0] + this.targetRadius*Math.sin(this.cameraAngle),
-      this.targetCenter[1],
-      this.targetCenter[2] + this.targetRadius*Math.cos(this.cameraAngle),
-    ];
-
-    this.currPos = [
-      this.positionCenter[0] + this.positionRadius*Math.sin(this.cameraAngle),
-      this.positionCenter[1],
-      this.positionCenter[2] + this.positionRadius*Math.cos(this.cameraAngle),
-    ];
+    this.position = this.startPerspective.position.slice(0);
+    this.target = this.startPerspective.target.slice(0);
 
     this.done = false;
   }

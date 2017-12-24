@@ -98,7 +98,7 @@ XMLscene.prototype.initCameras = function() {
   this.cameraPerspectives = {
     "Blacks Player": new CameraPerspective(vec3.fromValues(0, 15, 15), vec3.fromValues(0, 0, 0)),
     "Whites Player": new CameraPerspective(vec3.fromValues(0, 15, -15), vec3.fromValues(0, 0, 0)),
-    "Neutral": new CameraPerspective(vec3.fromValues(0, 20, 0), vec3.fromValues(0, 0, 0))
+    "Neutral": new CameraPerspective(vec3.fromValues(0, 15, 0), vec3.fromValues(0, 0, 0))
   }
   this.perspective = "Blacks Player";
 
@@ -249,7 +249,11 @@ XMLscene.prototype.updateCamera = function(deltaTime){
     return;
   }
 
+  if(this.cameraAnimation.isDone()){
+    return;
+  }
+
   this.cameraAnimation.update(deltaTime);
-  this.camera.setPosition(this.cameraAnimation.currPos);
-  this.camera.setTarget(this.cameraAnimation.currTarget);
+  this.camera.setPosition(this.cameraAnimation.position);
+  this.camera.setTarget(this.cameraAnimation.target);
 }

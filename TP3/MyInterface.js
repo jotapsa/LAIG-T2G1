@@ -56,7 +56,7 @@ MyInterface.prototype.addCameraGroup = function(){
     self.scene.changeCameraPerspective();
   });
 
-  cameraGroup.add(this.scene, 'cameraAnimationSpeed', 0, 20);
+  cameraGroup.add(this.scene, 'cameraAnimationSpeed', 1, 20);
 }
 
 MyInterface.prototype.addConfigurationGroup = function() {
