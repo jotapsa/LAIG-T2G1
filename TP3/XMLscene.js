@@ -125,10 +125,10 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-    // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
     this.interface.addCameraGroup();
     this.interface.addConfigurationGroup();
+    this.interface.addGameOptions();
 }
 
 XMLscene.prototype.handlePicking = function(){
@@ -232,9 +232,6 @@ XMLscene.prototype.update = function (currTime){
 }
 
 XMLscene.prototype.changeCameraPerspective = function(){
-  console.log(this.camera);
-  console.log(this.cameraPerspectives[this.perspective]);
-  console.log(this.perspective);
   this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
 

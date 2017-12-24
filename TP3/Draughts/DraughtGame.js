@@ -128,6 +128,13 @@ DraughtGame.prototype.getSelectedPiecePos = function(){
   return null;
 }
 
+DraughtGame.prototype.undoMove = function(){
+  //If we have made a move
+  if(this.moves.length){
+    //Undo it
+  }
+}
+
 DraughtGame.prototype.resetGame = function(){
   this.board.resetMap();
 

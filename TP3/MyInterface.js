@@ -81,3 +81,7 @@ MyInterface.prototype.addConfigurationGroup = function() {
         'Normal Small Star Empires': THEME.NORMAL
     }).name('Theme');
 }
+
+MyInterface.prototype.addGameOptions = function(){
+  this.gui.add(this.scene.game, 'undoMove').name('Undo Move');
+}
