@@ -18,8 +18,8 @@ serialInclude(['../lib/CGF.js', 'Utils.js', 'XMLscene.js', 'MySceneGraph.js',
        'Primitives/Board.js', 'Primitives/Piece.js', 'Draughts/DraughtMap.js',
        'Draughts/DraughtGame.js', 'Draughts/Computer.js', 'Draughts/Human.js',
        'Draughts/Move.js',
-       'Animations/Animation.js', 'Animations/CircularAnimation.js',
-       'Animations/LinearAnimation.js','Animations/BezierAnimation.js', 'Animations/ComboAnimation.js',
+       'Animations/Animation.js', 'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js',
+       'Animations/BezierAnimation.js', 'Animations/ComboAnimation.js', 'Animations/CameraAnimation.js',
        'Cameras/CameraPerspective.js',
 
 main=function()

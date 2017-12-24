@@ -44,8 +44,6 @@ XMLscene.prototype.init = function(application) {
       uSampler2: 2
     });
 
-    this.perspective = "Neutral";
-
     this.theme = THEME.LEGACY;
 
     this.game = new DraughtGame();
@@ -97,12 +95,17 @@ XMLscene.prototype.initCameras = function() {
     far: 500
   }
 
-  this.cameraPerspectives = [];
-  this.cameraPerspectives.push(new CameraPerspective('Blacks Player', vec3.fromValues(0, 15, 15), vec3.fromValues(-1, -1, 0)));
-  this.cameraPerspectives.push(new CameraPerspective('Whites Player', vec3.fromValues(0, 15, -15), vec3.fromValues(0, -1, -1)));
-  this.cameraPerspectives.push(new CameraPerspective('Neutral', vec3.fromValues(0, 20, 0), vec3.fromValues(0, -1, 0)));
+  this.cameraPerspectives = {
+    "Blacks Player": new CameraPerspective(vec3.fromValues(0, 15, 15), vec3.fromValues(-1, -1, 0)),
+    "Whites Player": new CameraPerspective(vec3.fromValues(0, 15, -15), vec3.fromValues(0, -1, -1)),
+    "Neutral": new CameraPerspective(vec3.fromValues(0, 20, 0), vec3.fromValues(0, -1, 0))
+  }
+  this.perspective = "Blacks Player";
 
-  this.camera = new CGFcamera(this.cameraConfig["fov"],this.cameraConfig["near"],this.cameraConfig["far"], this.cameraPerspectives[0].getPosition(), this.cameraPerspectives[0].getDirection());
+  this.perspectiveChangeSpeed = 5;
+  this.perspectiveChange = null;
+
+  this.camera = new CGFcamera(this.cameraConfig["fov"],this.cameraConfig["near"],this.cameraConfig["far"], this.cameraPerspectives[this.perspective].position, this.cameraPerspectives[this.perspective].direction);
 }
 
 /* Handler called when the graph is finally loaded.
@@ -227,24 +230,19 @@ XMLscene.prototype.update = function (currTime){
   }
 }
 
-XMLscene.prototype.updateCamera = function(deltaTime){
-  //do stuff
+XMLscene.prototype.changeCameraPerspective = function(){
+  this.perspectiveChange = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.perspectiveChangeSpeed);
 }
 
 /**
- * Method to return Camera Perspective names.
- *
- * @method getPerspectiveNames
- * @return {Array} 	names 	Names of Camera Perspectives
+ * @method 	updateCamera
+ * @param	{int}	deltaTime	delta since the last time there was an update
  *
  */
 
-XMLscene.prototype.getPerspectiveNames = function(){
-	let names = [];
-
-	for (let perspective of this.cameraPerspectives){
-		names.push(perspective.getName());
+XMLscene.prototype.updateCamera = function(deltaTime){
+  if(this.perspectiveChange == null){
+    return;
   }
 
-	return names;
 }
