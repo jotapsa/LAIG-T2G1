@@ -44,6 +44,8 @@ XMLscene.prototype.init = function(application) {
       uSampler2: 2
     });
 
+    this.perspective = "Neutral";
+
     this.theme = THEME.LEGACY;
 
     this.game = new DraughtGame();
@@ -121,7 +123,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-
+    this.interface.addCameraOptions();
     this.interface.addConfigurationGroup();
 }
 
@@ -216,9 +218,33 @@ XMLscene.prototype.update = function (currTime){
     timeFactor: this.timeFactor
   });
 
+  this.updateCamera(deltaTime);
+
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
   if(!anim && this.resetAnimation){
     this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
   }
-};
+}
+
+XMLscene.prototype.updateCamera = function(deltaTime){
+  //do stuff
+}
+
+/**
+ * Method to return Camera Perspective names.
+ *
+ * @method getPerspectiveNames
+ * @return {Array} 	names 	Names of Camera Perspectives
+ *
+ */
+
+XMLscene.prototype.getPerspectiveNames = function(){
+	let names = [];
+
+	for (let perspective of this.cameraPerspectives){
+		names.push(perspective.getName());
+  }
+
+	return names;
+}

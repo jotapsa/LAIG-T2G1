@@ -46,6 +46,13 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
+MyInterface.prototype.addCameraOptions = function(){
+  var self = this; //maintain reference to the original this in a change of context
+  let cameraController = this.gui.add(this.scene, 'perspective', this.scene.getPerspectiveNames()).name('Perspective');
+  cameraController.onChange(function(){
+    //self.scene.lol();
+  });
+}
 
 MyInterface.prototype.addConfigurationGroup = function() {
   var configGroup = this.gui.addFolder("Configuration");
