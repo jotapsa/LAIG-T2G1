@@ -17,11 +17,29 @@ DraughtAux.checkValidMove = function(game, move, map){
       if(move.Equals(forcedMoves[i])){
         //Check if further forced moves are possible
         let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, map, playerCell);
-        if (furtherForcedMoves.length > 0){
-          game.forceConsecutiveMove(finalPos);
-        }
-        else{
-          game.toggleOFFselectLOCK();
+        switch (playerCell) {
+          case CELL.WHITE_PIECE:
+          case CELL.WHITE_KING:{
+            if(furtherForcedMoves.length>0){
+              game.whites.forceConsecutiveMove(finalPos);
+            }
+            else{
+              game.whites.toggleOFFselectLOCK(finalPos);
+            }
+          }
+          break;
+          case CELL.BLACK_PIECE:
+          case CELL.BLACK_KING:{
+            if(furtherForcedMoves.length>0){
+              game.blacks.forceConsecutiveMove(finalPos);
+            }
+            else{
+              game.blacks.toggleOFFselectLOCK(finalPos);
+            }
+          }
+          break;
+          default:
+          break;
         }
         return true;
       }

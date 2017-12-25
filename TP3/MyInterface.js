@@ -63,17 +63,22 @@ MyInterface.prototype.addConfigurationGroup = function() {
   var configGroup = this.gui.addFolder("Configuration");
   configGroup.open();
 
-  configGroup.add(this.scene.game, 'gameMode', {
-       'Human vs Human': GAMEMODE.HUMAN_VS_HUMAN,
-       'Human vs CPU': GAMEMODE.HUMAN_VS_CPU,
-   }).name('Game Mode');
+  configGroup.add(this.scene.game, 'whitesOwner', {
+       'Human': OWNER.HUMAN,
+       'CPU': OWNER.CPU,
+   }).name('Whites');
 
-   configGroup.add(this.scene.game, 'dificulty', {
-     'Easy': DIFICULTY.EASY,
-     'Medium': DIFICULTY.MEDIUM,
-     'Hard': DIFICULTY.HARD,
-     'Impossible': DIFICULTY.IMPOSSIBLE,
-   }).name('Dificulty');
+   configGroup.add(this.scene.game, 'blacksOwner', {
+        'Human': OWNER.HUMAN,
+        'CPU': OWNER.CPU,
+    }).name('Blacks');
+
+   configGroup.add(this.scene.game, 'difficulty', {
+     'Easy': DIFFICULTY.EASY,
+     'Medium': DIFFICULTY.MEDIUM,
+     'Hard': DIFFICULTY.HARD,
+     'Impossible': DIFFICULTY.IMPOSSIBLE,
+   }).name('CPU Difficulty');
 
    configGroup.add(this.scene, 'theme', {
         'SSE Legacy ': THEME.LEGACY,

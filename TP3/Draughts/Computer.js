@@ -10,6 +10,6 @@ function Computer(piece, difficulty){
   this.wins = 0;
 };
 
-Computer.prototype.getWins(){
+Computer.prototype.getWins = function(){
   return this.wins;
 }
