@@ -33,7 +33,16 @@ Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor=Board;
 
 Board.prototype.display = function (){
-	this.selectedPiecePos = this.scene.game.getSelectedPiecePos();
+	switch (this.scene.game.getGameState()) {
+		case GAMESTATE.BLACKS_TURN:
+			this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
+			break;
+		case GAMESTATE.WHITES_TURN:
+			this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
+			break;
+		default:
+		break;
+	}
 
 	for(let y=0; y<this.sizeN; y++){
 		for(let x=0; x<this.sizeN; x++){

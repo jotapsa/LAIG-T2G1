@@ -1,16 +1,15 @@
 GAMESTATE = {
-  WHITES_TURN: 0,
-  BLACKS_TURN: 1,
-  GAME_FINISHED: 2,
+  WHITES_TURN: 1,
+  BLACKS_TURN: 2,
+  GAME_FINISHED: 3,
 };
 
-GAMEMODE = {
-  HUMAN_VS_HUMAN: 0,
-  HUMAN_VS_CPU: 1,
-  CPU_VS_CPU: 2
-};
+OWNER = {
+  HUMAN: 0,
+  CPU: 1,
+}
 
-DIFICULTY = {
+DIFFICULTY = {
   EASY: 0,
   MEDIUM: 1,
   HARD: 2,
@@ -30,108 +29,85 @@ THEME = {
 function DraughtGame(){
   //construtor
   this.moves = [];
-  this.gameMode = GAMEMODE.HUMAN_VS_HUMAN;
+  this.whitesOwner = OWNER.HUMAN;
+  this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
-  this.dificulty = DIFICULTY.HARD;
+  this.difficulty = DIFFICULTY.HARD;
 
   this.board = new DraughtMap();
-  this.selectedPiece = false;
-  this.selectLOCK = false;
-  this.startingPos = null;
-  this.finalPos = null;
+  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
   //scoring variables
   this.player1Wins = 0;
   this.player2Wins = 0;
-  this.computerWins = 0;
+  this.computer1Wins = 0;
+  this.computer2Wins = 0;
 
   this.whitePieces = 12;
   this.blackPieces = 12;
 
-  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-  console.log(this.IDGamma);
+  if(this.whitesOwner == OWNER.HUMAN){
+    this.whites = new Player("Whites");
+  }
+  else if(this.whitesOwner == OWNER.CPU){
+    this.whites = new Computer("Whites", this.difficulty);
+  }
+
+  if(this.blacksOwner == OWNER.HUMAN){
+    this.blacks = new Player("Blacks");
+  }
+  else if(this.blacksOwner == OWNER.CPU){
+    this.blacks = new Computer("Blacks", this.difficulty);
+  }
 };
 
+DraughtGame.prototype.getGameState = function(){
+  return this.gameState;
+}
+
 DraughtGame.prototype.picked = function (id){
-  let move=null; //reset move everytime
-  let y, x;
+  let move;
 
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
   }
 
-  y = Math.floor(id / 8);
-  x = id % 8;
-  console.log("Y: " + y + " X: " + x);
-  console.log("selectLOCK: " + this.selectLOCK);
-
-  switch (this.gameState){
+  switch(this.gameState){
     case GAMESTATE.WHITES_TURN:{
-      if((this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING) && !this.selectLOCK){
-        this.startingPos = [y, x];
-        this.selectedPiece = true;
-      }
-      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
-        this.finalPos = [y, x];
-        if(!this.selectLOCK){
-          this.selecedPiece = false;
-        }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.WHITES_TURN);
-      }
-      //if valid move
-      if (move && Human.checkValidMove(this, move, this.board)){
-        this.moves.push(move);
-        if(!this.selectLOCK){
-          this.gameState = GAMESTATE.BLACKS_TURN;
-        }
-        this.board.makeMove(move);
-      }
+      move = this.whites.createMove(id, this.board);
     }
     break;
     case GAMESTATE.BLACKS_TURN:{
-      if((this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING) && !this.selectLOCK){
-        this.startingPos = [y, x];
-        this.selectedPiece = true;
-      }
-      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
-        this.finalPos = [y, x];
-        if(!this.selectLOCK){
-          this.selecedPiece = false;
-        }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.BLACKS_TURN);
-      }
-      //if valid move
-      if (move && Human.checkValidMove(this, move, this.board)){
-        this.moves.push(move);
-        if(!this.selectLOCK){
-          this.gameState = GAMESTATE.WHITES_TURN;
-        }
-        this.board.makeMove(move);
-      }
+      move = this.blacks.createMove(id, this.board);
+    }
+    default:
+    break;
+  }
+
+  //if valid move
+  if (move && DraughtAux.checkValidMove(this, move, this.board)){
+    this.moves.push(move);
+    if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
+      this.nextTurn();
+    }
+    this.board.makeMove(move);
+  }
+  console.log(move);
+}
+
+DraughtGame.prototype.nextTurn = function(){
+  switch(this.gameState){
+    case (GAMESTATE.BLACKS_TURN):{
+      this.gameState = GAMESTATE.WHITES_TURN;
     }
     break;
-    case GAMESTATE.GAME_FINISHED:
+    case (GAMESTATE.WHITES_TURN):{
+      this.gameState = GAMESTATE.BLACKS_TURN;
+    }
     break;
     default:
     break;
   }
-}
-
-DraughtGame.prototype.forceConsecutiveMove = function(startingPos){
-  this.startingPos = startingPos;
-  this.selectedPiece = true;
-  this.selectLOCK = true;
-}
-
-DraughtGame.prototype.toggleOFFselectLOCK = function(){
-  this.selectLOCK = false;
-}
-
-DraughtGame.prototype.getSelectedPiecePos = function(){
-  if(this.selectedPiece){
-    return this.startingPos;
-  }
-  return null;
 }
 
 DraughtGame.prototype.undoMove = function(){
