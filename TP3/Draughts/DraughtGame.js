@@ -49,65 +49,31 @@ function DraughtGame(){
   this.blackPieces = 12;
 
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-  console.log(this.IDGamma);
+
+  switch(this.gameMode){
+    case (GAMEMODE.HUMAN_VS_HUMAN):
+      this.whites = new Player("Whites");
+      this.blacks = new Player("Blacks");
+    break;
+    default:
+    break;
+  }
+
 };
 
-DraughtGame.prototype.picked = function (id){
-  let move=null; //reset move everytime
-  let y, x;
 
+DraughtGame.prototype.picked = function (id){
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
   }
 
-  y = Math.floor(id / 8);
-  x = id % 8;
-  console.log("Y: " + y + " X: " + x);
-  console.log("selectLOCK: " + this.selectLOCK);
-
   switch (this.gameState){
     case GAMESTATE.WHITES_TURN:{
-      if((this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING) && !this.selectLOCK){
-        this.startingPos = [y, x];
-        this.selectedPiece = true;
-      }
-      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
-        this.finalPos = [y, x];
-        if(!this.selectLOCK){
-          this.selecedPiece = false;
-        }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.WHITES_TURN);
-      }
-      //if valid move
-      if (move && Human.checkValidMove(this, move, this.board)){
-        this.moves.push(move);
-        if(!this.selectLOCK){
-          this.gameState = GAMESTATE.BLACKS_TURN;
-        }
-        this.board.makeMove(move);
-      }
+      this.whites.picked(id);
     }
     break;
     case GAMESTATE.BLACKS_TURN:{
-      if((this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING) && !this.selectLOCK){
-        this.startingPos = [y, x];
-        this.selectedPiece = true;
-      }
-      else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
-        this.finalPos = [y, x];
-        if(!this.selectLOCK){
-          this.selecedPiece = false;
-        }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.BLACKS_TURN);
-      }
-      //if valid move
-      if (move && Human.checkValidMove(this, move, this.board)){
-        this.moves.push(move);
-        if(!this.selectLOCK){
-          this.gameState = GAMESTATE.WHITES_TURN;
-        }
-        this.board.makeMove(move);
-      }
+      this.blacks.picked(id);
     }
     break;
     case GAMESTATE.GAME_FINISHED:
@@ -116,6 +82,71 @@ DraughtGame.prototype.picked = function (id){
     break;
   }
 }
+//
+// DraughtGame.prototype.picked = function (id){
+//   let move=null; //reset move everytime
+//   let y, x;
+//
+//   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
+//     return;
+//   }
+//
+//   y = Math.floor(id / 8);
+//   x = id % 8;
+//   console.log("Y: " + y + " X: " + x);
+//   console.log("selectLOCK: " + this.selectLOCK);
+//
+//   switch (this.gameState){
+//     case GAMESTATE.WHITES_TURN:{
+//       if((this.board.getPos(y,x) == CELL.WHITE_PIECE || this.board.getPos(y,x) == CELL.WHITE_KING) && !this.selectLOCK){
+//         this.startingPos = [y, x];
+//         this.selectedPiece = true;
+//       }
+//       else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
+//         this.finalPos = [y, x];
+//         if(!this.selectLOCK){
+//           this.selecedPiece = false;
+//         }
+//         move = new Move(this.startingPos, this.finalPos, GAMESTATE.WHITES_TURN);
+//       }
+//       //if valid move
+//       if (move && DraughtAux.checkValidMove(this, move, this.board)){
+//         this.moves.push(move);
+//         if(!this.selectLOCK){
+//           this.gameState = GAMESTATE.BLACKS_TURN;
+//         }
+//         this.board.makeMove(move);
+//       }
+//     }
+//     break;
+//     case GAMESTATE.BLACKS_TURN:{
+//       if((this.board.getPos(y,x) == CELL.BLACK_PIECE || this.board.getPos(y,x) == CELL.BLACK_KING) && !this.selectLOCK){
+//         this.startingPos = [y, x];
+//         this.selectedPiece = true;
+//       }
+//       else if (this.selectedPiece && this.board.getPos(y,x) == CELL.EMPTY_SQUARE){
+//         this.finalPos = [y, x];
+//         if(!this.selectLOCK){
+//           this.selecedPiece = false;
+//         }
+//         move = new Move(this.startingPos, this.finalPos, GAMESTATE.BLACKS_TURN);
+//       }
+//       //if valid move
+//       if (move && DraughtAux.checkValidMove(this, move, this.board)){
+//         this.moves.push(move);
+//         if(!this.selectLOCK){
+//           this.gameState = GAMESTATE.WHITES_TURN;
+//         }
+//         this.board.makeMove(move);
+//       }
+//     }
+//     break;
+//     case GAMESTATE.GAME_FINISHED:
+//     break;
+//     default:
+//     break;
+//   }
+// }
 
 DraughtGame.prototype.forceConsecutiveMove = function(startingPos){
   this.startingPos = startingPos;

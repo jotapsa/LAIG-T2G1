@@ -1,6 +1,15 @@
-function Computer(){
+/**
+ * Computer
+ * @param gl {WebGLRenderingContext}
+ * @constructor
+ */
+function Computer(piece, difficulty){
+  //construtor
+  this.piece = piece;
+  this.difficulty= difficulty;
+  this.wins = 0;
 };
 
-Computer.getsizeN = function(){
-  return this.sizeN;
+Computer.prototype.getWins(){
+  return this.wins;
 }
