@@ -59,6 +59,15 @@ function MyGraphLeaf(graph, type, args,argsP) {
           else{
             this.object = new Board(graph.scene, this.args[0], this.args[1]);
           }
+          break;
+        case 'button':
+          if(this.args.length != 1){
+            console.log("error: number of arguments");
+          }
+          else{
+            this.object = new Button(graph.scene);
+          }
+          break;
         default:
             break;
     }

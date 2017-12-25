@@ -48,11 +48,17 @@ function DraughtGame(){
   this.whitePieces = 12;
   this.blackPieces = 12;
 
+  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
+  console.log(this.IDGamma);
 };
 
 DraughtGame.prototype.picked = function (id){
   let move=null; //reset move everytime
   let y, x;
+
+  if (id < this.IDGamma[0] || id > this.IDGamma[1]){
+    return;
+  }
 
   y = Math.floor(id / 8);
   x = id % 8;

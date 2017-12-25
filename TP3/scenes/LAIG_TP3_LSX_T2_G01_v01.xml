@@ -89,17 +89,49 @@
     <TEXTURE id="null" />
 
     <DESCENDANTS>
-      <NODEREF id="board" />
+      <NODEREF id="Draughts" />
     </DESCENDANTS>
   </NODE>
 
-  <!-- The Board -->
-  <NODE id="board">
+  <NODE id="Draughts">
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
     <DESCENDANTS>
+      <NODEREF id="buttons" />
       <LEAF type="board" args=""/>
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="buttons">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <DESCENDANTS>
+      <NODEREF id="button1" />
+      <NODEREF id="button2" />
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="button1">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="10" y="0" z="0" />
+
+    <DESCENDANTS>
+      <LEAF type="button" args=""/>
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="button2">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="-10" y="0" z="0" />
+
+    <DESCENDANTS>
+      <LEAF type="button" args=""/>
     </DESCENDANTS>
   </NODE>
 
