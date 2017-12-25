@@ -7,7 +7,6 @@ GAMESTATE = {
 GAMEMODE = {
   HUMAN_VS_HUMAN: 0,
   HUMAN_VS_CPU: 1,
-  CPU_VS_CPU: 2
 };
 
 DIFICULTY = {
@@ -35,6 +34,8 @@ function DraughtGame(){
   this.dificulty = DIFICULTY.HARD;
 
   this.board = new DraughtMap();
+  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
+
   this.selectedPiece = false;
   this.selectLOCK = false;
   this.startingPos = null;
@@ -48,13 +49,14 @@ function DraughtGame(){
   this.whitePieces = 12;
   this.blackPieces = 12;
 
-  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-
   switch(this.gameMode){
     case (GAMEMODE.HUMAN_VS_HUMAN):
       this.whites = new Player("Whites");
       this.blacks = new Player("Blacks");
     break;
+    case (GAMEMODE.HUMAN_VS_CPU):
+      this.whites = new Player("Whites");
+      this.blacks = new Computer("Blacks");
     default:
     break;
   }
@@ -63,24 +65,11 @@ function DraughtGame(){
 
 
 DraughtGame.prototype.picked = function (id){
+  let move;
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
   }
 
-  switch (this.gameState){
-    case GAMESTATE.WHITES_TURN:{
-      this.whites.picked(id);
-    }
-    break;
-    case GAMESTATE.BLACKS_TURN:{
-      this.blacks.picked(id);
-    }
-    break;
-    case GAMESTATE.GAME_FINISHED:
-    break;
-    default:
-    break;
-  }
 }
 //
 // DraughtGame.prototype.picked = function (id){
@@ -187,4 +176,17 @@ DraughtGame.prototype.resetGame = function(){
   //scoring variables
   this.whitePieces = 12;
   this.blackPieces = 12;
+
+  //gameMode
+  switch(this.gameMode){
+    case (GAMEMODE.HUMAN_VS_HUMAN):
+      this.whites = new Player("Whites");
+      this.blacks = new Player("Blacks");
+    break;
+    case (GAMEMODE.HUMAN_VS_CPU):
+      this.whites = new Player("Whites");
+      this.blacks = new Computer("Blacks");
+    default:
+    break;
+  }
 }

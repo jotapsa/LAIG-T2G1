@@ -66,7 +66,6 @@ MyInterface.prototype.addConfigurationGroup = function() {
   configGroup.add(this.scene.game, 'gameMode', {
        'Human vs Human': GAMEMODE.HUMAN_VS_HUMAN,
        'Human vs CPU': GAMEMODE.HUMAN_VS_CPU,
-       'CPU vs CPU': GAMEMODE.CPU_VS_CPU,
    }).name('Game Mode');
 
    configGroup.add(this.scene.game, 'dificulty', {
@@ -80,6 +79,8 @@ MyInterface.prototype.addConfigurationGroup = function() {
         'SSE Legacy ': THEME.LEGACY,
         'Normal Small Star Empires': THEME.NORMAL
     }).name('Theme');
+
+    configGroup.add(this.scene.game, 'resetGame').name('Reset Game');
 }
 
 MyInterface.prototype.addGameOptions = function(){

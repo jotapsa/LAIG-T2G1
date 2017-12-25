@@ -17,4 +17,6 @@ Player.prototype.getWins = function(){
 Player.prototype.picked = function(id){
   let move=null; //reset move everytime
   let y, x;
+
+  return move;
 }
