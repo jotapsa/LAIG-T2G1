@@ -70,7 +70,7 @@ DraughtGame.prototype.picked = function (id){
         if(!this.selectLOCK){
           this.selecedPiece = false;
         }
-        move = new Move(this.startingPos, this.finalPos);
+        move = new Move(this.startingPos, this.finalPos, GAMESTATE.WHITES_TURN);
       }
       //if valid move
       if (move && Human.checkValidMove(this, move, this.board)){
@@ -92,7 +92,7 @@ DraughtGame.prototype.picked = function (id){
         if(!this.selectLOCK){
           this.selecedPiece = false;
         }
-        move = new Move(this.startingPos, this.finalPos);
+        move = new Move(this.startingPos, this.finalPos, GAMESTATE.BLACKS_TURN);
       }
       //if valid move
       if (move && Human.checkValidMove(this, move, this.board)){
@@ -131,7 +131,11 @@ DraughtGame.prototype.getSelectedPiecePos = function(){
 DraughtGame.prototype.undoMove = function(){
   //If we have made a move
   if(this.moves.length){
-    //Undo it
+    let move;
+    move = this.moves.pop();
+    this.board.undoMove(move);
+    this.gameState = move.getTurn();
+    this.selectedPiece =false;
   }
 }
 
