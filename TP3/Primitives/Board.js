@@ -40,7 +40,6 @@ Board.prototype.display = function (){
 			}
 		}
 		break;
-			break;
 		case GAMESTATE.WHITES_TURN:{
 			if(this.scene.game.whites instanceof Player){
 				this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
