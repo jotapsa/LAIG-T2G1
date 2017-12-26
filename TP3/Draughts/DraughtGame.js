@@ -29,7 +29,7 @@ THEME = {
 function DraughtGame(){
   //construtor
   this.moves = [];
-  this.whitesOwner = OWNER.HUMAN;
+  this.whitesOwner = OWNER.CPU;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
   this.difficulty = DIFFICULTY.HARD;
@@ -66,7 +66,7 @@ DraughtGame.prototype.getGameState = function(){
 }
 
 DraughtGame.prototype.picked = function (id){
-  let move;
+  let move = null;
 
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
@@ -74,12 +74,17 @@ DraughtGame.prototype.picked = function (id){
 
   switch(this.gameState){
     case GAMESTATE.WHITES_TURN:{
-      move = this.whites.createMove(id, this.board);
+      if(this.whites instanceof Player){
+        move = this.whites.createMove(id, this.board);
+      }
     }
     break;
     case GAMESTATE.BLACKS_TURN:{
-      move = this.blacks.createMove(id, this.board);
+      if(this.blacks instanceof Player){
+        move = this.blacks.createMove(id, this.board);
+      }
     }
+    break;
     default:
     break;
   }
@@ -118,6 +123,27 @@ DraughtGame.prototype.undoMove = function(){
     this.board.undoMove(move);
     this.gameState = move.getTurn();
     this.selectedPiece =false;
+  }
+}
+
+DraughtGame.prototype.update = function(deltaTime){
+  //deltaTime is in ms
+
+  switch(this.gameState){
+    case GAMESTATE.WHITES_TURN:{
+      if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
+        move = this.whites.createMove(this.board);
+      }
+    }
+    break;
+    case GAMESTATE.BLACKS_TURN:{
+      if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
+        move = this.blacks.createMove(this.board);
+      }
+    }
+    break;
+    default:
+    break;
   }
 }
 

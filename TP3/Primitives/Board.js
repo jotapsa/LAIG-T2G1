@@ -34,12 +34,19 @@ Board.prototype.constructor=Board;
 
 Board.prototype.display = function (){
 	switch (this.scene.game.getGameState()) {
-		case GAMESTATE.BLACKS_TURN:
-			this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
+		case GAMESTATE.BLACKS_TURN:{
+			if(this.scene.game.blacks instanceof Player){
+				this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
+			}
+		}
+		break;
 			break;
-		case GAMESTATE.WHITES_TURN:
-			this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
-			break;
+		case GAMESTATE.WHITES_TURN:{
+			if(this.scene.game.whites instanceof Player){
+				this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
+			}
+		}
+		break;
 		default:
 		break;
 	}

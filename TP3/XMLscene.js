@@ -223,6 +223,7 @@ XMLscene.prototype.update = function (currTime){
   });
 
   this.updateCamera(deltaTime);
+  this.game.update(deltaTime);
 
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
