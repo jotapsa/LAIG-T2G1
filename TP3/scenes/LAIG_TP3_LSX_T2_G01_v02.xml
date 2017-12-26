@@ -79,7 +79,7 @@
  </TEXTURE>
 
  <TEXTURE id="tableAround">
-     <file path="images/casino_wood.jpg" />
+     <file path="images/room_wood.jpg" />
      <amplif_factor s="1" t="1" />
  </TEXTURE>
 
