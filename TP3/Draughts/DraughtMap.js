@@ -12,8 +12,13 @@ CELL = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtMap(map){
+function DraughtMap(map , capturedWhitePieces, capturedWhiteKings, capturedBlackPieces, capturedBlackKings){
   //construtor
+  this.capturedWhitePieces = capturedWhitePieces || 0;
+  this.capturedWhiteKings = capturedWhiteKings || 0;
+  this.capturedBlackPieces = capturedBlackPieces || 0;
+  this.capturedBlackKings = capturedBlackKings || 0;
+
   this.map = map || [
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
     [CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE],
@@ -24,9 +29,50 @@ function DraughtMap(map){
     [CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE],
     [CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE],
   ];
-
   this.sizeN = this.map.length;
+
+  this.countPieces();
 };
+
+DraughtMap.prototype.getsizeN = function(){
+  return this.sizeN;
+}
+
+DraughtMap.prototype.getPos = function (y, x){
+  return this.map[y][x];
+}
+
+DraughtMap.prototype.countPieces = function(){
+  this.blackPieces = 0;
+  this.blackKings = 0;
+  this.whitePieces = 0;
+  this.whiteKings = 0;
+
+  for(let y=0; y<this.sizeN; y++){
+    for(let x=0; x<this.sizeN; x++){
+      switch(this.map[y][x]){
+        case (CELL.WHITE_PIECE):{
+          this.whitePieces++;
+        }
+        break;
+        case (CELL.WHITE_KING):{
+          this.whiteKings++;
+        }
+        break;
+        case (CELL.BLACK_PIECE):{
+          this.blackPieces++;
+        }
+        break;
+        case (CELL.BLACK_KING):{
+          this.blackKings++;
+        }
+        break;
+        default:
+        break;
+      }
+    }
+  }
+}
 
 DraughtMap.prototype.makeMove = function(move){
   let startingPos, finalPos;
@@ -61,16 +107,28 @@ DraughtMap.prototype.capturePiece = function(move){
   delta = [finalPos[0]-startingPos[0], finalPos[1]-startingPos[1]];
   intermediatePos = [startingPos[0] + delta[0]/2, startingPos[1] + delta[1]/2];
 
-  switch(this.map[startingPos[0]][startingPos[1]]){
-    case CELL.BLACK_KING:
-    case CELL.BLACK_PIECE:{
-      //maybe whitepieces--; ?
+  //Captured Piece
+  switch(this.map[intermediatePos[0]][intermediatePos[1]]){
+    case CELL.BLACK_KING:{
+      this.capturedBlackKings++;
+      this.blackKings--;
     }
     break;
-    case CELL.WHITE_KING:
-    case CELL.WHITE_PIECE:{
-      //maybe blackpieces--; ?
+    case CELL.BLACK_PIECE:{
+      this.capturedBlackPieces++;
+      this.blackPieces--;
     }
+    break;
+    case CELL.WHITE_KING:{
+      this.capturedWhiteKings++;
+      this.whiteKings--;
+    }
+    break;
+    case CELL.WHITE_PIECE:{
+      this.capturedWhitePieces++;
+      this.whitePieces--;
+    }
+    break;
     default:
     break;
   }
@@ -111,21 +169,40 @@ DraughtMap.prototype.releasePiece = function(move){
   delta = [finalPos[0]-startingPos[0], finalPos[1]-startingPos[1]];
   intermediatePos = [startingPos[0] + delta[0]/2, startingPos[1] + delta[1]/2];
 
-  switch(this.map[finalPos[0]][finalPos[1]]){
-    case CELL.BLACK_KING:
-    case CELL.BLACK_PIECE:{
-      //maybe whitepieces++; ?
+  //Captured Piece
+  switch(capturedPiece){
+    case CELL.BLACK_KING:{
+      this.capturedBlackKings--;
+      this.blackKings++;
     }
     break;
-    case CELL.WHITE_KING:
-    case CELL.WHITE_PIECE:{
-      //maybe blackpieces++; ?
+    case CELL.BLACK_PIECE:{
+      this.capturedBlackPieces--;
+      this.blackPieces++;
     }
+    break;
+    case CELL.WHITE_KING:{
+      this.capturedWhiteKings--;
+      this.whiteKings++;
+    }
+    break;
+    case CELL.WHITE_PIECE:{
+      this.capturedWhitePieces--;
+      this.whitePieces++;
+    }
+    break;
     default:
     break;
   }
 
   this.map[intermediatePos[0]][intermediatePos[1]] = capturedPiece;
+}
+
+DraughtMap.prototype.resetCapturedPieces = function(){
+  this.capturedWhitePieces = 0;
+  this.capturedWhiteKings = 0;
+  this.capturedBlackPieces = 0;
+  this.capturedBlackKings = 0;
 }
 
 DraughtMap.prototype.resetMap = function(){
@@ -139,14 +216,8 @@ DraughtMap.prototype.resetMap = function(){
     [CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE],
     [CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE],
   ];
-}
-
-DraughtMap.prototype.getsizeN = function(){
-  return this.sizeN;
-}
-
-DraughtMap.prototype.getPos = function (y, x){
-  return this.map[y][x];
+  this.resetCapturedPieces()
+  this.countPieces();
 }
 
 /**
@@ -159,5 +230,5 @@ DraughtMap.prototype.clone = function (){
     mapClone.push(this.map[i].slice(0));
   }
 
-  return new DraughtMap(mapClone);
+  return new DraughtMap(mapClone, this.capturedWhitePieces, this.capturedWhiteKings, this.capturedBlackPieces, this.capturedBlackKings);
 }

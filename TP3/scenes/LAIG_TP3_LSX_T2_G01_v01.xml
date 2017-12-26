@@ -142,6 +142,7 @@
 
     <DESCENDANTS>
       <NODEREF id="buttons" />
+      <NODEREF id="auxBoards" />
       <LEAF type="board" args=""/>
     </DESCENDANTS>
   </NODE>
@@ -175,6 +176,38 @@
 
     <DESCENDANTS>
       <LEAF type="button" args=""/>
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="auxBoards">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <DESCENDANTS>
+      <NODEREF id="auxBoardBlacks" />
+      <NODEREF id="auxBoardWhites" />
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="auxBoardWhites">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="0" z="-4.5"/>
+
+    <DESCENDANTS>
+      <LEAF type="boardaux" args="white"/>
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="auxBoardBlacks">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="0" z="4.5"/>
+
+    <DESCENDANTS>
+      <LEAF type="boardaux" args="black"/>
     </DESCENDANTS>
   </NODE>
 

@@ -29,7 +29,7 @@ THEME = {
 function DraughtGame(){
   //construtor
   this.moves = [];
-  this.whitesOwner = OWNER.CPU;
+  this.whitesOwner = OWNER.HUMAN;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
   this.depth = 10;

@@ -97,9 +97,9 @@ XMLscene.prototype.initCameras = function() {
   }
 
   this.cameraPerspectives = {
-    "Blacks Player": new CameraPerspective(vec3.fromValues(0, 15, 15), vec3.fromValues(0, 0, 0)),
-    "Whites Player": new CameraPerspective(vec3.fromValues(0, 15, -15), vec3.fromValues(0, 0, 0)),
-    "Neutral": new CameraPerspective(vec3.fromValues(0, 15, 0), vec3.fromValues(0, 0, 0))
+    "Blacks Player": new CameraPerspective(vec3.fromValues(0, 25, 25), vec3.fromValues(0, 5, 0)),
+    "Whites Player": new CameraPerspective(vec3.fromValues(0, 25, -25), vec3.fromValues(0, 5, 0)),
+    "Neutral": new CameraPerspective(vec3.fromValues(0, 25, 0), vec3.fromValues(0, 5, 0))
   }
   this.perspective = "Blacks Player";
 
