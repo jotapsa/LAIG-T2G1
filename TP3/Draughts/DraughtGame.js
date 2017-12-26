@@ -172,11 +172,30 @@ DraughtGame.prototype.resetGame = function(){
   this.finalPos = null;
 
   //scoring variables
+  this.player1Wins = 0;
+  this.player2Wins = 0;
+  this.computer1Wins = 0;
+  this.computer2Wins = 0;
+  
   this.whitePieces = 12;
   this.blackPieces = 12;
 
+  if(this.whitesOwner == OWNER.HUMAN){
+    this.whites = new Player("Whites");
+  }
+  else if(this.whitesOwner == OWNER.CPU){
+    this.whites = new Computer("Whites", this.depth);
+  }
+
+  if(this.blacksOwner == OWNER.HUMAN){
+    this.blacks = new Player("Blacks");
+  }
+  else if(this.blacksOwner == OWNER.CPU){
+    this.blacks = new Computer("Blacks", this.depth);
+  }
+
   this.gameState = GAMESTATE.BLACKS_TURN;
-  this.moves.length = 0;
+  this.moves = [];
   this.started = false;
 
   //Scoreboard
@@ -189,35 +208,23 @@ DraughtGame.prototype.resetGame = function(){
 
   let blacks = '<span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>';
   let whites = '<span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>';
-  // console.log(this.blacksOwner);
-  // console.log(this.whitesOwner);
 
-  switch(this.blacksOwner){
-    case (OWNER.HUMAN):{
-        this.players[0].innerHTML = blacks + 'Player 1';
-    }
-      break;
-    case (OWNER.CPU):{
-      this.players[0].innerHTML = blacks + 'CPU';
-    }
-      break;
-    default:
-      break;
+  if(this.blacksOwner == OWNER.HUMAN){
+    blacks += 'Player 1';
+  }
+  else {
+    blacks += 'CPU';
   }
 
-  switch(this.whitesOwner){
-    case (OWNER.HUMAN):{
-      this.players[1].innerHTML = whites + 'Player 2';
-    }
-      break;
-    case (OWNER.CPU):{
-      this.players[1].innerHTML = whites + 'CPU';
-    }
-      break;
-    default:
-      console.log(this.whitesOwner == OWNER.CPU);
-      break;
+  if(this.whitesOwner == OWNER.HUMAN){
+    whites += 'Player 2';
   }
+  else {
+    whites += 'CPU';
+  }
+
+  this.players[0].innerHTML = blacks;
+  this.players[1].innerHTML = whites;
 }
 
 DraughtGame.prototype.setTurnTime = function(){
