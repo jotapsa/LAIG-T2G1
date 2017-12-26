@@ -244,6 +244,7 @@ DraughtGame.prototype.setTurnTime = function(){
 
 DraughtGame.prototype.setStartTime = function(currTime){
   this.startTime = currTime;
+  this.turnTime = currTime;
 }
 
 DraughtGame.prototype.displayTime = function(currTime){
@@ -256,12 +257,13 @@ DraughtGame.prototype.displayTime = function(currTime){
 
 DraughtGame.prototype.displayTurnTime = function(currTime){
   let time;
-  if(this.moves.length==1){
-    time = (currTime - this.startTime)/1000;
+  time = (currTime - this.turnTime)/1000;
+
+  if(time >= 30){
+    this.nextTurn();
+    return;
   }
-  else {
-    time = (currTime - this.turnTime)/1000;
-  }
+
   let minutes = ("0" + parseInt(time/60)).slice(-2);
   let seconds = ("0" + parseInt(time%60)).slice(-2);
 

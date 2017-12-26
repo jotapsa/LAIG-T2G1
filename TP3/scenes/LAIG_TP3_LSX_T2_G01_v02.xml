@@ -160,6 +160,7 @@
 
     <DESCENDANTS>
       <NODEREF id="buttons" />
+      <NODEREF id="auxBoards" />
       <LEAF type="board" args=""/>
     </DESCENDANTS>
   </NODE>
@@ -196,6 +197,38 @@
     </DESCENDANTS>
   </NODE>
 
+  <NODE id="auxBoards">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <DESCENDANTS>
+      <NODEREF id="auxBoardBlacks" />
+      <NODEREF id="auxBoardWhites" />
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="auxBoardWhites">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="0" z="-6"/>
+
+    <DESCENDANTS>
+      <LEAF type="boardaux" args="0"/>
+    </DESCENDANTS>
+  </NODE>
+
+  <NODE id="auxBoardBlacks">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="0" z="6"/>
+
+    <DESCENDANTS>
+      <LEAF type="boardaux" args="1"/>
+    </DESCENDANTS>
+  </NODE>
+
   <NODE id="gameTable">
     <MATERIAL id="null" />
     <TEXTURE id="null" />
@@ -210,7 +243,7 @@
     <MATERIAL id="null" />
     <TEXTURE id="tableAround" />
 
-    <TRANSLATION x="-10" y="10" z="-8" />
+    <TRANSLATION x="-10" y="10.5" z="-8" />
     <SCALE sx="5" sy="0.25" sz="4" />
 
     <DESCENDANTS>
