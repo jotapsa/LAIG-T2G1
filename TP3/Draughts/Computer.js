@@ -35,7 +35,8 @@ Computer.prototype.createMove = function(board){
   this.creatingMove = true;
   let move = null;
 
-  Computer.alphaBeta(board, this.depth, Number.MIN_VALUE, Number.MAX_VALUE, this.piece);
+  move = Computer.alphaBeta(board, this.depth, Number.MIN_VALUE, Number.MAX_VALUE, this.piece)[1];
+  console.log(move);
 
   this.creatingMove = false;
   return move;
@@ -47,14 +48,17 @@ Computer.prototype.createMove = function(board){
 *alpha = best already explored option along path to the root for maximizer
 *beta = best alread explored option along path to the root for minimizer
 *
+* returns an array with the value of the board for the last move, and the last move
 */
 
 Computer.alphaBeta = function(board, depth, alpha, beta, player){
+  let bestMove = null;
+
   if(!Computer.canExploreFurther(depth)){
-    return Computer.evaluateBoard(board);
+    return [Computer.evaluateBoard(board), bestMove];
   }
 
-  let possibleMoves, possibleBoards, value, childValue, bestMove;
+  let possibleMoves, possibleBoards, value, childValue;
 
   possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
@@ -62,8 +66,8 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
   if(player == "Whites"){
     value = Number.MIN_VALUE;
     for(let i=0; i<possibleBoards.length; i++){
-      childValue = Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks");
-      if (value < childValue){
+      childValue = Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks")[0];
+      if (value <= childValue){
         value = childValue;
         bestMove = possibleMoves[i];
       }
@@ -72,13 +76,13 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
         break;
       }
     }
-    return value;
+    return [value, bestMove];
   }
   else{
     value = Number.MAX_VALUE;
     for(let i=0; i<possibleBoards.length; i++){
-      childValue = Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites");
-      if (value > childValue){
+      childValue = Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites")[0];
+      if (value >= childValue){
         value = childValue;
         bestMove = possibleMoves[i];
       }
@@ -87,7 +91,7 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
         break;
       }
     }
-    return value;
+    return [value, bestMove];
   }
 
 }

@@ -32,7 +32,7 @@ function DraughtGame(){
   this.whitesOwner = OWNER.CPU;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
-  this.depth = 5;
+  this.depth = 10;
 
   this.board = new DraughtMap();
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
@@ -154,7 +154,11 @@ DraughtGame.prototype.update = function(deltaTime){
   }
 
   if(move){
-    board.makeMove(move);
+    this.moves.push(move);
+    if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
+      this.nextTurn();
+    }
+    this.board.makeMove(move);
   }
 }
 
