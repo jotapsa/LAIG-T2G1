@@ -3,7 +3,6 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>CGFexample</title>
-    <!-- <link href="css/main.css" rel="stylesheet"> -->
 <style>
 body, html {
     border: 0;
@@ -20,19 +19,32 @@ canvas {
 #score{
   position: absolute;
   color: white;
-  display: flex;
+  display: grid;
 }
 
 #score h1{
   padding-left: 1em;
   display: flex;
-  font-size: 3em;
+  font-size: 2em;
+}
+
+#score h2{
+  padding-left: 2em;
+  font-size: 1em;
+  margin: 1px;
+}
+
+#score h2:last-child{
+  padding-top:1em;
+  padding-left: 2em;
+  font-size: 1em;
+  margin: 1px;
 }
 
 #score ul{
   list-style: none;
   display: flex;
-  padding-left: 5em;
+  padding-left: 2em;
 }
 
 #score li:first-child{
@@ -78,12 +90,14 @@ canvas {
 <body>
   <div id="score">
     <h1>Jogo das Damas</h1>
-    <!-- <h2>MIEIC - LAIG  2017/2018 - T1G8</h2> -->
     <ul class="score-board">
       <li class="player"><span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>Player 1</li>
       <li class="score"><span class="time">00:00</span>0 - 0</li>
       <li class="player"><span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>Player 2</li>
     </ul>
+    <h2>Bernardo Manuel Costa Barbosa</h2>
+    <h2>João Pedro Teixeira Pereira de Sá</h2>
+    <h2>MIEIC - LAIG - 2017/2018</h2>
   </div>
   <script src="main.js"></script>
 

@@ -243,6 +243,9 @@ XMLscene.prototype.update = function (currTime){
       this.game.displayTurnTime(currTime);
     }
   }
+  else {
+    this.gameStart = false;
+  }
 }
 
 XMLscene.prototype.changeCameraPerspective = function(){

@@ -60,6 +60,7 @@ function DraughtGame(){
     this.blacks = new Computer("Blacks", this.depth);
   }
 
+  this.players = document.getElementsByClassName("player");
   this.turnTimes = document.getElementsByClassName("timeTurn");
   this.score = document.getElementsByClassName("score");
   this.time = document.getElementsByClassName("time");
@@ -173,6 +174,50 @@ DraughtGame.prototype.resetGame = function(){
   //scoring variables
   this.whitePieces = 12;
   this.blackPieces = 12;
+
+  this.gameState = GAMESTATE.BLACKS_TURN;
+  this.moves.length = 0;
+  this.started = false;
+
+  //Scoreboard
+  this.time[0].innerHTML = '00:00';
+  this.turnTimes[0].setAttribute("style","");
+  this.turnTimes[0].innerHTML = '';
+  this.turnTimes[1].setAttribute("style","");
+  this.turnTimes[1].innerHTML = '';
+  this.startTime = null;
+
+  let blacks = '<span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>';
+  let whites = '<span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>';
+  // console.log(this.blacksOwner);
+  // console.log(this.whitesOwner);
+
+  switch(this.blacksOwner){
+    case (OWNER.HUMAN):{
+        this.players[0].innerHTML = blacks + 'Player 1';
+    }
+      break;
+    case (OWNER.CPU):{
+      this.players[0].innerHTML = blacks + 'CPU';
+    }
+      break;
+    default:
+      break;
+  }
+
+  switch(this.whitesOwner){
+    case (OWNER.HUMAN):{
+      this.players[1].innerHTML = whites + 'Player 2';
+    }
+      break;
+    case (OWNER.CPU):{
+      this.players[1].innerHTML = whites + 'CPU';
+    }
+      break;
+    default:
+      console.log(this.whitesOwner == OWNER.CPU);
+      break;
+  }
 }
 
 DraughtGame.prototype.setTurnTime = function(){
