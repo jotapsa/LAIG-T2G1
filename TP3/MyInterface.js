@@ -76,8 +76,9 @@ MyInterface.prototype.addConfigurationGroup = function() {
    configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
 
    configGroup.add(this.scene, 'theme', {
-        'SSE Legacy ': THEME.LEGACY,
-        'Normal Small Star Empires': THEME.NORMAL
+        'Casino': THEME.LEGACY,
+        'Living Room': THEME.NORMAL,
+        'Room Floor': THEME.NORMAL,
     }).name('Theme');
 
     configGroup.add(this.scene.game, 'resetGame').name('Reset Game');
