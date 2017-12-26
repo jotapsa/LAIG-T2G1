@@ -73,12 +73,7 @@ MyInterface.prototype.addConfigurationGroup = function() {
         'CPU': OWNER.CPU,
     }).name('Blacks');
 
-   configGroup.add(this.scene.game, 'difficulty', {
-     'Easy': DIFFICULTY.EASY,
-     'Medium': DIFFICULTY.MEDIUM,
-     'Hard': DIFFICULTY.HARD,
-     'Impossible': DIFFICULTY.IMPOSSIBLE,
-   }).name('CPU Difficulty');
+   configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
 
    configGroup.add(this.scene, 'theme', {
         'SSE Legacy ': THEME.LEGACY,

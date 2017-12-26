@@ -12,9 +12,9 @@ CELL = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtMap(){
+function DraughtMap(map){
   //construtor
-  this.map =[
+  this.map = map || [
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
     [CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE],
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
@@ -147,4 +147,12 @@ DraughtMap.prototype.getsizeN = function(){
 
 DraughtMap.prototype.getPos = function (y, x){
   return this.map[y][x];
+}
+
+/**
+* Creates a new DraughtMap from the current parameters.
+* @return {DraughtMap} A DraughtMap that is a clone of this one.
+*/
+DraughtMap.prototype.clone = function (){
+  return new DraughtMap(this.map);
 }

@@ -32,7 +32,7 @@ function DraughtGame(){
   this.whitesOwner = OWNER.HUMAN;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
-  this.difficulty = DIFFICULTY.HARD;
+  this.depth = 5;
 
   this.board = new DraughtMap();
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
@@ -50,14 +50,14 @@ function DraughtGame(){
     this.whites = new Player("Whites");
   }
   else if(this.whitesOwner == OWNER.CPU){
-    this.whites = new Computer("Whites", this.difficulty);
+    this.whites = new Computer("Whites", this.depth);
   }
 
   if(this.blacksOwner == OWNER.HUMAN){
     this.blacks = new Player("Blacks");
   }
   else if(this.blacksOwner == OWNER.CPU){
-    this.blacks = new Computer("Blacks", this.difficulty);
+    this.blacks = new Computer("Blacks", this.depth);
   }
 
   this.turnTimes = document.getElementsByClassName("timeTurn");

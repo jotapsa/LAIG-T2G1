@@ -9,10 +9,10 @@ POINTS ={
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Computer(piece, difficulty){
+function Computer(piece, depth){
   //construtor
   this.piece = piece;
-  this.difficulty= difficulty;
+  this.depth= depth;
   this.creatingMove = false;
   this.wins = 0;
 
@@ -35,10 +35,12 @@ Computer.prototype.createMove = function(board){
   this.creatingMove = true;
   let move = null;
 
+  Computer.alphaBeta(board, this.depth, Number.MIN_VALUE, Number.MAX_VALUE, this.piece);
 
   this.creatingMove = false;
   return move;
 }
+
 /*
 *Implementation of the Alpha-beta Pruning Algorithm, we set whites as the maximizing player and blacks as the minimizer
 *
@@ -52,11 +54,32 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
     return Computer.evaluateBoard(board);
   }
 
-  if(player == "Whites"){
+  let possibleMoves, possibleBoards, v;
 
+  possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
+  possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
+
+  if(player == "Whites"){
+    v = Number.MIN_VALUE;
+    for(let i=0; i<possibleBoards.length; i++){
+      v = Math.max(v, Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks"));
+      alpha = Math.max(alpha, v);
+      if(beta <= alpha){
+        break;
+      }
+    }
+    return v;
   }
   else{
-
+    v = Number.MAX_VALUE;
+    for(let i=0; i<possibleBoards.length; i++){
+      v = Math.min(v, Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites"));
+      beta = Math.min(beta, v);
+      if(beta <= alpha){
+        break;
+      }
+    }
+    return v;
   }
 
 }

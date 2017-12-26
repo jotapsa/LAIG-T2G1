@@ -1,11 +1,6 @@
 function DraughtAux(){
 };
 
-DraughtAux.ObtainNonForcedMovesForPlayer = function(board, turn){
-  let nonForcedMoves;
-
-}
-
 DraughtAux.checkValidMove = function(game, move, map){
   let forcedMoves, startingPos, finalPos, playerCell;
 
@@ -99,8 +94,50 @@ DraughtAux.isValidStandardMove = function(move, map){
   return false;
 }
 
+DraughtAux.getAllPossibleMovesForPlayer = function(player, map){
+  let moves = [], playerCell;
+
+  if(player == "Whites"){
+    playerCell=CELL.WHITE_PIECE;
+  }
+  else{
+    playerCell=CELL.BLACK_PIECE
+  }
+
+  //Check if there are forced moves
+  moves = DraughtAux.ObtainAllForcedMovesForPlayer(playerCell, map);
+  if(moves.length>0){
+    return moves;
+  }
+
+  moves = DraughtAux.ObtainAllNonForcedMovesForPlayer(playerCell, map);
+  return moves;
+}
+
+DraughtAux.ObtainAllNonForcedMovesForPlayer = function(playerCell, map){
+  let nonForcedMoves = [];
+
+  for(let y=0; y<map.getsizeN(); y++){
+    for(let x=0; x<map.getsizeN(); x++){
+      if ((playerCell == CELL.BLACK_KING || playerCell == CELL.BLACK_PIECE) &&
+      (map.getPos(y,x) == CELL.BLACK_KING || map.getPos(y,x) == CELL.BLACK_PIECE)){
+        nonForcedMoves = nonForcedMoves.concat(DraughtAux.ObtainNonForcedMovesForPiece([y, x], map));
+      }
+      else if ((playerCell == CELL.WHITE_KING || playerCell == CELL.WHITE_PIECE) &&
+      (map.getPos(y,x) == CELL.WHITE_KING || map.getPos(y,x) == CELL.WHITE_PIECE)){
+        nonForcedMoves = nonForcedMoves.concat(DraughtAux.ObtainNonForcedMovesForPiece([y,x], map));
+      }
+      else{
+        //do nothing
+      }
+    }
+  }
+
+  return nonForcedMoves;
+}
+
 DraughtAux.ObtainAllForcedMovesForPlayer = function(playerCell, map){
-  let forcedMoves = [], forcedMove = null;
+  let forcedMoves = [];
 
   for(let y=0; y<map.getsizeN(); y++){
     for(let x=0; x<map.getsizeN(); x++){
@@ -119,6 +156,62 @@ DraughtAux.ObtainAllForcedMovesForPlayer = function(playerCell, map){
   }
 
   return forcedMoves;
+}
+
+DraughtAux.ObtainNonForcedMovesForPiece = function(startingPos, map, playerCell){
+  let nonForcedMoves = [], nonForcedMove = null;
+  playerCell = playerCell || map.getPos(startingPos[0], startingPos[1]);
+
+  switch(playerCell){
+    case CELL.BLACK_KING:{
+      if((nonForcedMove = DraughtAux.UpLeft(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+      if((nonForcedMove = DraughtAux.UpRight(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+    }
+    //trickle
+    case CELL.BLACK_PIECE:{
+      if((nonForcedMove = DraughtAux.DownLeft(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+      if((nonForcedMove = DraughtAux.DownRight(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+    }
+    break;
+    case CELL.WHITE_KING:{
+      if((nonForcedMove = DraughtAux.DownLeft(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+      if((nonForcedMove = DraughtAux.DownRight(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+    }
+    //trickle
+    case CELL.WHITE_PIECE:{
+      if((nonForcedMove = DraughtAux.UpLeft(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+      if((nonForcedMove = DraughtAux.UpRight(playerCell, startingPos, map)) != null){
+        nonForcedMoves.push(nonForcedMove);
+        nonForcedMove=null;
+      }
+    }
+    break;
+    default:
+    break;
+  }
+
+  return nonForcedMoves;
 }
 
 DraughtAux.ObtainForcedMovesForPiece = function(startingPos, map, playerCell){
@@ -399,4 +492,16 @@ DraughtAux.DownRight = function(playerCell, startingPos, map){
     break;
   }
   return move;
+}
+
+DraughtAux.simulatePossibleBoards = function(board, moveSet){
+  let boardSet = [], boardCopy;
+  for(let i=0; i<moveSet.length; i++){
+    boardCopy = board.clone();
+    console.log(boardCopy);
+    boardCopy.makeMove(moveSet[i]);
+    boardSet.push(boardCopy);
+  }
+
+  return boardSet;
 }
