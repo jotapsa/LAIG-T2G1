@@ -154,5 +154,10 @@ DraughtMap.prototype.getPos = function (y, x){
 * @return {DraughtMap} A DraughtMap that is a clone of this one.
 */
 DraughtMap.prototype.clone = function (){
-  return new DraughtMap(this.map);
+  let mapClone = [];
+  for(let i=0; i< this.map.length; i++){
+    mapClone.push(this.map[i].slice(0));
+  }
+
+  return new DraughtMap(mapClone);
 }

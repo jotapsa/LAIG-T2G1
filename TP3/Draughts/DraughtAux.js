@@ -498,7 +498,6 @@ DraughtAux.simulatePossibleBoards = function(board, moveSet){
   let boardSet = [], boardCopy;
   for(let i=0; i<moveSet.length; i++){
     boardCopy = board.clone();
-    console.log(boardCopy);
     boardCopy.makeMove(moveSet[i]);
     boardSet.push(boardCopy);
   }

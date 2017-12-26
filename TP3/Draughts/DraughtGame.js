@@ -29,7 +29,7 @@ THEME = {
 function DraughtGame(){
   //construtor
   this.moves = [];
-  this.whitesOwner = OWNER.HUMAN;
+  this.whitesOwner = OWNER.CPU;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.BLACKS_TURN;
   this.depth = 5;
@@ -103,7 +103,6 @@ DraughtGame.prototype.picked = function (id){
     this.board.makeMove(move);
     this.started = true;
   }
-  console.log(move);
 }
 
 DraughtGame.prototype.nextTurn = function(){
@@ -134,6 +133,7 @@ DraughtGame.prototype.undoMove = function(){
 }
 
 DraughtGame.prototype.update = function(deltaTime){
+  let move = null;
   //deltaTime is in ms
 
   switch(this.gameState){
@@ -151,6 +151,10 @@ DraughtGame.prototype.update = function(deltaTime){
     break;
     default:
     break;
+  }
+
+  if(move){
+    board.makeMove(move);
   }
 }
 

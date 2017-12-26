@@ -54,32 +54,40 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
     return Computer.evaluateBoard(board);
   }
 
-  let possibleMoves, possibleBoards, v;
+  let possibleMoves, possibleBoards, value, childValue, bestMove;
 
   possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
 
   if(player == "Whites"){
-    v = Number.MIN_VALUE;
+    value = Number.MIN_VALUE;
     for(let i=0; i<possibleBoards.length; i++){
-      v = Math.max(v, Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks"));
-      alpha = Math.max(alpha, v);
+      childValue = Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks");
+      if (value < childValue){
+        value = childValue;
+        bestMove = possibleMoves[i];
+      }
+      alpha = Math.max(alpha, value);
       if(beta <= alpha){
         break;
       }
     }
-    return v;
+    return value;
   }
   else{
-    v = Number.MAX_VALUE;
+    value = Number.MAX_VALUE;
     for(let i=0; i<possibleBoards.length; i++){
-      v = Math.min(v, Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites"));
-      beta = Math.min(beta, v);
+      childValue = Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites");
+      if (value > childValue){
+        value = childValue;
+        bestMove = possibleMoves[i];
+      }
+      beta = Math.min(beta, value);
       if(beta <= alpha){
         break;
       }
     }
-    return v;
+    return value;
   }
 
 }
