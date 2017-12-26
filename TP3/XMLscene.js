@@ -47,6 +47,7 @@ XMLscene.prototype.init = function(application) {
     this.theme = THEME.LEGACY;
 
     this.game = new DraughtGame();
+    this.gameStart = false;
 
     this.setPickEnabled(true);
 }
@@ -229,6 +230,18 @@ XMLscene.prototype.update = function (currTime){
 
   if(!anim && this.resetAnimation){
     this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
+  }
+
+
+  if(this.game.started){
+    if(!this.gameStart){
+      this.game.setStartTime(currTime);
+      this.gameStart = true;
+    }
+    else{
+      this.game.displayTime(currTime);
+      this.game.displayTurnTime(currTime);
+    }
   }
 }
 

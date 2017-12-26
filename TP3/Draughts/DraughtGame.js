@@ -59,6 +59,11 @@ function DraughtGame(){
   else if(this.blacksOwner == OWNER.CPU){
     this.blacks = new Computer("Blacks", this.difficulty);
   }
+
+  this.turnTimes = document.getElementsByClassName("timeTurn");
+  this.score = document.getElementsByClassName("score");
+  this.time = document.getElementsByClassName("time");
+  this.started = false;
 };
 
 DraughtGame.prototype.getGameState = function(){
@@ -96,6 +101,7 @@ DraughtGame.prototype.picked = function (id){
       this.nextTurn();
     }
     this.board.makeMove(move);
+    this.started = true;
   }
   console.log(move);
 }
@@ -113,6 +119,7 @@ DraughtGame.prototype.nextTurn = function(){
     default:
     break;
   }
+  this.setTurnTime();
 }
 
 DraughtGame.prototype.undoMove = function(){
@@ -158,4 +165,63 @@ DraughtGame.prototype.resetGame = function(){
   //scoring variables
   this.whitePieces = 12;
   this.blackPieces = 12;
+}
+
+DraughtGame.prototype.setTurnTime = function(){
+  switch(this.gameState){
+    case (GAMESTATE.BLACKS_TURN):{
+      this.turnTimes[1].setAttribute("style","");
+      this.turnTimes[1].innerHTML = '00:00';
+      this.turnTimes[0].innerHTML = '00:00';
+      this.turnTimes[0].setAttribute("style","color:yellow;");
+    }
+    break;
+    case (GAMESTATE.WHITES_TURN):{
+      this.turnTimes[0].setAttribute("style","");
+      this.turnTimes[0].innerHTML = '00:00';
+      this.turnTimes[1].innerHTML = '00:00';
+      this.turnTimes[1].setAttribute("style","color:yellow;");
+    }
+    break;
+    default:
+    break;
+  }
+  this.turnTime = this.currentTime;
+}
+
+DraughtGame.prototype.setStartTime = function(currTime){
+  this.startTime = currTime;
+}
+
+DraughtGame.prototype.displayTime = function(currTime){
+  this.currentTime = currTime;
+  let time = (currTime - this.startTime)/1000;
+  let minutes = ("0" + parseInt(time/60)).slice(-2);
+  let seconds = ("0" + parseInt(time%60)).slice(-2);
+  this.time[0].innerHTML = minutes +':'+seconds;
+}
+
+DraughtGame.prototype.displayTurnTime = function(currTime){
+  let time;
+  if(this.moves.length==1){
+    time = (currTime - this.startTime)/1000;
+  }
+  else {
+    time = (currTime - this.turnTime)/1000;
+  }
+  let minutes = ("0" + parseInt(time/60)).slice(-2);
+  let seconds = ("0" + parseInt(time%60)).slice(-2);
+
+  switch(this.gameState){
+    case (GAMESTATE.BLACKS_TURN):{
+      this.turnTimes[0].innerHTML = minutes +':'+seconds;
+    }
+    break;
+    case (GAMESTATE.WHITES_TURN):{
+      this.turnTimes[1].innerHTML = minutes +':'+seconds;
+    }
+    break;
+    default:
+    break;
+  }
 }
