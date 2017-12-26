@@ -504,3 +504,26 @@ DraughtAux.simulatePossibleBoards = function(board, moveSet){
 
   return boardSet;
 }
+
+DraughtAux.isGameOver = function(board,turn){
+  let possibleMoves;
+
+  if(turn == 'blacks'){
+    if(board.capturedWhitePieces + board.capturedWhiteKings == 12){
+      return true;
+    }
+  }
+  else if(turn == 'whites'){
+    if(board.capturedBlackPieces + board.capturedBlackKings == 12){
+      return true;
+    }
+  }
+
+  possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(turn, board);
+  if(possibleMoves.length != 0){
+    return false;
+  }
+  else {
+    return true;
+  }
+}
