@@ -1512,7 +1512,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             // if(this.reader.hasAttribute(children[i],'args')){
             // }
 						this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
-						if(type == 'patch'){
+            if(type == 'patch'){
                             this.CPLines = this.parseCPLines(descendants[j]);
                             this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,this.CPLines));
 						}

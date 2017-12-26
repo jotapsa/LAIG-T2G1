@@ -193,10 +193,10 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="0" y="0" z="-4.5"/>
+    <TRANSLATION x="0" y="0" z="-6"/>
 
     <DESCENDANTS>
-      <LEAF type="boardaux" args="white"/>
+      <LEAF type="boardaux" args="0"/>
     </DESCENDANTS>
   </NODE>
 
@@ -204,10 +204,10 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="0" y="0" z="4.5"/>
+    <TRANSLATION x="0" y="0" z="6"/>
 
     <DESCENDANTS>
-      <LEAF type="boardaux" args="black"/>
+      <LEAF type="boardaux" args="1"/>
     </DESCENDANTS>
   </NODE>
 
