@@ -129,7 +129,7 @@
   <!-- The root node -->
   <NODE id="root">
     <MATERIAL id="defaultMaterial" />
-    <TEXTURE id="floorTexture" />
+    <TEXTURE id="null" />
 
     <DESCENDANTS>
       <NODEREF id="floor" />
@@ -142,7 +142,7 @@
   <!-- The floor -->
   <NODE id="floor">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
+      <TEXTURE id="floorTexture" />
 
       <TRANSLATION x="-25" y="0" z="25" />
       <ROTATION axis="x" angle="-90" />
@@ -360,6 +360,7 @@
         <NODEREF id="chair_base" />
         <NODEREF id="chair_back" />
         <NODEREF id="chair_legs" />
+        <NODEREF id="chair_arms" />
       </DESCENDANTS>
   </NODE>
 
@@ -386,6 +387,54 @@
 
       <DESCENDANTS>
         <NODEREF id="chair_base" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Chair Arms -->
+  <NODE id="chair_arms">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="2.8" z="0.7" />
+
+      <DESCENDANTS>
+        <NODEREF id="chair_arm1" />
+        <NODEREF id="chair_arm2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Chair Arm 1 -->
+  <NODE id="chair_arm1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="chair_arm" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Chair Arm 2 -->
+  <NODE id="chair_arm2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="2" y="0" z="0" />
+
+      <DESCENDANTS>
+        <NODEREF id="chair_arm" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Chair Arm -->
+  <NODE id="chair_arm">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="0.05" sy="0.35" sz="0.1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
       </DESCENDANTS>
   </NODE>
 

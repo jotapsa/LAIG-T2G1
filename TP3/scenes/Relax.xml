@@ -85,6 +85,23 @@
      <amplif_factor s="0.3" t="0.3" />
  </TEXTURE>
 
+ <!-- Wood -->
+ <TEXTURE id="wood">
+     <file path="images/wood.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <!-- Football ball -->
+ <TEXTURE id="football">
+     <file path="images/football.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <!-- Basketball ball -->
+ <TEXTURE id="basketball">
+     <file path="images/basketball.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
 
 </TEXTURES>
 
@@ -98,6 +115,15 @@
       <ambient r="0.4" g="0.4" b="0.4" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
   </MATERIAL>
+
+  <!-- Abajur material -->
+  <MATERIAL id="abajurMaterial">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="1" g="1" b="0.4" a="1" />
+      <ambient r="0.4" g="0.4" b="0.4" a="1" />
+      <emission r="0" g="0" b="0.0" a="1" />
+  </MATERIAL>
 </MATERIALS>
 
 
@@ -108,13 +134,17 @@
 <!-- The animations -->
 <ANIMATIONS>
 
-  <ANIMATION id="goAround"  speed="2"   type="linear">
+  <ANIMATION id="ball1Anim"  speed="15"   type="linear">
     <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"    yy="0"    zz="-5"  />
-    <controlpoint   xx="0"   yy="0"   zz="-5"   />
+    <controlpoint   xx="40"   yy="0"   zz="0"   />
+    <controlpoint   xx="40"   yy="0"   zz="20"   />
+    <controlpoint   xx="0"   yy="0"   zz="20"   />
     <controlpoint   xx="0"   yy="0"   zz="0"   />
   </ANIMATION>
+
+  <ANIMATION id="ball2Anim" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="0" rotang="720"/>
 
 </ANIMATIONS>
 
@@ -126,20 +156,22 @@
   <!-- The root node -->
   <NODE id="root">
     <MATERIAL id="defaultMaterial" />
-    <TEXTURE id="floorTexture" />
+    <TEXTURE id="null" />
 
     <DESCENDANTS>
       <NODEREF id="floor" />
       <NODEREF id="Draughts" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
+      <NODEREF id="lamps" />
+      <NODEREF id="balls" />
     </DESCENDANTS>
   </NODE>
 
   <!-- The floor -->
   <NODE id="floor">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
+      <TEXTURE id="floorTexture" />
 
       <TRANSLATION x="-25" y="0" z="25" />
       <ROTATION axis="x" angle="-90" />
@@ -389,7 +421,6 @@
 
       <DESCENDANTS>
         <NODEREF id="chair_base" />
-        <NODEREF id="chair_back" />
         <NODEREF id="chair_legs" />
       </DESCENDANTS>
   </NODE>
@@ -404,19 +435,6 @@
 
       <DESCENDANTS>
         <NODEREF id="cube" />
-      </DESCENDANTS>
-  </NODE>
-
-  <!-- Chair Top Back -->
-  <NODE id="chair_back">
-      <MATERIAL id="null" />
-      <TEXTURE id="null" />
-
-      <TRANSLATION x="0" y="2.8" z="4.1" />
-      <ROTATION axis="x" angle="-90" />
-
-      <DESCENDANTS>
-        <NODEREF id="chair_base" />
       </DESCENDANTS>
   </NODE>
 
@@ -555,6 +573,133 @@
 
       <DESCENDANTS>
         <LEAF  type="rectangle" args="-2 2 2 -2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- The lamps -->
+   <NODE id="lamps">
+      <MATERIAL id="defaultMaterial" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+          <NODEREF id="lamp1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- First Lamp -->
+   <NODE id="lamp1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-20" y="0" z="20" />
+
+      <DESCENDANTS>
+          <NODEREF id="lamp" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Generic Lamp -->
+   <NODE id="lamp">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="abajur" />
+        <NODEREF id="post" />
+        <NODEREF id="base" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Lamp Abajur -->
+   <NODE id="abajur">
+      <MATERIAL id="abajurMaterial" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="16" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="2" sy="2" sz="2" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="4 2 1 50 50 0 0" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Lamp Post -->
+   <NODE id="post">
+      <MATERIAL id="null" />
+      <TEXTURE id="wood" />
+
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="2" sy="2" sz="2" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="8 0.5 0.5 30 30 0 1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Lamp Base -->
+   <NODE id="base">
+      <MATERIAL id="null" />
+      <TEXTURE id="wood" />
+
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="2" sy="2" sz="2" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="0.5 2 2 50 50 1 1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Balls -->
+   <NODE id="balls">
+      <MATERIAL id="defaultMaterial" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+          <NODEREF id="ball1" />
+          <NODEREF id="ball2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- First ball -->
+   <NODE id="ball1" >
+      <MATERIAL id="null" />
+      <TEXTURE id="football" />
+
+      <TRANSLATION x="-20" y="1.5" z="-20" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="ball1Anim" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+          <NODEREF id="ball_sphere" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- The second ball -->
+  <NODE id="ball2">
+      <MATERIAL id="null" />
+      <TEXTURE id="basketball" />
+
+      <TRANSLATION x="0" y="1.5" z="0" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="ball2Anim" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+         <NODEREF id="ball_sphere" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Ball -->
+  <NODE id="ball_sphere">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+          <LEAF type="sphere" args="1.5 100 100" />
       </DESCENDANTS>
   </NODE>
 

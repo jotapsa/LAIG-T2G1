@@ -126,7 +126,7 @@
   <!-- The root node -->
   <NODE id="root">
     <MATERIAL id="defaultMaterial" />
-    <TEXTURE id="floorTexture" />
+    <TEXTURE id="null" />
 
     <DESCENDANTS>
       <NODEREF id="floor" />
@@ -139,7 +139,7 @@
   <!-- The floor -->
   <NODE id="floor">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
+      <TEXTURE id="floorTexture" />
 
       <TRANSLATION x="-25" y="0" z="25" />
       <ROTATION axis="x" angle="-90" />
