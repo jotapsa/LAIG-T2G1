@@ -176,7 +176,7 @@ DraughtGame.prototype.resetGame = function(){
   this.player2Wins = 0;
   this.computer1Wins = 0;
   this.computer2Wins = 0;
-  
+
   this.whitePieces = 12;
   this.blackPieces = 12;
 
@@ -265,11 +265,6 @@ DraughtGame.prototype.displayTime = function(currTime){
 DraughtGame.prototype.displayTurnTime = function(currTime){
   let time;
   time = (currTime - this.turnTime)/1000;
-
-  if(time >= 30){
-    this.nextTurn();
-    return;
-  }
 
   let minutes = ("0" + parseInt(time/60)).slice(-2);
   let seconds = ("0" + parseInt(time%60)).slice(-2);

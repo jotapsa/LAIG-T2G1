@@ -12,12 +12,10 @@ CELL = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtMap(map , capturedWhitePieces, capturedWhiteKings, capturedBlackPieces, capturedBlackKings){
+function DraughtMap(map , capturedWhites, capturedBlacks){
   //construtor
-  this.capturedWhitePieces = capturedWhitePieces || 0;
-  this.capturedWhiteKings = capturedWhiteKings || 0;
-  this.capturedBlackPieces = capturedBlackPieces || 0;
-  this.capturedBlackKings = capturedBlackKings || 0;
+  this.capturedWhites = capturedWhites || [];
+  this.capturedBlacks = capturedBlacks || [];
 
   this.map = map || [
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
@@ -44,27 +42,19 @@ DraughtMap.prototype.getPos = function (y, x){
 
 DraughtMap.prototype.countPieces = function(){
   this.blackPieces = 0;
-  this.blackKings = 0;
   this.whitePieces = 0;
-  this.whiteKings = 0;
 
   for(let y=0; y<this.sizeN; y++){
     for(let x=0; x<this.sizeN; x++){
       switch(this.map[y][x]){
+        case (CELL.WHITE_KING):
         case (CELL.WHITE_PIECE):{
           this.whitePieces++;
         }
         break;
-        case (CELL.WHITE_KING):{
-          this.whiteKings++;
-        }
-        break;
+        case (CELL.BLACK_KING):
         case (CELL.BLACK_PIECE):{
           this.blackPieces++;
-        }
-        break;
-        case (CELL.BLACK_KING):{
-          this.blackKings++;
         }
         break;
         default:
@@ -109,23 +99,15 @@ DraughtMap.prototype.capturePiece = function(move){
 
   //Captured Piece
   switch(this.map[intermediatePos[0]][intermediatePos[1]]){
-    case CELL.BLACK_KING:{
-      this.capturedBlackKings++;
-      this.blackKings--;
-    }
-    break;
+    case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
-      this.capturedBlackPieces++;
+      this.capturedBlacks.push(this.map[intermediatePos[0]][intermediatePos[1]]);
       this.blackPieces--;
     }
     break;
-    case CELL.WHITE_KING:{
-      this.capturedWhiteKings++;
-      this.whiteKings--;
-    }
-    break;
+    case CELL.WHITE_KING:
     case CELL.WHITE_PIECE:{
-      this.capturedWhitePieces++;
+      this.capturedWhites.push(this.map[intermediatePos[0]][intermediatePos[1]]);
       this.whitePieces--;
     }
     break;
@@ -169,25 +151,18 @@ DraughtMap.prototype.releasePiece = function(move){
   delta = [finalPos[0]-startingPos[0], finalPos[1]-startingPos[1]];
   intermediatePos = [startingPos[0] + delta[0]/2, startingPos[1] + delta[1]/2];
 
-  //Captured Piece
+  //Release Piece -- this assumes the last piece
+  //captured is also the last one in the array
   switch(capturedPiece){
+    case CELL.BLACK_PIECE:
     case CELL.BLACK_KING:{
-      this.capturedBlackKings--;
-      this.blackKings++;
-    }
-    break;
-    case CELL.BLACK_PIECE:{
-      this.capturedBlackPieces--;
+      this.capturedBlacks.pop();
       this.blackPieces++;
     }
     break;
-    case CELL.WHITE_KING:{
-      this.capturedWhiteKings--;
-      this.whiteKings++;
-    }
-    break;
+    case CELL.WHITE_KING:
     case CELL.WHITE_PIECE:{
-      this.capturedWhitePieces--;
+      this.capturedWhites.pop();
       this.whitePieces++;
     }
     break;
@@ -199,10 +174,8 @@ DraughtMap.prototype.releasePiece = function(move){
 }
 
 DraughtMap.prototype.resetCapturedPieces = function(){
-  this.capturedWhitePieces = 0;
-  this.capturedWhiteKings = 0;
-  this.capturedBlackPieces = 0;
-  this.capturedBlackKings = 0;
+  this.capturedWhites = [];
+  this.capturedBlacks = [];
 }
 
 DraughtMap.prototype.resetMap = function(){
@@ -230,5 +203,5 @@ DraughtMap.prototype.clone = function (){
     mapClone.push(this.map[i].slice(0));
   }
 
-  return new DraughtMap(mapClone, this.capturedWhitePieces, this.capturedWhiteKings, this.capturedBlackPieces, this.capturedBlackKings);
+  return new DraughtMap(mapClone, this.capturedWhites.slice(0), this.capturedBlacks.slice(0));
 }

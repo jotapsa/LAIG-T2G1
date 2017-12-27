@@ -61,25 +61,14 @@ CapturedBoard.prototype.display = function (){
 
 	switch(this.pieceType){
 		case "white":{
-			for(let i=0; i<this.scene.game.board.capturedWhitePieces; i++){
+			for(let i=0; i<this.scene.game.board.capturedWhites.length; i++){
 				this.scene.pushMatrix();
 					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
 					this.piece.display();
-				this.scene.popMatrix();
-
-				xPiece++;
-				if(xPiece > (this.boardWidth/2)){
-					yPiece++;
-					xPiece = -(this.boardWidth/2) + 0.5;
-				}
-			}
-
-			for(let i=0; i<this.scene.game.board.capturedWhiteKings; i++){
-				this.scene.pushMatrix();
-					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
-					this.piece.display();
-					this.scene.translate(0,0.21,0);
-					this.piece.display();
+					if(this.scene.game.board.capturedWhites[i] == CELL.WHITE_KING){
+						this.scene.translate(0,0.21,0);
+						this.piece.display();
+					}
 				this.scene.popMatrix();
 
 				xPiece++;
@@ -91,25 +80,14 @@ CapturedBoard.prototype.display = function (){
 		}
 		break;
 		case "black":{
-			for(let i=0; i<this.scene.game.board.capturedBlackPieces; i++){
+			for(let i=0; i<this.scene.game.board.capturedBlacks.length; i++){
 				this.scene.pushMatrix();
 					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
 					this.piece.display();
-				this.scene.popMatrix();
-
-				xPiece++;
-				if(xPiece > (this.boardWidth/2)){
-					yPiece++;
-					xPiece = -(this.boardWidth/2) + 0.5;
-				}
-			}
-
-			for(let i=0; i<this.scene.game.board.capturedBlackKings; i++){
-				this.scene.pushMatrix();
-					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
-					this.piece.display();
-					this.scene.translate(0,0.21,0);
-					this.piece.display();
+					if(this.scene.game.board.capturedBlacks[i] == CELL.BLACK_KING){
+						this.scene.translate(0,0.21,0);
+						this.piece.display();
+					}
 				this.scene.popMatrix();
 
 				xPiece++;
@@ -123,4 +101,5 @@ CapturedBoard.prototype.display = function (){
 		default:
 		break;
 	}
+
 };
