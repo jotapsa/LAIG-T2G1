@@ -85,6 +85,13 @@ XMLscene.prototype.initLights = function() {
             i++;
         }
     }
+
+    //Disable all lights left
+    for(let n = i;n<8;n++){
+      this.lights[n].disable();
+      this.lights[n].setVisible(false);
+      this.lights[n].update();
+    }
 }
 
 /**
@@ -127,6 +134,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
+    this.interface.ResetGUI();
     this.interface.addLightsGroup(this.graph.lights);
     this.interface.addCameraGroup();
     this.interface.addConfigurationGroup();
@@ -257,7 +265,7 @@ XMLscene.prototype.changeCameraPerspective = function(){
  * .
  */
 XMLscene.prototype.loadGraph = function(){
-  this.graph = new MySceneGraph(this.themes[this.theme], this);
+  var myGraph = new MySceneGraph(this.themes[this.theme], this);
 }
 
 

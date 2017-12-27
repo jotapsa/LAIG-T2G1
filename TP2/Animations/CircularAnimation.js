@@ -16,7 +16,7 @@ class CircularAnimation extends Animation {
       this.rotationAngle = rotationAngle;
 
       //expectedTime in seconds
-      this.expectedTime = (2*Math.PI*this.radius*(this.rotationAngle/360.0))/this.speed;
+      this.expectedTime = (2*Math.PI*this.radius*(Math.abs(this.rotationAngle)/360.0))/this.speed;
       this.angleSpeed = this.rotationAngle/this.expectedTime; // (angle/s)
 
       this.resetAnimation();

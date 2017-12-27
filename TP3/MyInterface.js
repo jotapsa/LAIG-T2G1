@@ -28,16 +28,24 @@ MyInterface.prototype.init = function(application) {
 };
 
 /**
+ * Reset All GUI Folders and Items.
+ */
+MyInterface.prototype.ResetGUI = function() {
+    this.gui.destroy();
+    this.gui = new dat.GUI();
+}
+
+/**
  * Adds a folder containing the IDs of the lights passed as parameter.
  */
 MyInterface.prototype.addLightsGroup = function(lights) {
-
     var group = this.gui.addFolder("Lights");
     group.close();
 
     // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
     // e.g. this.option1=true; this.option2=false;
 
+    this.scene.lightValues = {};
     for (var key in lights) {
         if (lights.hasOwnProperty(key)) {
             this.scene.lightValues[key] = lights[key][0];
