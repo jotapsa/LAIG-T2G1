@@ -29,18 +29,10 @@ function DraughtGame(){
   this.gameState = GAMESTATE.RUNNING;
   this.turn = TURN.BLACKS;
   this.depth = 10;
+  this.started = false;
 
   this.board = new DraughtMap();
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-
-  //scoring variables
-  this.player1Wins = 0;
-  this.player2Wins = 0;
-  this.computer1Wins = 0;
-  this.computer2Wins = 0;
-
-  this.whitePieces = 12;
-  this.blackPieces = 12;
 
   if(this.whitesOwner == OWNER.HUMAN){
     this.whites = new Player("Whites");
@@ -60,7 +52,6 @@ function DraughtGame(){
   this.turnTimes = document.getElementsByClassName("timeTurn");
   this.score = document.getElementsByClassName("score");
   this.time = document.getElementsByClassName("time");
-  this.started = false;
 };
 
 DraughtGame.prototype.getgameState = function(){
@@ -132,7 +123,6 @@ DraughtGame.prototype.undoMove = function(){
     move = this.moves.pop();
     this.board.undoMove(move);
     this.turn = move.getTurn();
-    this.selectedPiece =false;
   }
 }
 
@@ -167,21 +157,12 @@ DraughtGame.prototype.update = function(deltaTime){
 }
 
 DraughtGame.prototype.resetGame = function(){
+  this.moves = [];
+  this.gameState = GAMESTATE.RUNNING;
+  this.turn = TURN.BLACKS;
+  this.started = false;
+
   this.board.resetMap();
-
-  this.selectedPiece = false;
-  this.selectLOCK = false;
-  this.startingPos = null;
-  this.finalPos = null;
-
-  //scoring variables
-  this.player1Wins = 0;
-  this.player2Wins = 0;
-  this.computer1Wins = 0;
-  this.computer2Wins = 0;
-
-  this.whitePieces = 12;
-  this.blackPieces = 12;
 
   if(this.whitesOwner == OWNER.HUMAN){
     this.whites = new Player("Whites");
@@ -196,10 +177,6 @@ DraughtGame.prototype.resetGame = function(){
   else if(this.blacksOwner == OWNER.CPU){
     this.blacks = new Computer("Blacks", this.depth);
   }
-
-  this.gameState = GAMESTATE.BLACKS_TURN;
-  this.moves = [];
-  this.started = false;
 
   //Scoreboard
   this.time[0].innerHTML = '00:00';
