@@ -33,21 +33,19 @@ Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor=Board;
 
 Board.prototype.display = function (){
-	switch (this.scene.game.getGameState()) {
-		case GAMESTATE.BLACKS_TURN:{
-			if(this.scene.game.blacks instanceof Player){
-				this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
-			}
-		}
-		break;
-		case GAMESTATE.WHITES_TURN:{
-			if(this.scene.game.whites instanceof Player){
+	if(this.scene.game.getgameState() == GAMESTATE.RUNNING){
+		switch(this.scene.game.getTurn()){
+			case TURN.WHITES:{
 				this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
 			}
+			break;
+			case TURN.BLACKS:{
+				this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
+			}
+			break;
+			default:
+			break;
 		}
-		break;
-		default:
-		break;
 	}
 
 	for(let y=0; y<this.sizeN; y++){

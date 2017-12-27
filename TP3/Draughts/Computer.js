@@ -16,7 +16,10 @@ function Computer(piece, depth){
   this.creatingMove = false;
   this.wins = 0;
 
+  this.selectedPiece = false;
   this.selectLOCK = false;
+  this.startingPos = null;
+  this.finalPos = null;
 };
 
 Computer.prototype.getWins = function(){
@@ -29,6 +32,16 @@ Computer.prototype.getCreatingMove = function(){
 
 Computer.prototype.getselectLOCK = function(){
   return this.selectLOCK;
+}
+
+/*
+* This function will always return null if called on Computer
+*/
+Computer.prototype.getSelectedPiecePos = function(){
+  if(this.selectedPiece){
+    return this.startingPos;
+  }
+  return null;
 }
 
 Computer.prototype.createMove = function(board){

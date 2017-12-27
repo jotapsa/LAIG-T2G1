@@ -1,25 +1,20 @@
 GAMESTATE = {
-  WHITES_TURN: 1,
-  BLACKS_TURN: 2,
+  RUNNING: 1,
+  ANIMATION: 2,
   GAME_FINISHED: 3,
+  REPLAY: 4,
 };
+
+TURN = {
+  WHITES: 1,
+  BLACKS: 2,
+  NONE: 3,
+}
 
 OWNER = {
   HUMAN: 0,
   CPU: 1,
 }
-
-DIFFICULTY = {
-  EASY: 0,
-  MEDIUM: 1,
-  HARD: 2,
-  IMPOSSIBLE: 3
-}
-
-THEME = {
-    NORMAL: 0,
-    LEGACY: 1,
-};
 
 /**
  * DraughtGame
@@ -31,7 +26,8 @@ function DraughtGame(){
   this.moves = [];
   this.whitesOwner = OWNER.HUMAN;
   this.blacksOwner = OWNER.HUMAN;
-  this.gameState = GAMESTATE.BLACKS_TURN;
+  this.gameState = GAMESTATE.RUNNING;
+  this.turn = TURN.BLACKS;
   this.depth = 10;
 
   this.board = new DraughtMap();
@@ -67,8 +63,12 @@ function DraughtGame(){
   this.started = false;
 };
 
-DraughtGame.prototype.getGameState = function(){
+DraughtGame.prototype.getgameState = function(){
   return this.gameState;
+}
+
+DraughtGame.prototype.getTurn = function (){
+  return this.turn;
 }
 
 DraughtGame.prototype.picked = function (id){
@@ -78,14 +78,18 @@ DraughtGame.prototype.picked = function (id){
     return;
   }
 
-  switch(this.gameState){
-    case GAMESTATE.WHITES_TURN:{
+  if (this.gameState != GAMESTATE.RUNNING){
+    return;
+  }
+
+  switch(this.turn){
+    case TURN.WHITES:{
       if(this.whites instanceof Player){
         move = this.whites.createMove(id, this.board);
       }
     }
     break;
-    case GAMESTATE.BLACKS_TURN:{
+    case TURN.BLACKS:{
       if(this.blacks instanceof Player){
         move = this.blacks.createMove(id, this.board);
       }
@@ -107,19 +111,18 @@ DraughtGame.prototype.picked = function (id){
 }
 
 DraughtGame.prototype.nextTurn = function(){
-  switch(this.gameState){
-    case (GAMESTATE.BLACKS_TURN):{
-      this.gameState = GAMESTATE.WHITES_TURN;
+  switch(this.turn){
+    case (TURN.BLACKS):{
+      this.turn = TURN.WHITES;
     }
     break;
-    case (GAMESTATE.WHITES_TURN):{
-      this.gameState = GAMESTATE.BLACKS_TURN;
+    case (TURN.WHITES):{
+      this.turn = TURN.BLACKS;
     }
     break;
     default:
     break;
   }
-  this.setTurnTime();
 }
 
 DraughtGame.prototype.undoMove = function(){
@@ -128,7 +131,7 @@ DraughtGame.prototype.undoMove = function(){
     let move;
     move = this.moves.pop();
     this.board.undoMove(move);
-    this.gameState = move.getTurn();
+    this.turn = move.getTurn();
     this.selectedPiece =false;
   }
 }
@@ -137,14 +140,14 @@ DraughtGame.prototype.update = function(deltaTime){
   let move = null;
   //deltaTime is in ms
 
-  switch(this.gameState){
-    case GAMESTATE.WHITES_TURN:{
+  switch(this.turn){
+    case TURN.WHITES:{
       if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
         move = this.whites.createMove(this.board);
       }
     }
     break;
-    case GAMESTATE.BLACKS_TURN:{
+    case TURN.BLACKS:{
       if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
         move = this.blacks.createMove(this.board);
       }
@@ -227,28 +230,6 @@ DraughtGame.prototype.resetGame = function(){
   this.players[1].innerHTML = whites;
 }
 
-DraughtGame.prototype.setTurnTime = function(){
-  switch(this.gameState){
-    case (GAMESTATE.BLACKS_TURN):{
-      this.turnTimes[1].setAttribute("style","");
-      this.turnTimes[1].innerHTML = '00:00';
-      this.turnTimes[0].innerHTML = '00:00';
-      this.turnTimes[0].setAttribute("style","color:yellow;");
-    }
-    break;
-    case (GAMESTATE.WHITES_TURN):{
-      this.turnTimes[0].setAttribute("style","");
-      this.turnTimes[0].innerHTML = '00:00';
-      this.turnTimes[1].innerHTML = '00:00';
-      this.turnTimes[1].setAttribute("style","color:yellow;");
-    }
-    break;
-    default:
-    break;
-  }
-  this.turnTime = this.currentTime;
-}
-
 DraughtGame.prototype.setStartTime = function(currTime){
   this.startTime = currTime;
   this.turnTime = currTime;
@@ -281,4 +262,26 @@ DraughtGame.prototype.displayTurnTime = function(currTime){
     default:
     break;
   }
+}
+
+DraughtGame.prototype.setTurnTime = function(){
+  switch(this.gameState){
+    case (GAMESTATE.BLACKS_TURN):{
+      this.turnTimes[1].setAttribute("style","");
+      this.turnTimes[1].innerHTML = '00:00';
+      this.turnTimes[0].innerHTML = '00:00';
+      this.turnTimes[0].setAttribute("style","color:yellow;");
+    }
+    break;
+    case (GAMESTATE.WHITES_TURN):{
+      this.turnTimes[0].setAttribute("style","");
+      this.turnTimes[0].innerHTML = '00:00';
+      this.turnTimes[1].innerHTML = '00:00';
+      this.turnTimes[1].setAttribute("style","color:yellow;");
+    }
+    break;
+    default:
+    break;
+  }
+  this.turnTime = this.currentTime;
 }

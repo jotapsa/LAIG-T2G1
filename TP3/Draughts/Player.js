@@ -5,7 +5,7 @@
  */
 function Player(piece){
   //construtor
-  this.piece = piece;
+  this.pieces = piece;
   this.wins = 0;
 
   this.selectedPiece = false;
@@ -29,9 +29,9 @@ Player.prototype.createMove = function(id, board){
   y = Math.floor(id / 8);
   x = id % 8;
   console.log("Y: " + y + " X: " + x);
-  console.log(this.piece + " selectLOCK: " + this.selectLOCK);
+  console.log(this.pieces + " selectLOCK: " + this.selectLOCK);
 
-  switch (this.piece) {
+  switch (this.pieces) {
     case "Whites":{
       if((board.getPos(y,x) == CELL.WHITE_PIECE || board.getPos(y,x) == CELL.WHITE_KING) && !this.selectLOCK){
         this.startingPos = [y, x];
@@ -40,9 +40,9 @@ Player.prototype.createMove = function(id, board){
       else if (this.selectedPiece && board.getPos(y,x) == CELL.EMPTY_SQUARE){
         this.finalPos = [y, x];
         if(!this.selectLOCK){
-          this.selecedPiece = false;
+          this.selectedPiece = false;
         }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.WHITES_TURN);
+        move = new Move(this.startingPos, this.finalPos, TURN.WHITES);
       }
     }
     break;
@@ -54,9 +54,9 @@ Player.prototype.createMove = function(id, board){
       else if (this.selectedPiece && board.getPos(y,x) == CELL.EMPTY_SQUARE){
         this.finalPos = [y, x];
         if(!this.selectLOCK){
-          this.selecedPiece = false;
+          this.selectedPiece = false;
         }
-        move = new Move(this.startingPos, this.finalPos, GAMESTATE.BLACKS_TURN);
+        move = new Move(this.startingPos, this.finalPos, TURN.BLACKS);
       }
     }
     break;
