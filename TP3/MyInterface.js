@@ -59,7 +59,8 @@ MyInterface.prototype.addCameraGroup = function(){
   cameraGroup.add(this.scene, 'cameraAnimationSpeed', 1, 20);
 }
 
-MyInterface.prototype.addConfigurationGroup = function() {
+MyInterface.prototype.addConfigurationGroup = function(){
+  var self = this; //maintain reference to the original this in a change of context
   var configGroup = this.gui.addFolder("Configuration");
   configGroup.open();
 
@@ -73,13 +74,12 @@ MyInterface.prototype.addConfigurationGroup = function() {
         'CPU': OWNER.CPU,
     }).name('Blacks');
 
-   configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
+    configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
 
-   configGroup.add(this.scene, 'theme', {
-        'Casino': THEME.LEGACY,
-        'Living Room': THEME.NORMAL,
-        'Room Floor': THEME.NORMAL,
-    }).name('Theme');
+    let themeController = configGroup.add(this.scene, 'theme', Object.keys(this.scene.themes)).name('Theme');
+    themeController.onChange(function(){
+      self.scene.loadGraph();
+    });
 
     configGroup.add(this.scene.game, 'resetGame').name('Reset Game');
 }

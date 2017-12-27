@@ -1,16 +1,13 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 var FPSToUpdate = 1000;
 
-
 /**
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
 function XMLscene(interface) {
     CGFscene.call(this);
-
     this.interface = interface;
-
     this.lightValues = {};
 }
 
@@ -44,7 +41,12 @@ XMLscene.prototype.init = function(application) {
       uSampler2: 2
     });
 
-    this.theme = THEME.LEGACY;
+    this.themes = {
+      "Casino": "Casino.xml",
+      "Living Room": "Living_Room.xml",
+      "Relax": "Relax.xml"
+    }
+    this.theme = "Casino";
 
     this.game = new DraughtGame();
     this.gameStart = false;
@@ -83,7 +85,6 @@ XMLscene.prototype.initLights = function() {
             i++;
         }
     }
-
 }
 
 /**
@@ -251,6 +252,14 @@ XMLscene.prototype.update = function (currTime){
 XMLscene.prototype.changeCameraPerspective = function(){
   this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
+
+/**
+ * .
+ */
+XMLscene.prototype.loadGraph = function(){
+  this.graph = new MySceneGraph(this.themes[this.theme], this);
+}
+
 
 /**
  * @method 	updateCamera

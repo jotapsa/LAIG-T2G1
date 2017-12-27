@@ -16,7 +16,7 @@ serialInclude(['../lib/CGF.js', 'Utils.js', 'XMLscene.js', 'MySceneGraph.js',
 			 'Primitives/Rectangle.js', 'Primitives/Triangle.js', 'Primitives/Sphere.js',
 			 'Primitives/Cylinder.js', 'Primitives/Patch.js', 'Primitives/UnitCube.js',
        'Primitives/Board.js', 'Primitives/Piece.js', 'Draughts/DraughtMap.js',
-       'Primitives/Button.js', 'Primitives/CapturedBoard.js', 
+       'Primitives/Button.js', 'Primitives/CapturedBoard.js',
        'Primitives/Button.js', 'Primitives/CapturedBoard.js',
        'Draughts/DraughtGame.js', 'Draughts/DraughtAux.js', 'Draughts/Player.js',
        'Draughts/Move.js', 'Draughts/Computer.js',
@@ -41,7 +41,7 @@ main=function()
 
   //myInterface.setActiveCamera(myScene.camera);
 
-	var filename=getUrlVars()['file'] || "LAIG_TP3_LSX_T2_G01_v01.xml";
+	var filename=getUrlVars()['file'] || "Casino.xml";
 
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors
