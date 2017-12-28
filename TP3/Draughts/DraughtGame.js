@@ -24,6 +24,7 @@ OWNER = {
 function DraughtGame(){
   //construtor
   this.moves = [];
+  this.standByMove = null;
   this.whitesOwner = OWNER.HUMAN;
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.RUNNING;
@@ -92,12 +93,13 @@ DraughtGame.prototype.picked = function (id){
 
   //if valid move
   if (move && DraughtAux.checkValidMove(this, move, this.board)){
-    this.moves.push(move);
     if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
       this.nextTurn();
     }
-    this.board.makeMove(move);
-    this.started = true;
+    //animation
+
+    this.standByMove = move;
+    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 
@@ -127,24 +129,46 @@ DraughtGame.prototype.undoMove = function(){
 }
 
 DraughtGame.prototype.update = function(deltaTime){
-  let move = null;
+  let move = null, animation = null;
   //deltaTime is in ms
 
-  switch(this.turn){
-    case TURN.WHITES:{
-      if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
-        move = this.whites.createMove(this.board);
+  switch(this.gameState){
+    case (GAMESTATE.RUNNING):{
+      if(this.standByMove != null){
+        this.moves.push(this.standByMove);
+        this.board.makeMove(this.standByMove);
+        this.standByMove = null;
       }
     }
     break;
-    case TURN.BLACKS:{
-      if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
-        move = this.blacks.createMove(this.board);
+    case (GAMESTATE.ANIMATION):{
+      animation = this.standByMove.getAnimation();
+      if(animation.isDone()){
+        this.gameState = GAMESTATE.RUNNING;
       }
+      animation.update(deltaTime);
     }
-    break;
     default:
     break;
+  }
+
+  if (this.gameState == GAMESTATE.RUNNING){
+    switch(this.turn){
+      case TURN.WHITES:{
+        if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
+          move = this.whites.createMove(this.board);
+        }
+      }
+      break;
+      case TURN.BLACKS:{
+        if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
+          move = this.blacks.createMove(this.board);
+        }
+      }
+      break;
+      default:
+      break;
+    }  
   }
 
   if(move){
@@ -152,7 +176,7 @@ DraughtGame.prototype.update = function(deltaTime){
     let finalPos =  move.getFinalPos();
     let playerCell = this.board.getPos(startingPos[0], startingPos[1]);
 
-    this.moves.push(move);
+
     if(move.isforcedMove()){
       let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, this.board, playerCell);
       switch (playerCell) {
@@ -183,7 +207,8 @@ DraughtGame.prototype.update = function(deltaTime){
     if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
       this.nextTurn();
     }
-    this.board.makeMove(move);
+    this.standByMove = move;
+    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 

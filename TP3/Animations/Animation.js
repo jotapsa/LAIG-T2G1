@@ -3,8 +3,7 @@
 * @constructor
 */
 class Animation {
-  constructor(scene, speed){
-    this.scene = scene;
+  constructor(speed){
     this.speed = speed || 0;
     this.transformMatrix = mat4.create();
 

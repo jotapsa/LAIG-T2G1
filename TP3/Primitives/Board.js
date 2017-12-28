@@ -33,19 +33,26 @@ Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor=Board;
 
 Board.prototype.display = function (){
+	let selectedPiecePos = null, animation = null, animationPos = null;
+
 	if(this.scene.game.getgameState() == GAMESTATE.RUNNING){
 		switch(this.scene.game.getTurn()){
 			case TURN.WHITES:{
-				this.selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
+				selectedPiecePos = this.scene.game.whites.getSelectedPiecePos();
 			}
 			break;
 			case TURN.BLACKS:{
-				this.selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
+				selectedPiecePos = this.scene.game.blacks.getSelectedPiecePos();
 			}
 			break;
 			default:
 			break;
 		}
+	}
+
+	if(this.scene.game.getgameState() == GAMESTATE.ANIMATION){
+		animation = this.scene.game.standByMove.getAnimation();
+		animationPos = this.scene.game.standByMove.getStartingPos();
 	}
 
 	for(let y=0; y<this.sizeN; y++){
@@ -70,8 +77,11 @@ Board.prototype.display = function (){
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
 					this.scene.translate(0,0.5,0);
+					if(animation != null && animationPos[0] == y && animationPos[1] == x){
+						 this.scene.multMatrix(animation.getTransformMatrix());
+					}
 					//Is there a selectedPiece ?
-					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
+					if(selectedPiecePos!=null && selectedPiecePos[0] == y && selectedPiecePos[1] == x){
 						this.selectedPiece.display();
 					}
 					else{
@@ -84,8 +94,11 @@ Board.prototype.display = function (){
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
 					this.scene.translate(0,0.5,0);
+					if(animation != null && animationPos[0] == y && animationPos[1] == x){
+						 this.scene.multMatrix(animation.getTransformMatrix());
+					}
 					//Is there a selectedPiece ?
-					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
+					if(selectedPiecePos!=null && selectedPiecePos[0] == y && selectedPiecePos[1] == x){
 						this.selectedPiece.display();
 						this.scene.translate(0,0.21,0);
 						this.selectedPiece.display();
@@ -102,8 +115,11 @@ Board.prototype.display = function (){
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
 					this.scene.translate(0,0.5,0);
+					if(animation != null && animationPos[0] == y && animationPos[1] == x){
+						 this.scene.multMatrix(animation.getTransformMatrix());
+					}
 					//Is there a selectedPiece ?
-					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
+					if(selectedPiecePos!=null && selectedPiecePos[0] == y && selectedPiecePos[1] == x){
 						this.selectedPiece.display();
 					}
 					else{
@@ -116,8 +132,11 @@ Board.prototype.display = function (){
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
 					this.cube.display();
 					this.scene.translate(0,0.5,0);
+					if(animation != null && animationPos[0] == y && animationPos[1] == x){
+						 this.scene.multMatrix(animation.getTransformMatrix());
+					}
 					//Is there a selectedPiece ?
-					if(this.selectedPiecePos!=null && this.selectedPiecePos[0] == y && this.selectedPiecePos[1] == x){
+					if(selectedPiecePos!=null && selectedPiecePos[0] == y && selectedPiecePos[1] == x){
 						this.selectedPiece.display();
 						this.scene.translate(0,0.21,0);
 						this.selectedPiece.display();

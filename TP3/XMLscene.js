@@ -258,7 +258,7 @@ XMLscene.prototype.update = function (currTime){
 }
 
 XMLscene.prototype.changeCameraPerspective = function(){
-  this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
+  this.cameraAnimation = new CameraAnimation(this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
 
 /**

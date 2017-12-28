@@ -8,6 +8,15 @@ function Move(startingPos, finalPos, turn, forcedMove){
   this.startingPos = startingPos;
   this.finalPos = finalPos;
   this.turn = turn || undefined;
+
+  this.CPoints = [];
+  this.CPoints.push([0, 0, 0]);
+  this.CPoints.push([0, 2, 0]);
+  this.CPoints.push([this.finalPos[1]-this.startingPos[1], 2, this.finalPos[0]-this.startingPos[0]]);
+  this.CPoints.push([this.finalPos[1]-this.startingPos[1], 0, this.finalPos[0]-this.startingPos[0]]);
+  this.animation = new BezierAnimation(this.CPoints, 10);
+  //console.log(this.animation);
+
   this.forcedMove = forcedMove || false;
   this.promotedPiece = false;
   this.capturedPiece = CELL.EMPTY_SQUARE; //same as none
@@ -24,6 +33,10 @@ Move.prototype.getFinalPos = function(){
 
 Move.prototype.getTurn = function(){
   return this.turn;
+}
+
+Move.prototype.getAnimation = function(){
+  return this.animation;
 }
 
 Move.prototype.isforcedMove = function(){
