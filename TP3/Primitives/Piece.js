@@ -9,31 +9,22 @@ function Piece(scene, colour){
 	this.cylinder = new Cylinder(this.scene, 0.2, 0.4, 0.4, 20, 20, 1, 1);
   this.colour = colour;
 
+	this.pieceMaterial = new CGFappearance(this.scene);
+	this.pieceMaterial.setAmbient(0.5, 0.5, 0.5, 1);
+	this.pieceMaterial.setSpecular(0.5, 0.5, 0.5, 1);
+	this.pieceMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
+	this.pieceMaterial.setShininess(1);
+
 	switch(this.colour){
 		case "white":{
-			this.pieceMaterial = new CGFappearance(this.scene);
-			this.pieceMaterial.setAmbient(0.5, 0.5, 0.5, 1);
-			this.pieceMaterial.setSpecular(0.5, 0.5, 0.5, 1);
-			this.pieceMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
-			this.pieceMaterial.setShininess(1);
 			this.pieceMaterial.loadTexture ("scenes/images/white_checker.jpg");
 		}
 		break;
 		case "black":{
-			this.pieceMaterial = new CGFappearance(this.scene);
-			this.pieceMaterial.setAmbient(0.5, 0.5, 0.5,1);
-			this.pieceMaterial.setSpecular(0.5, 0.5, 0.5,1);
-			this.pieceMaterial.setDiffuse(0.5, 0.5, 0.5,1);
-			this.pieceMaterial.setShininess(1);
 			this.pieceMaterial.loadTexture("scenes/images/black_checker.jpg");
 		}
 		break;
 		case "selected":{
-			this.pieceMaterial = new CGFappearance(this.scene);
-			this.pieceMaterial.setAmbient(1, 1, 1,1);
-			this.pieceMaterial.setSpecular(1, 1, 1,1);
-			this.pieceMaterial.setDiffuse(1, 1, 1,1);
-			this.pieceMaterial.setShininess(1);
 			this.pieceMaterial.loadTexture("scenes/images/sat_blue.png");
 		}
 		break;
