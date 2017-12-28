@@ -28,7 +28,7 @@ function DraughtGame(){
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.RUNNING;
   this.turn = TURN.BLACKS;
-  this.depth = 10;
+  this.depth = 5;
   this.started = false;
 
   this.board = new DraughtMap();
@@ -38,14 +38,14 @@ function DraughtGame(){
     this.whites = new Player("Whites");
   }
   else if(this.whitesOwner == OWNER.CPU){
-    this.whites = new Computer("Whites", this.depth);
+    this.whites = new Computer("Whites", Math.floor(this.depth));
   }
 
   if(this.blacksOwner == OWNER.HUMAN){
     this.blacks = new Player("Blacks");
   }
   else if(this.blacksOwner == OWNER.CPU){
-    this.blacks = new Computer("Blacks", this.depth);
+    this.blacks = new Computer("Blacks", Math.floor(this.depth));
   }
 
   this.players = document.getElementsByClassName("player");
@@ -168,14 +168,14 @@ DraughtGame.prototype.resetGame = function(){
     this.whites = new Player("Whites");
   }
   else if(this.whitesOwner == OWNER.CPU){
-    this.whites = new Computer("Whites", this.depth);
+    this.whites = new Computer("Whites", Math.floor(this.depth));
   }
 
   if(this.blacksOwner == OWNER.HUMAN){
     this.blacks = new Player("Blacks");
   }
   else if(this.blacksOwner == OWNER.CPU){
-    this.blacks = new Computer("Blacks", this.depth);
+    this.blacks = new Computer("Blacks", Math.floor(this.depth));
   }
 
   //Scoreboard

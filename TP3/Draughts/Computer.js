@@ -2,6 +2,7 @@ POINTS ={
   WON: 10000000000,
   KING: 50000,
   PIECE: 30000,
+  POSITION_MULTIPLIER: 100,
 }
 
 /**
@@ -48,8 +49,7 @@ Computer.prototype.createMove = function(board){
   this.creatingMove = true;
   let move = null;
 
-  move = Computer.alphaBeta(board, this.depth, Number.MIN_VALUE, Number.MAX_VALUE, this.piece)[1];
-  console.log(move);
+  move = Computer.alphaBeta(board, this.depth, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.piece)[1];
 
   this.creatingMove = false;
   return move;
@@ -59,7 +59,7 @@ Computer.prototype.createMove = function(board){
 *Implementation of the Alpha-beta Pruning Algorithm, we set whites as the maximizing player and blacks as the minimizer
 *
 *alpha = best already explored option along path to the root for maximizer
-*beta = best alread explored option along path to the root for minimizer
+*beta = best already explored option along path to the root for minimizer
 *
 * returns an array with the value of the board for the last move, and the last move
 */
@@ -77,7 +77,7 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
 
   if(player == "Whites"){
-    value = Number.MIN_VALUE;
+    value = -Number.MAX_SAFE_INTEGER;
     for(let i=0; i<possibleBoards.length; i++){
       childValue = Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks")[0];
       if (value <= childValue){
@@ -92,7 +92,7 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
     return [value, bestMove];
   }
   else{
-    value = Number.MAX_VALUE;
+    value = Number.MAX_SAFE_INTEGER;
     for(let i=0; i<possibleBoards.length; i++){
       childValue = Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites")[0];
       if (value >= childValue){
@@ -128,8 +128,7 @@ Computer.evaluateBoard = function(board){
   let value = 0;
 
   value += Computer.evaluateNumberOfPieces(board);
-  //value += Computer.evaluatePiecesCloserToBeingKings(board);
-  //value += Computer.evaluetePiecesPosition(board);
+  value += Computer.evaluatePiecesPosition(board);
   value += Computer.generateRandomComponent();
 
   return value;
@@ -163,6 +162,27 @@ Computer.evaluateNumberOfPieces = function(board){
   return value;
 }
 
+Computer.evaluatePiecesPosition = function(board){
+  let value = 0, sizeN;
+
+  sizeN = board.getsizeN();
+  for(let y=0; y<sizeN; y++){
+    for(let x=0; x<sizeN; x++){
+      switch(board.getPos(y, x)){
+        case(CELL.WHITE_PIECE):
+          value += y*POINTS.POSITION_MULTIPLIER;
+        break;
+        case(CELL.BLACK_PIECE):
+          value -= (sizeN-y-1)*POINTS.POSITION_MULTIPLIER;
+        break;
+        default:
+        break;
+      }
+    }
+  }
+
+  return value;
+}
 
 Computer.generateRandomComponent = function(){
   let positive = Math.random() >= 0.5;
