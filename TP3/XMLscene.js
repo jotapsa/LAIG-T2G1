@@ -9,6 +9,11 @@ function XMLscene(interface) {
     CGFscene.call(this);
     this.interface = interface;
     this.lightValues = {};
+
+    this.games = {};
+    this.gameName = '';
+    this.savedGames = 0;
+    this.selectedGame = null;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -137,6 +142,7 @@ XMLscene.prototype.onGraphLoaded = function()
     this.interface.ResetGUI();
     this.interface.addLightsGroup(this.graph.lights);
     this.interface.addCameraGroup();
+    this.interface.addManageGamesGroup();
     this.interface.addConfigurationGroup();
     this.interface.addGameOptions();
 }
@@ -287,4 +293,60 @@ XMLscene.prototype.updateCamera = function(deltaTime){
   this.cameraAnimation.update(deltaTime);
   this.camera.setPosition(this.cameraAnimation.position);
   this.camera.setTarget(this.cameraAnimation.target);
+}
+
+/**
+ * .
+ */
+XMLscene.prototype.updateLoadGameList = function(){
+  let self = this;
+  let manageGamesGroup = this.interface.gui.__folders['Manage Games'];
+
+  manageGamesGroup.__controllers[3].remove();
+  manageGamesGroup.__controllers[2].remove();
+  let loadGame = manageGamesGroup.add(this, 'selectedGame', Object.values(this.games)).name('Load Game');
+  loadGame.onChange(function(){
+    self.loadGame();
+  });
+  manageGamesGroup.add(this, 'clearGames').name('Clear All Games');
+}
+
+/**
+ * .
+ */
+XMLscene.prototype.saveGame = function(){
+  if(!this.gameStart || this.gameName.length == 0)
+    return;
+
+  let self = this;
+  let manageGamesGroup = this.interface.gui.__folders['Manage Games'];
+
+  this.games[this.savedGames] = this.gameName;
+  window.localStorage['gameList'] = JSON.stringify(this.games);
+  window.localStorage['savedGame'+this.savedGames] = JSON.stringify(this.game);
+  this.savedGames++;
+
+  //Update Load Game List
+  this.updateLoadGameList();
+}
+
+/**
+ * .
+ */
+XMLscene.prototype.loadGame = function(){
+  let game = Object.keys(this.games).find(key => this.games[key] === this.selectedGame);
+  this.game = new DraughtGame(JSON.parse(window.localStorage['savedGame'+game]));
+  this.gameStart = true;
+  this.gameName = this.games[game];
+}
+
+/**
+ * .
+ */
+XMLscene.prototype.clearGames = function(){
+  window.localStorage.clear();
+  this.savedGames = 0;
+  this.games = {};
+  this.gameName = '';
+  this.updateLoadGameList();
 }

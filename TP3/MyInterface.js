@@ -67,6 +67,26 @@ MyInterface.prototype.addCameraGroup = function(){
   cameraGroup.add(this.scene, 'cameraAnimationSpeed', 1, 20);
 }
 
+MyInterface.prototype.addManageGamesGroup = function(){
+  var self = this; //maintain reference to the original this in a change of context
+  var manageGamesGroup = this.gui.addFolder("Manage Games");
+  manageGamesGroup.open();
+
+  manageGamesGroup.add(this.scene, 'gameName').name('Name of Game').listen();
+  manageGamesGroup.add(this.scene, 'saveGame').name('Save Game');
+
+  if (window.localStorage.hasOwnProperty('gameList')){
+    this.scene.games = JSON.parse(window.localStorage['gameList']);
+    this.scene.savedGames = Object.values(this.scene.games).length;
+  }
+  
+  let loadGame = manageGamesGroup.add(this.scene, 'selectedGame', Object.values(this.scene.games) ).name('Load Game');
+  loadGame.onChange(function(){
+    self.scene.loadGame();
+  });
+  manageGamesGroup.add(this.scene, 'clearGames').name('Clear All Games');
+}
+
 MyInterface.prototype.addConfigurationGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
   var configGroup = this.gui.addFolder("Configuration");

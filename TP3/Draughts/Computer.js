@@ -10,15 +10,26 @@ POINTS ={
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Computer(piece, depth){
+function Computer(piece, depth,computer){
   //construtor
-  this.piece = piece;
-  this.depth= depth;
-  this.creatingMove = false;
-  this.wins = 0;
+  if (computer===undefined){
+    this.piece = piece;
+    this.depth= depth;
+    this.creatingMove = false;
+    this.wins = 0;
 
-  this.selectLOCK = false;
-  this.startingPos = null;
+    this.selectLOCK = false;
+    this.startingPos = null;
+  }
+  else {
+    this.piece = computer['piece'];
+    this.depth = computer['depth'];
+    this.creatingMove = computer['creatingMove'];
+    this.wins = computer['wins'];
+
+    this.selectLOCK = computer['selectLOCK'];
+    this.startingPos = computer['startingPos'];
+  }
 };
 
 Computer.prototype.getWins = function(){
