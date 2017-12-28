@@ -148,7 +148,38 @@ DraughtGame.prototype.update = function(deltaTime){
   }
 
   if(move){
+    let startingPos = move.getStartingPos();
+    let finalPos =  move.getFinalPos();
+    let playerCell = this.board.getPos(startingPos[0], startingPos[1]);
+
     this.moves.push(move);
+    if(move.isforcedMove()){
+      let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, this.board, playerCell);
+      switch (playerCell) {
+        case CELL.WHITE_PIECE:
+        case CELL.WHITE_KING:{
+          if(furtherForcedMoves.length>0){
+            this.whites.forceConsecutiveMove(finalPos);
+          }
+          else{
+            this.whites.toggleOFFselectLOCK(finalPos);
+          }
+        }
+        break;
+        case CELL.BLACK_PIECE:
+        case CELL.BLACK_KING:{
+          if(furtherForcedMoves.length>0){
+            this.blacks.forceConsecutiveMove(finalPos);
+          }
+          else{
+            this.blacks.toggleOFFselectLOCK(finalPos);
+          }
+        }
+        break;
+        default:
+        break;
+      }
+    }
     if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
       this.nextTurn();
     }

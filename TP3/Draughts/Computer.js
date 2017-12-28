@@ -17,10 +17,8 @@ function Computer(piece, depth){
   this.creatingMove = false;
   this.wins = 0;
 
-  this.selectedPiece = false;
   this.selectLOCK = false;
   this.startingPos = null;
-  this.finalPos = null;
 };
 
 Computer.prototype.getWins = function(){
@@ -39,9 +37,6 @@ Computer.prototype.getselectLOCK = function(){
 * This function will always return null if called on Computer
 */
 Computer.prototype.getSelectedPiecePos = function(){
-  if(this.selectedPiece){
-    return this.startingPos;
-  }
   return null;
 }
 
@@ -49,11 +44,23 @@ Computer.prototype.createMove = function(board){
   this.creatingMove = true;
   let move = null;
 
-  move = Computer.alphaBeta(board, this.depth, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.piece)[1];
+  move = Computer.alphaBeta(board, this.depth, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.piece, this.startingPos)[1];
 
   this.creatingMove = false;
   return move;
 }
+
+Computer.prototype.forceConsecutiveMove = function(startingPos){
+  this.startingPos = startingPos;
+  this.selectLOCK = true;
+}
+
+Computer.prototype.toggleOFFselectLOCK = function(){
+  this.startingPos = null;
+  this.selectLOCK = false;
+}
+
+
 
 /*
 *Implementation of the Alpha-beta Pruning Algorithm, we set whites as the maximizing player and blacks as the minimizer
@@ -64,7 +71,7 @@ Computer.prototype.createMove = function(board){
 * returns an array with the value of the board for the last move, and the last move
 */
 
-Computer.alphaBeta = function(board, depth, alpha, beta, player){
+Computer.alphaBeta = function(board, depth, alpha, beta, player, startingPos){
   let bestMove = null;
 
   if(!Computer.canExploreFurther(depth)){
@@ -73,9 +80,15 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
 
   let possibleMoves, possibleBoards, value, childValue;
 
-  possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
+  if(startingPos != null){
+    let playerCell = board.getPos(startingPos[0], startingPos[1]);
+    possibleMoves = DraughtAux.ObtainForcedMovesForPiece(startingPos, board, playerCell);
+  }
+  else{
+    possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
+  }
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
-  console.log(possibleBoards);
+  //console.log(possibleBoards);
 
   if(player == "Whites"){
     value = -Number.MAX_SAFE_INTEGER;
