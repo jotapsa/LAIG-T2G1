@@ -14,8 +14,7 @@ function Move(startingPos, finalPos, turn, forcedMove){
   this.CPoints.push([0, 2, 0]);
   this.CPoints.push([this.finalPos[1]-this.startingPos[1], 2, this.finalPos[0]-this.startingPos[0]]);
   this.CPoints.push([this.finalPos[1]-this.startingPos[1], 0, this.finalPos[0]-this.startingPos[0]]);
-  this.animation = new BezierAnimation(this.CPoints, 10);
-  //console.log(this.animation);
+  this.animation = new BezierAnimation(this.CPoints, 20);
 
   this.forcedMove = forcedMove || false;
   this.promotedPiece = false;
