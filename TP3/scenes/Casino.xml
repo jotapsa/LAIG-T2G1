@@ -87,7 +87,30 @@
      <amplif_factor s="0.1" t="0.2" />
  </TEXTURE>
 
+ <TEXTURE id="AceSpades">
+     <file path="images/card_aceSpades.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
 
+ <TEXTURE id="AceClubs">
+     <file path="images/card_aceClubs.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="AceHearts">
+     <file path="images/card_aceHearts.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="AceDiamonds">
+     <file path="images/card_aceDiamonds.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="backCard">
+     <file path="images/card_back.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
 </TEXTURES>
 
 
@@ -109,15 +132,6 @@
 
 <!-- The animations -->
 <ANIMATIONS>
-
-  <ANIMATION id="goAround"  speed="2"   type="linear">
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"    yy="0"    zz="-5"  />
-    <controlpoint   xx="0"   yy="0"   zz="-5"   />
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-  </ANIMATION>
-
   <ANIMATION id="Security1" speed="3" type="circular"
             centerx="20" centery="20" centerz="-20"
             radius="5" startang="180" rotang="90"/>
@@ -125,6 +139,22 @@
   <ANIMATION id="Security2" speed="3" type="circular"
             centerx="20" centery="20" centerz="-20"
             radius="5" startang="270" rotang="-90"/>
+
+  <ANIMATION id="SpadesAnim" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="0" rotang="720"/>
+
+  <ANIMATION id="ClubsAnim" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="-180" rotang="720"/>
+
+  <ANIMATION id="HeartsAnim" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="-90" rotang="720"/>
+
+  <ANIMATION id="DiamondsAnim" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="-270" rotang="720"/>
 
   <ANIMATION id="SecurityCombo" type="combo">
     <SPANREF id="Security1"/>
@@ -151,6 +181,7 @@
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
       <NODEREF id="vigilance" />
+      <NODEREF id="cards" />
     </DESCENDANTS>
   </NODE>
 
@@ -562,7 +593,9 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
-      <!-- <TRANSLATION x="20" y="20" z="-20" /> -->
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="SecurityCombo" />
+      </ANIMATIONREFS>
 
       <DESCENDANTS>
         <NODEREF id="supports" />
@@ -573,10 +606,6 @@
   <NODE id="supports">
       <MATERIAL id="null" />
       <TEXTURE id="carbonFiber" />
-
-      <ANIMATIONREFS>
-        <ANIMATIONREF id="SecurityCombo" />
-      </ANIMATIONREFS>
 
       <DESCENDANTS>
         <NODEREF id="upSupport" />
@@ -632,6 +661,101 @@
             <CPOINT xx="0.65" yy="0" zz="4" ww="1"/>
           </CPLINE>
         </LEAF>
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Cards -->
+  <NODE id="cards">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="30" z="0" />
+
+      <DESCENDANTS>
+        <NODEREF id="cardAceSpades" />
+        <NODEREF id="cardAceClubs" />
+        <NODEREF id="cardAceHearts" />
+        <NODEREF id="cardAceDiamonds" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Ace of Spades Card -->
+  <NODE id="cardAceSpades">
+      <MATERIAL id="null" />
+      <TEXTURE id="AceSpades" />
+
+      <ROTATION axis="x" angle="120" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="SpadesAnim" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <NODEREF id="card" />
+        <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Ace of Clubs Card -->
+  <NODE id="cardAceClubs">
+      <MATERIAL id="null" />
+      <TEXTURE id="AceClubs" />
+
+      <ROTATION axis="x" angle="120" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="ClubsAnim" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <NODEREF id="card" />
+        <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Ace of Hearts Card -->
+  <NODE id="cardAceHearts">
+      <MATERIAL id="null" />
+      <TEXTURE id="AceHearts" />
+
+      <ROTATION axis="x" angle="120" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="HeartsAnim" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <NODEREF id="card" />
+        <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Ace of Diamonds Card -->
+  <NODE id="cardAceDiamonds">
+      <MATERIAL id="null" />
+      <TEXTURE id="AceDiamonds" />
+
+      <ROTATION axis="x" angle="120" />
+
+    <ANIMATIONREFS>
+      <ANIMATIONREF id="DiamondsAnim" />
+    </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <NODEREF id="card" />
+        <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Card -->
+  <NODE id="card">
+      <MATERIAL id="null" />
+      <TEXTURE id="backCard" />
+
+      <ROTATION axis="y" angle="180" />
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
       </DESCENDANTS>
   </NODE>
 
