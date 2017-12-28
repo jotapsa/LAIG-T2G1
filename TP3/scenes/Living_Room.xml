@@ -69,6 +69,11 @@
      <amplif_factor s="0.1" t="0.1" />
  </TEXTURE>
 
+ <TEXTURE id="logoLAIG">
+     <file path="images/laig.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
 
 </TEXTURES>
 
@@ -126,6 +131,7 @@
       <NODEREF id="Draughts" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
+      <NODEREF id="TV" />
     </DESCENDANTS>
   </NODE>
 
@@ -563,6 +569,74 @@
 
       <DESCENDANTS>
         <LEAF  type="rectangle" args="-2 2 2 -2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- TV -->
+  <NODE id="TV">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="20" y="0" z="-22" />
+      <ROTATION axis="y" angle="-45" />
+
+      <DESCENDANTS>
+        <NODEREF id="baseTV" />
+        <NODEREF id="bodyTV" />
+        <NODEREF id="screenTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Base TV -->
+  <NODE id="baseTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <SCALE sx="1" sy="0.2" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Body TV -->
+  <NODE id="bodyTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <TRANSLATION x="2" y="15" z="2" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="15 0.5 0.5 30 30 1 1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Screen TV -->
+  <NODE id="screenTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <!-- 10/5.65 -->
+      <TRANSLATION x="-3" y="15" z="2.5" />
+      <SCALE sx="2.5" sy="1.4125" sz="0.05" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+        <NODEREF id="logoTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Logo TV -->
+  <NODE id="logoTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="logoLAIG" />
+
+      <TRANSLATION x="0.1" y="0" z="0.1" />
+      <SCALE sx="0.95" sy="0.90" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
       </DESCENDANTS>
   </NODE>
 
