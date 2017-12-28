@@ -315,8 +315,14 @@ XMLscene.prototype.updateLoadGameList = function(){
  * .
  */
 XMLscene.prototype.saveGame = function(){
-  if(!this.gameStart || this.gameName.length == 0)
+  if(!this.gameStart)
     return;
+
+  if(this.gameName.length == 0){
+    let input = document.querySelector(".cr.string input");
+    input.focus();
+    return;
+  }
 
   let self = this;
   let manageGamesGroup = this.interface.gui.__folders['Manage Games'];

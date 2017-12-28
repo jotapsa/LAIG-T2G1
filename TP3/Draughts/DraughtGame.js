@@ -93,6 +93,11 @@ function DraughtGame(game){
   this.turnTimes = document.getElementsByClassName("timeTurn");
   this.score = document.getElementsByClassName("score");
   this.time = document.getElementsByClassName("time");
+
+  this.showInfo = document.getElementById("info");
+  this.showInfo.addEventListener("click", this.showInstructions);
+  this.closeInfo = document.getElementsByClassName("infoClose")[0];
+  this.closeInfo.addEventListener("click", this.closeInstructions);
 };
 
 DraughtGame.prototype.getgameState = function(){
@@ -333,4 +338,21 @@ DraughtGame.prototype.setTurnTime = function(){
     break;
   }
   this.turnTime = this.currentTime;
+}
+
+DraughtGame.prototype.showInstructions = function(){
+  let info = document.getElementById("gameInstructions");
+  info.style.display = "block";
+}
+
+DraughtGame.prototype.closeInstructions = function(){
+  let info = document.getElementById("gameInstructions");
+  info.style.display = "none";
+}
+
+window.onclick = function(event) {
+  let info = document.getElementById("gameInstructions");
+    if (event.target == info) {
+        info.style.display = "none";
+    }
 }
