@@ -74,6 +74,11 @@
      <amplif_factor s="1" t="1" />
  </TEXTURE>
 
+ <TEXTURE id="aeroFEUP">
+     <file path="images/aeroFEUP.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
  <TEXTURE id="earthTexture">
      <file path="images/earth.jpg" />
      <amplif_factor s="1" t="1" />
@@ -139,7 +144,7 @@
       <NODEREF id="Draughts" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
-      <NODEREF id="TV" />
+      <NODEREF id="TVs" />
       <NODEREF id="planets" />
     </DESCENDANTS>
   </NODE>
@@ -581,13 +586,39 @@
       </DESCENDANTS>
   </NODE>
 
-  <!-- TV -->
-  <NODE id="TV">
+  <!-- TVs -->
+  <NODE id="TVs">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
+      <DESCENDANTS>
+        <NODEREF id="TV1" />
+        <NODEREF id="TV2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- TV 1 -->
+  <NODE id="TV1">
+      <MATERIAL id="null" />
+      <TEXTURE id="aeroFEUP" />
+
       <TRANSLATION x="20" y="0" z="-22" />
       <ROTATION axis="y" angle="-45" />
+
+      <DESCENDANTS>
+        <NODEREF id="baseTV" />
+        <NODEREF id="bodyTV" />
+        <NODEREF id="screenTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- TV 1 -->
+  <NODE id="TV2">
+      <MATERIAL id="null" />
+      <TEXTURE id="logoLAIG" />
+
+      <TRANSLATION x="-20" y="0" z="22" />
+      <ROTATION axis="y" angle="135" />
 
       <DESCENDANTS>
         <NODEREF id="baseTV" />
@@ -639,7 +670,7 @@
   <!-- Logo TV -->
   <NODE id="logoTV">
       <MATERIAL id="null" />
-      <TEXTURE id="logoLAIG" />
+      <TEXTURE id="null" />
 
       <TRANSLATION x="0.1" y="0" z="0.1" />
       <SCALE sx="0.95" sy="0.90" sz="1" />
