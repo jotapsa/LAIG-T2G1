@@ -269,7 +269,9 @@ DraughtAux.ObtainForcedMovesForPiece = function(startingPos, map, playerCell){
 
   return forcedMoves;
 }
-
+/*
+* Keep in mind every capture is a forced move
+*/
 DraughtAux.UpLeftCapture = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]+2, startingPos[1]-2];
@@ -280,7 +282,7 @@ DraughtAux.UpLeftCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]+1, startingPos[1]-1)==CELL.WHITE_PIECE ||
         map.getPos(startingPos[0]+1, startingPos[1]-1)==CELL.WHITE_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, true);
         }
     }
     break;
@@ -290,7 +292,7 @@ DraughtAux.UpLeftCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]+1, startingPos[1]-1)==CELL.BLACK_PIECE ||
         map.getPos(startingPos[0]+1, startingPos[1]-1)==CELL.BLACK_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, true);
         }
     }
     default:
@@ -299,6 +301,9 @@ DraughtAux.UpLeftCapture = function(playerCell, startingPos, map){
   return move;
 }
 
+/*
+*
+*/
 DraughtAux.UpLeft = function(playerCell, startingPos, map){
   let move = null;
   let finalPos = [startingPos[0]+1, startingPos[1]-1];
@@ -307,7 +312,7 @@ DraughtAux.UpLeft = function(playerCell, startingPos, map){
     case CELL.BLACK_KING:{
       if ((startingPos[0] < (map.getsizeN()-1)) && (startingPos[1] >= 1) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, false);
       }
     }
     break;
@@ -315,7 +320,7 @@ DraughtAux.UpLeft = function(playerCell, startingPos, map){
     case CELL.WHITE_KING:{
       if ((startingPos[0] < (map.getsizeN()-1)) && (startingPos[1] >= 1) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, false);
       }
     }
     break;
@@ -335,7 +340,7 @@ DraughtAux.UpRightCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]+1, startingPos[1]+1)==CELL.WHITE_PIECE ||
         map.getPos(startingPos[0]+1, startingPos[1]+1)==CELL.WHITE_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, true);
         }
     }
     break;
@@ -345,7 +350,7 @@ DraughtAux.UpRightCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]+1, startingPos[1]+1)==CELL.BLACK_PIECE ||
         map.getPos(startingPos[0]+1, startingPos[1]+1)==CELL.BLACK_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, true);
         }
     }
     break;
@@ -363,7 +368,7 @@ DraughtAux.UpRight = function(playerCell, startingPos, map){
     case CELL.BLACK_KING:{
       if ((startingPos[0] < (map.getsizeN()-1)) && (startingPos[1] < (map.getsizeN()-1)) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, false);
       }
     }
     break;
@@ -371,7 +376,7 @@ DraughtAux.UpRight = function(playerCell, startingPos, map){
     case CELL.WHITE_KING:{
       if ((startingPos[0] < (map.getsizeN()-1)) && (startingPos[1] < (map.getsizeN()-1)) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, false);
       }
     }
     break;
@@ -392,7 +397,7 @@ DraughtAux.DownLeftCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]-1, startingPos[1]-1)==CELL.WHITE_PIECE ||
         map.getPos(startingPos[0]-1, startingPos[1]-1)==CELL.WHITE_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, true);
         }
     }
     break;
@@ -401,7 +406,7 @@ DraughtAux.DownLeftCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]-1, startingPos[1]-1)==CELL.BLACK_PIECE ||
         map.getPos(startingPos[0]-1, startingPos[1]-1)==CELL.BLACK_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, true);
         }
     }
     break;
@@ -420,14 +425,14 @@ DraughtAux.DownLeft = function(playerCell, startingPos, map){
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] >= 1) && (startingPos[1] >= 1) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, false);
       }
     }
     break;
     case CELL.WHITE_KING:{
       if ((startingPos[0] >= 1) && (startingPos[1] >= 1) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, false);
       }
     }
     break;
@@ -449,7 +454,7 @@ DraughtAux.DownRightCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]-1, startingPos[1]+1)==CELL.WHITE_PIECE ||
         map.getPos(startingPos[0]-1, startingPos[1]+1)==CELL.WHITE_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, true);
         }
     }
     break;
@@ -458,7 +463,7 @@ DraughtAux.DownRightCapture = function(playerCell, startingPos, map){
         (map.getPos(startingPos[0]-1, startingPos[1]+1)==CELL.BLACK_PIECE ||
         map.getPos(startingPos[0]-1, startingPos[1]+1)==CELL.BLACK_KING) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, true);
         }
     }
     break;
@@ -477,14 +482,14 @@ DraughtAux.DownRight = function(playerCell, startingPos, map){
     case CELL.BLACK_PIECE:{
       if ((startingPos[0] >= 1) && (startingPos[1] < (map.getsizeN()-1)) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.BLACKS, false);
         }
     }
     break;
     case CELL.WHITE_KING:{
       if ((startingPos[0] >= 1) && (startingPos[1] < (map.getsizeN()-1)) &&
         (map.getPos(finalPos[0], finalPos[1])==CELL.EMPTY_SQUARE)){
-          move = new Move (startingPos, finalPos);
+          move = new Move (startingPos, finalPos, TURN.WHITES, false);
         }
     }
     break;
@@ -496,12 +501,26 @@ DraughtAux.DownRight = function(playerCell, startingPos, map){
 
 DraughtAux.simulatePossibleBoards = function(board, moveSet){
   let boardSet = [], boardCopy;
+
   for(let i=0; i<moveSet.length; i++){
     boardCopy = board.clone();
     boardCopy.makeMove(moveSet[i]);
-    boardSet.push(boardCopy);
+    if(moveSet[i].isforcedMove()){
+      let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(moveSet[i].getFinalPos(), boardCopy);
+      if (furtherForcedMoves.length>0){
+        let furtherSimulatedBoards = DraughtAux.simulatePossibleBoards(boardCopy, furtherForcedMoves);
+        for(let j=0; j<furtherSimulatedBoards.length; j++){
+          boardSet.push([furtherSimulatedBoards[j][0], moveSet[i]]);
+        }
+      }
+      else{
+        boardSet.push([boardCopy, moveSet[i]]);
+      }
+    }
+    else{
+      boardSet.push([boardCopy, moveSet[i]]);
+    }
   }
-
   return boardSet;
 }
 

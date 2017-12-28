@@ -75,14 +75,15 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
 
   possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
+  console.log(possibleBoards);
 
   if(player == "Whites"){
     value = -Number.MAX_SAFE_INTEGER;
     for(let i=0; i<possibleBoards.length; i++){
-      childValue = Computer.alphaBeta(possibleBoards[i], depth-1, alpha, beta, "Blacks")[0];
+      childValue = Computer.alphaBeta(possibleBoards[i][0], depth-1, alpha, beta, "Blacks")[0];
       if (value <= childValue){
         value = childValue;
-        bestMove = possibleMoves[i];
+        bestMove = possibleBoards[i][1];
       }
       alpha = Math.max(alpha, value);
       if(beta <= alpha){
@@ -94,10 +95,10 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
   else{
     value = Number.MAX_SAFE_INTEGER;
     for(let i=0; i<possibleBoards.length; i++){
-      childValue = Computer.alphaBeta(possibleBoards[i], depth-1 , alpha, beta, "Whites")[0];
+      childValue = Computer.alphaBeta(possibleBoards[i][0], depth-1 , alpha, beta, "Whites")[0];
       if (value >= childValue){
         value = childValue;
-        bestMove = possibleMoves[i];
+        bestMove = possibleBoards[i][1];
       }
       beta = Math.min(beta, value);
       if(beta <= alpha){
@@ -106,7 +107,6 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player){
     }
     return [value, bestMove];
   }
-
 }
 
 Computer.canExploreFurther = function(depth){

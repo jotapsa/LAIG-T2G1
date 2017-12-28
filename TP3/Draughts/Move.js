@@ -3,18 +3,16 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Move(startingPos, finalPos, player){
+function Move(startingPos, finalPos, turn, forcedMove){
   //construtor
   this.startingPos = startingPos;
   this.finalPos = finalPos;
-  this.turn = player || undefined;
+  this.turn = turn || undefined;
+  this.forcedMove = forcedMove || false;
   this.promotedPiece = false;
   this.capturedPiece = CELL.EMPTY_SQUARE; //same as none
 };
 
-Move.prototype.getTurn = function(){
-  return this.turn;
-}
 
 Move.prototype.getStartingPos = function(){
   return this.startingPos;
@@ -22,6 +20,14 @@ Move.prototype.getStartingPos = function(){
 
 Move.prototype.getFinalPos = function(){
   return this.finalPos;
+}
+
+Move.prototype.getTurn = function(){
+  return this.turn;
+}
+
+Move.prototype.isforcedMove = function(){
+  return this.forcedMove;
 }
 
 Move.prototype.getPromotedPiece = function(){
