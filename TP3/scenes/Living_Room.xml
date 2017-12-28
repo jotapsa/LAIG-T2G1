@@ -74,6 +74,15 @@
      <amplif_factor s="1" t="1" />
  </TEXTURE>
 
+ <TEXTURE id="earthTexture">
+     <file path="images/earth.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="moonTexture">
+     <file path="images/moon.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
 
 </TEXTURES>
 
@@ -106,14 +115,13 @@
 <!-- The animations -->
 <ANIMATIONS>
 
-  <ANIMATION id="goAround"  speed="2"   type="linear">
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"    yy="0"    zz="-5"  />
-    <controlpoint   xx="0"   yy="0"   zz="-5"   />
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-  </ANIMATION>
+  <ANIMATION id="earthAnimation" speed="8" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="0" rotang="720"/>
 
+  <ANIMATION id="moonAnimation" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="3" startang="0" rotang="4320"/>
 </ANIMATIONS>
 
 
@@ -132,6 +140,7 @@
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
       <NODEREF id="TV" />
+      <NODEREF id="planets" />
     </DESCENDANTS>
   </NODE>
 
@@ -640,5 +649,46 @@
       </DESCENDANTS>
   </NODE>
 
-</NODES>
+  <!-- Planets -->
+  <NODE id="planets">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="20" z="0" />
+
+      <DESCENDANTS>
+        <NODEREF id="earth" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Earth -->
+  <NODE id="earth">
+      <MATERIAL id="null" />
+      <TEXTURE id="earthTexture" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="earthAnimation" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1.5 30 30" />
+        <NODEREF id="moon" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Moon -->
+  <NODE id="moon">
+      <MATERIAL id="null" />
+      <TEXTURE id="moonTexture" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="moonAnimation" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF type="sphere" args="0.5 30 30" />
+      </DESCENDANTS>
+  </NODE>
+
+  </NODES>
 </SCENE>
