@@ -3,8 +3,8 @@
 *
 */
 class CameraAnimation extends Animation{
-  constructor(scene, startPerspective, finalPerspective, speed){
-    super(scene, speed);
+  constructor(startPerspective, finalPerspective, speed){
+    super(speed);
     this.startPerspective = startPerspective;
     this.finalPerspective = finalPerspective;
 
@@ -48,7 +48,7 @@ class CameraAnimation extends Animation{
    * @return {CameraAnimation} A Camera Animation that is a clone of this one.
    */
   clone() {
-      return new CameraAnimation(this.scene, this.startPerspective, this.finalPerspective, this.speed);
+      return new CameraAnimation(this.startPerspective, this.finalPerspective, this.speed);
   }
 
 }

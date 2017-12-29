@@ -12,8 +12,8 @@ var r4=7;
  * @constructor
  */
 class BezierAnimation extends Animation {
-    constructor(scene,controlPoints,speed) {
-      super(scene, speed);
+    constructor(controlPoints,speed) {
+      super(speed);
       this.CPoints = controlPoints;
       this.casteljau = deCasteljau (this.CPoints);
       this.curveLength = distance (this.casteljau[l1], this.casteljau[l2]) + distance (this.casteljau[l2], this.casteljau[l3]) + distance (this.casteljau[l3], this.casteljau[l4]) +
@@ -94,6 +94,6 @@ class BezierAnimation extends Animation {
      * @return {BezierAnimation} A Bezier Animation that is a clone of this one.
      */
     clone() {
-        return new BezierAnimation(this.scene, this.CPoints, this.speed);
+        return new BezierAnimation(this.CPoints, this.speed);
     }
 }

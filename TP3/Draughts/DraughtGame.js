@@ -25,13 +25,20 @@ function DraughtGame(game){
   //construtor
 
   if (game===undefined){
-    this.moves = [];
-    this.whitesOwner = OWNER.HUMAN;
-    this.blacksOwner = OWNER.HUMAN;
-    this.gameState = GAMESTATE.RUNNING;
-    this.turn = TURN.BLACKS;
-    this.depth = 5;
-    this.started = false;
+  this.moves = [];
+  this.standByMove = null;
+  this.whitesOwner = OWNER.HUMAN;
+  this.blacksOwner = OWNER.HUMAN;
+  this.gameState = GAMESTATE.RUNNING;
+  this.turn = TURN.BLACKS;
+  this.depth = 10;
+  this.started = false;
+
+  this.board = new DraughtMap();
+  this.replayBoard = new DraughtMap();
+  this.moveReplayIndex = 0;
+
+  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
     this.board = new DraughtMap();
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
@@ -108,6 +115,14 @@ DraughtGame.prototype.getTurn = function (){
   return this.turn;
 }
 
+DraughtGame.prototype.getBoard = function(){
+  return this.board;
+}
+
+DraughtGame.prototype.getReplayBoard = function(){
+  return this.replayBoard;
+}
+
 DraughtGame.prototype.picked = function (id){
   let move = null;
 
@@ -138,12 +153,13 @@ DraughtGame.prototype.picked = function (id){
 
   //if valid move
   if (move && DraughtAux.checkValidMove(this, move, this.board)){
-    this.moves.push(move);
     if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
       this.nextTurn();
     }
-    this.board.makeMove(move);
-    this.started = true;
+    //animation
+
+    this.standByMove = move;
+    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 
@@ -176,20 +192,37 @@ DraughtGame.prototype.undoMove = function(){
   }
 }
 
-DraughtGame.prototype.update = function(){
-  let move = null;
+DraughtGame.prototype.update = function(deltaTime){
+  let move = null, animation = null;
   //deltaTime is in ms
 
-  switch(this.turn){
-    case TURN.WHITES:{
-      if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
-        move = this.whites.createMove(this.board);
-      }
+  switch(this.gameState){
+    case (GAMESTATE.RUNNING):{
     }
     break;
-    case TURN.BLACKS:{
-      if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
-        move = this.blacks.createMove(this.board);
+    case (GAMESTATE.ANIMATION):{
+      animation = this.standByMove.getAnimation();
+      if(animation.isDone()){
+        this.moves.push(this.standByMove);
+        this.board.makeMove(this.standByMove);
+        this.standByMove = null;
+        this.gameState = GAMESTATE.RUNNING;
+        animation.resetAnimation(); // so it can be replayed
+      }
+      animation.update(deltaTime);
+    }
+    break;
+    case (GAMESTATE.REPLAY):{
+      if((this.moves.length > 0) && (this.moveReplayIndex < this.moves.length)){
+        this.standByMove = this.moves[this.moveReplayIndex];
+        animation = this.standByMove.getAnimation();
+        if(animation.isDone()){
+          this.replayBoard.makeMove(this.moves[this.moveReplayIndex]);
+          animation.resetAnimation(); // u never know
+          this.moveReplayIndex++;
+          this.standByMove = null;
+        }
+        animation.update(deltaTime);
       }
     }
     break;
@@ -197,12 +230,31 @@ DraughtGame.prototype.update = function(){
     break;
   }
 
+  if (this.gameState == GAMESTATE.RUNNING){
+    switch(this.turn){
+      case TURN.WHITES:{
+        if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
+          move = this.whites.createMove(this.board);
+        }
+      }
+      break;
+      case TURN.BLACKS:{
+        if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
+          move = this.blacks.createMove(this.board);
+        }
+      }
+      break;
+      default:
+      break;
+    }
+  }
+
   if(move){
     let startingPos = move.getStartingPos();
     let finalPos =  move.getFinalPos();
     let playerCell = this.board.getPos(startingPos[0], startingPos[1]);
 
-    this.moves.push(move);
+
     if(move.isforcedMove()){
       let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, this.board, playerCell);
       switch (playerCell) {
@@ -233,7 +285,8 @@ DraughtGame.prototype.update = function(){
     if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
       this.nextTurn();
     }
-    this.board.makeMove(move);
+    this.standByMove = move;
+    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 
@@ -286,6 +339,14 @@ DraughtGame.prototype.resetGame = function(){
 
   this.players[0].innerHTML = blacks;
   this.players[1].innerHTML = whites;
+}
+
+DraughtGame.prototype.replayGame = function(){
+  if(this.moves.length > 0){
+    this.moveReplayIndex = 0;
+    this.replayBoard.resetMap();
+    this.gameState = GAMESTATE.REPLAY;
+  }
 }
 
 DraughtGame.prototype.setStartTime = function(currTime){

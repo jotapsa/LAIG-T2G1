@@ -69,6 +69,25 @@
      <amplif_factor s="0.1" t="0.1" />
  </TEXTURE>
 
+ <TEXTURE id="logoLAIG">
+     <file path="images/laig.png" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="aeroFEUP">
+     <file path="images/aeroFEUP.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="earthTexture">
+     <file path="images/earth.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
+
+ <TEXTURE id="moonTexture">
+     <file path="images/moon.jpg" />
+     <amplif_factor s="1" t="1" />
+ </TEXTURE>
 
 </TEXTURES>
 
@@ -101,14 +120,13 @@
 <!-- The animations -->
 <ANIMATIONS>
 
-  <ANIMATION id="goAround"  speed="2"   type="linear">
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"   yy="0"   zz="0"   />
-    <controlpoint   xx="5"    yy="0"    zz="-5"  />
-    <controlpoint   xx="0"   yy="0"   zz="-5"   />
-    <controlpoint   xx="0"   yy="0"   zz="0"   />
-  </ANIMATION>
+  <ANIMATION id="earthAnimation" speed="8" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="15" startang="0" rotang="720"/>
 
+  <ANIMATION id="moonAnimation" speed="10" type="circular"
+            centerx="0" centery="0" centerz="0"
+            radius="3" startang="0" rotang="4320"/>
 </ANIMATIONS>
 
 
@@ -126,6 +144,8 @@
       <NODEREF id="Draughts" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
+      <NODEREF id="TVs" />
+      <NODEREF id="planets" />
     </DESCENDANTS>
   </NODE>
 
@@ -566,5 +586,140 @@
       </DESCENDANTS>
   </NODE>
 
-</NODES>
+  <!-- TVs -->
+  <NODE id="TVs">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="TV1" />
+        <NODEREF id="TV2" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- TV 1 -->
+  <NODE id="TV1">
+      <MATERIAL id="null" />
+      <TEXTURE id="aeroFEUP" />
+
+      <TRANSLATION x="20" y="0" z="-22" />
+      <ROTATION axis="y" angle="-45" />
+
+      <DESCENDANTS>
+        <NODEREF id="baseTV" />
+        <NODEREF id="bodyTV" />
+        <NODEREF id="screenTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- TV 1 -->
+  <NODE id="TV2">
+      <MATERIAL id="null" />
+      <TEXTURE id="logoLAIG" />
+
+      <TRANSLATION x="-20" y="0" z="22" />
+      <ROTATION axis="y" angle="135" />
+
+      <DESCENDANTS>
+        <NODEREF id="baseTV" />
+        <NODEREF id="bodyTV" />
+        <NODEREF id="screenTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Base TV -->
+  <NODE id="baseTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <SCALE sx="1" sy="0.2" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Body TV -->
+  <NODE id="bodyTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <TRANSLATION x="2" y="15" z="2" />
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="15 0.5 0.5 30 30 1 1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Screen TV -->
+  <NODE id="screenTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <!-- 10/5.65 -->
+      <TRANSLATION x="-3" y="15" z="2.5" />
+      <SCALE sx="2.5" sy="1.4125" sz="0.05" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+        <NODEREF id="logoTV" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Logo TV -->
+  <NODE id="logoTV">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0.1" y="0" z="0.1" />
+      <SCALE sx="0.95" sy="0.90" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Planets -->
+  <NODE id="planets">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="20" z="0" />
+
+      <DESCENDANTS>
+        <NODEREF id="earth" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Earth -->
+  <NODE id="earth">
+      <MATERIAL id="null" />
+      <TEXTURE id="earthTexture" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="earthAnimation" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1.5 30 30" />
+        <NODEREF id="moon" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Moon -->
+  <NODE id="moon">
+      <MATERIAL id="null" />
+      <TEXTURE id="moonTexture" />
+
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="moonAnimation" />
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF type="sphere" args="0.5 30 30" />
+      </DESCENDANTS>
+  </NODE>
+
+  </NODES>
 </SCENE>

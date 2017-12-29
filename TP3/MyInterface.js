@@ -115,10 +115,10 @@ MyInterface.prototype.addConfigurationGroup = function(){
     themeController.onChange(function(){
       self.scene.loadGraph();
     });
-
-    configGroup.add(this.scene, 'resetGame').name('Reset Game');
 }
 
 MyInterface.prototype.addGameOptions = function(){
   this.gui.add(this.scene.game, 'undoMove').name('Undo Move');
+  this.gui.add(this.scene.game, 'resetGame').name('Reset Game');
+  this.gui.add(this.scene.game, 'replayGame').name('Replay Game');
 }

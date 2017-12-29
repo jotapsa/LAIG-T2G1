@@ -3,8 +3,8 @@
  * @constructor
  */
 class ComboAnimation extends Animation {
-    constructor(scene,animations) {
-      super(scene);
+    constructor(animations) {
+      super();
       this.animations = animations;
       this.currAnimationIndex = 0;
     }
@@ -52,6 +52,6 @@ class ComboAnimation extends Animation {
      * @return {ComboAnimation} A Circular Animation that is a clone of this one.
      */
     clone() {
-        return new ComboAnimation(this.scene, this.animations);
+        return new ComboAnimation(this.animations);
     }
 }

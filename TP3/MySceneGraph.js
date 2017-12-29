@@ -1214,7 +1214,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         if (CPoints.length < 2){
           return "must have at least two Control Points";
         }
-        this.animations[animationID] = new LinearAnimation(this.scene,CPoints,speed);
+        this.animations[animationID] = new LinearAnimation(CPoints, speed);
       break;
 
       //Circular Animation
@@ -1227,7 +1227,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         var radius = parseFloat(this.reader.getString(children[i], 'radius'));
         var startAngle = parseFloat(this.reader.getString(children[i], 'startang'));
         var rotationAngle = parseFloat(this.reader.getString(children[i], 'rotang'));
-        this.animations[animationID] = new CircularAnimation(this.scene,center,radius,startAngle,rotationAngle,speed);
+        this.animations[animationID] = new CircularAnimation(center, radius, startAngle, rotationAngle, speed);
       break;
 
       //Bezier Animation
@@ -1237,7 +1237,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         if ( CPoints.length != 4){
           return "must have 4 Control Points";
         }
-        this.animations[animationID] = new BezierAnimation(this.scene,CPoints,speed);
+        this.animations[animationID] = new BezierAnimation(CPoints,speed);
       break;
 
       //Combo Animation
@@ -1263,7 +1263,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode){
         if(animations.length < 1){
           return "must have 1 Animation";
         }
-        this.animations[animationID] = new ComboAnimation(this.scene,animations);
+        this.animations[animationID] = new ComboAnimation(animations);
       break;
     }
   }

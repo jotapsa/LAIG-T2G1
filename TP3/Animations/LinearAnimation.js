@@ -7,8 +7,8 @@ var Z = 2;
  * @constructor
  */
 class LinearAnimation extends Animation {
-    constructor(scene,controlPoints,speed) {
-      super(scene, speed);
+    constructor(controlPoints,speed) {
+      super(speed);
       this.CPoints = controlPoints;
 
       if (this.CPoints.length>=2){
@@ -95,6 +95,6 @@ class LinearAnimation extends Animation {
      * @return {LinearAnimation} A Linear Animation that is a clone of this one.
      */
     clone() {
-        return new LinearAnimation(this.scene, this.CPoints, this.speed);
+        return new LinearAnimation(this.CPoints, this.speed);
     }
 }

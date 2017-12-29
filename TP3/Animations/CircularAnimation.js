@@ -8,8 +8,8 @@ var degToRad = Math.PI / 180.0;
  * @constructor
  */
 class CircularAnimation extends Animation {
-    constructor(scene,center,radius,startAngle,rotationAngle,speed) {
-      super(scene, speed);
+    constructor(center,radius,startAngle,rotationAngle,speed) {
+      super(speed);
       this.center = center;
       this.radius = radius;
       this.startAngle = startAngle;
@@ -64,7 +64,7 @@ class CircularAnimation extends Animation {
      * @return {CircularAnimation} A Circular Animation that is a clone of this one.
      */
     clone() {
-        return new CircularAnimation(this.scene, this.center, this.radius, this.startAngle, this.rotationAngle, this.speed);
+        return new CircularAnimation(this.center, this.radius, this.startAngle, this.rotationAngle, this.speed);
     }
 
 }

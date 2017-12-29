@@ -239,9 +239,8 @@ XMLscene.prototype.update = function (currTime){
   if(this.graph.loadedOk){
     let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
-    if(!anim && this.resetAnimation){
-      this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
-    }
+  if(!anim){
+    this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
   }
 
   if(this.game.started){
@@ -269,7 +268,7 @@ XMLscene.prototype.initInterface = function(){
 }
 
 XMLscene.prototype.changeCameraPerspective = function(){
-  this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
+  this.cameraAnimation = new CameraAnimation(this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
 
 /**
