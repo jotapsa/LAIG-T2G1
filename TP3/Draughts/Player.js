@@ -3,15 +3,26 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Player(piece){
+function Player(piece,player){
   //construtor
-  this.pieces = piece;
-  this.wins = 0;
+  if (player===undefined){
+    this.pieces = piece;
+    this.wins = 0;
 
-  this.selectedPiece = false;
-  this.selectLOCK = false;
-  this.startingPos = null;
-  this.finalPos = null;
+    this.selectedPiece = false;
+    this.selectLOCK = false;
+    this.startingPos = null;
+    this.finalPos = null;
+  }
+  else {
+    this.pieces = player['pieces'];
+    this.wins = player['wins'];
+
+    this.selectedPiece = player['selectedPiece'];
+    this.selectLOCK = player['selectLOCK'];
+    this.startingPos = player['startingPos'];
+    this.finalPos = player['finalPos'];
+  }
 };
 
 Player.prototype.getselectLOCK = function(){

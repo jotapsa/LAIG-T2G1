@@ -3,7 +3,7 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Move(startingPos, finalPos, turn, forcedMove){
+function Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPiece){
   //construtor
   this.startingPos = startingPos;
   this.finalPos = finalPos;
@@ -17,8 +17,8 @@ function Move(startingPos, finalPos, turn, forcedMove){
   this.animation = new BezierAnimation(this.CPoints, 20);
 
   this.forcedMove = forcedMove || false;
-  this.promotedPiece = false;
-  this.capturedPiece = CELL.EMPTY_SQUARE; //same as none
+  this.promotedPiece = promotedPiece || false;
+  this.capturedPiece = capturedPiece || CELL.EMPTY_SQUARE; //same as none
 };
 
 

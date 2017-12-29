@@ -21,8 +21,10 @@ OWNER = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtGame(){
+function DraughtGame(game){
   //construtor
+
+  if (game===undefined){
   this.moves = [];
   this.standByMove = null;
   this.whitesOwner = OWNER.HUMAN;
@@ -38,24 +40,71 @@ function DraughtGame(){
 
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
-  if(this.whitesOwner == OWNER.HUMAN){
-    this.whites = new Player("Whites");
-  }
-  else if(this.whitesOwner == OWNER.CPU){
-    this.whites = new Computer("Whites", Math.floor(this.depth));
-  }
+    this.board = new DraughtMap();
+    this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
-  if(this.blacksOwner == OWNER.HUMAN){
-    this.blacks = new Player("Blacks");
+    if(this.whitesOwner == OWNER.HUMAN){
+      this.whites = new Player("Whites");
+    }
+    else if(this.whitesOwner == OWNER.CPU){
+      this.whites = new Computer("Whites", Math.floor(this.depth));
+    }
+
+    if(this.blacksOwner == OWNER.HUMAN){
+      this.blacks = new Player("Blacks");
+    }
+    else if(this.blacksOwner == OWNER.CPU){
+      this.blacks = new Computer("Blacks", Math.floor(this.depth));
+    }
   }
-  else if(this.blacksOwner == OWNER.CPU){
-    this.blacks = new Computer("Blacks", Math.floor(this.depth));
+  else {
+    this.moves = [];
+    for(let i = 0;i < game['moves'].length;i++){
+      // Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPiece)
+      let move = game['moves'][i];
+      let startingPos = move['startingPos'];
+      let finalPos = move['finalPos'];
+      this.moves.push(new Move(startingPos,finalPos,move['turn'],move['forcedMove'],move['promotedPiece'],move['capturedPiece']));
+    }
+
+    this.whitesOwner = game['whitesOwner'] == 0 ? OWNER.HUMAN : OWNER.CPU;
+    this.blacksOwner = game['blacksOwner'] == 0 ? OWNER.HUMAN : OWNER.CPU;
+    this.gameState = game['gameState'];
+    this.turn = game['turn'];
+    this.depth = game['depth'];
+    this.started = game['started'];
+
+    // DraughtMap(map , capturedWhites, capturedBlacks)
+    this.board = new DraughtMap(game['board']['map'],game['board']['capturedWhites'],game['board']['capturedBlacks']);
+    this.IDGamma = game['IDGamma'];
+
+    if(game['whitesOwner'] == OWNER.HUMAN){
+      this.whites = new Player("Whites",game['whites']);
+    }
+    else if(game['whitesOwner'] == OWNER.CPU){
+      this.whites = new Computer("Whites", Math.floor(this.depth),game['whites']);
+    }
+
+    if(game['blacksOwner'] == OWNER.HUMAN){
+      this.blacks = new Player("Blacks",game['blacks']);
+    }
+    else if(game['blacksOwner'] == OWNER.CPU){
+      this.blacks = new Computer("Blacks", Math.floor(this.depth),game['blacks']);
+    }
+
+    let d = new Date();
+    this.startTime = d.getTime() - game['timeElapsed']*1000;
   }
 
   this.players = document.getElementsByClassName("player");
   this.turnTimes = document.getElementsByClassName("timeTurn");
   this.score = document.getElementsByClassName("score");
   this.time = document.getElementsByClassName("time");
+
+  this.showInfo = document.getElementById("info");
+  this.showInfo.addEventListener("click", this.showInstructions);
+  this.closeInfo = document.getElementsByClassName("infoClose")[0];
+  this.closeInfo.addEventListener("click", this.closeInstructions);
 };
 
 DraughtGame.prototype.getgameState = function(){
@@ -135,6 +184,10 @@ DraughtGame.prototype.undoMove = function(){
     let move;
     move = this.moves.pop();
     this.board.undoMove(move);
+    if(this.blacksOwner == 1 || this.whitesOwner == 1){
+      move = this.moves.pop();
+      this.board.undoMove(move);
+    }
     this.turn = move.getTurn();
   }
 }
@@ -303,9 +356,9 @@ DraughtGame.prototype.setStartTime = function(currTime){
 
 DraughtGame.prototype.displayTime = function(currTime){
   this.currentTime = currTime;
-  let time = (currTime - this.startTime)/1000;
-  let minutes = ("0" + parseInt(time/60)).slice(-2);
-  let seconds = ("0" + parseInt(time%60)).slice(-2);
+  this.timeElapsed = (currTime - this.startTime)/1000;
+  let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
+  let seconds = ("0" + parseInt(this.timeElapsed%60)).slice(-2);
   this.time[0].innerHTML = minutes +':'+seconds;
 }
 
@@ -350,4 +403,21 @@ DraughtGame.prototype.setTurnTime = function(){
     break;
   }
   this.turnTime = this.currentTime;
+}
+
+DraughtGame.prototype.showInstructions = function(){
+  let info = document.getElementById("gameInstructions");
+  info.style.display = "block";
+}
+
+DraughtGame.prototype.closeInstructions = function(){
+  let info = document.getElementById("gameInstructions");
+  info.style.display = "none";
+}
+
+window.onclick = function(event) {
+  let info = document.getElementById("gameInstructions");
+    if (event.target == info) {
+        info.style.display = "none";
+    }
 }

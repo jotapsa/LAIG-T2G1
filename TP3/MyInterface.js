@@ -67,23 +67,50 @@ MyInterface.prototype.addCameraGroup = function(){
   cameraGroup.add(this.scene, 'cameraAnimationSpeed', 1, 20);
 }
 
+MyInterface.prototype.addManageGamesGroup = function(){
+  var self = this; //maintain reference to the original this in a change of context
+  var manageGamesGroup = this.gui.addFolder("Manage Games");
+  manageGamesGroup.open();
+
+  manageGamesGroup.add(this.scene, 'gameName').name('Name of Game').listen();
+  manageGamesGroup.add(this.scene, 'saveGame').name('Save Game');
+
+  if (window.localStorage.hasOwnProperty('gameList')){
+    this.scene.games = JSON.parse(window.localStorage['gameList']);
+    this.scene.savedGames = Object.values(this.scene.games).length;
+  }
+
+  let loadGame = manageGamesGroup.add(this.scene, 'selectedGame', Object.values(this.scene.games) ).name('Load Game');
+  loadGame.onChange(function(){
+    self.scene.loadGame();
+  });
+  manageGamesGroup.add(this.scene, 'clearGames').name('Clear All Games');
+}
+
 MyInterface.prototype.addConfigurationGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
   var configGroup = this.gui.addFolder("Configuration");
   configGroup.open();
 
-  configGroup.add(this.scene.game, 'whitesOwner', {
+  let whitesController = configGroup.add(this.scene.game, 'whitesOwner', {
        'Human': OWNER.HUMAN,
        'CPU': OWNER.CPU,
    }).name('Whites');
+   whitesController.onChange(function(){
+     self.scene.updateDepth();
+   });
 
-   configGroup.add(this.scene.game, 'blacksOwner', {
+   let blacksController = configGroup.add(this.scene.game, 'blacksOwner', {
         'Human': OWNER.HUMAN,
         'CPU': OWNER.CPU,
     }).name('Blacks');
+    blacksController.onChange(function(){
+      self.scene.updateDepth();
+    });
 
-    configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
-
+    if(this.scene.game.whitesOwner != OWNER.HUMAN || this.scene.game.blacksOwner != OWNER.HUMAN){
+      configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
+    }
     let themeController = configGroup.add(this.scene, 'theme', Object.keys(this.scene.themes)).name('Theme');
     themeController.onChange(function(){
       self.scene.loadGraph();
