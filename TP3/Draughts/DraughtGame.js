@@ -34,6 +34,7 @@ function DraughtGame(){
 
   this.board = new DraughtMap();
   this.replayBoard = new DraughtMap();
+  this.moveReplayIndex = 0;
 
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
@@ -63,6 +64,14 @@ DraughtGame.prototype.getgameState = function(){
 
 DraughtGame.prototype.getTurn = function (){
   return this.turn;
+}
+
+DraughtGame.prototype.getBoard = function(){
+  return this.board;
+}
+
+DraughtGame.prototype.getReplayBoard = function(){
+  return this.replayBoard;
 }
 
 DraughtGame.prototype.picked = function (id){
@@ -145,11 +154,21 @@ DraughtGame.prototype.update = function(deltaTime){
         this.board.makeMove(this.standByMove);
         this.standByMove = null;
         this.gameState = GAMESTATE.RUNNING;
+        animation.resetAnimation(); // so it can be replayed
       }
       animation.update(deltaTime);
     }
     break;
     case (GAMESTATE.REPLAY):{
+      if((this.moves.length > 0) && (this.moveReplayIndex < this.moves.length)){
+        animation = this.moves[this.moveReplayIndex].getAnimation();
+        if(animation.isDone()){
+          this.replayBoard.makeMove(this.moves[this.moveReplayIndex]);
+          animation.resetAnimation(); // u never know
+        }
+
+        animation.update(deltaTime);
+      }
     }
     break;
     default:
@@ -269,6 +288,8 @@ DraughtGame.prototype.resetGame = function(){
 
 DraughtGame.prototype.replayGame = function(){
   if(this.moves.length > 0){
+    this.moveReplayIndex = 0;
+    this.replayBoard.resetMap();
     this.gameState = GAMESTATE.REPLAY;
   }
 }

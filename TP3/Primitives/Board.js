@@ -34,6 +34,24 @@ Board.prototype.constructor=Board;
 
 Board.prototype.display = function (){
 	let selectedPiecePos = null, animation = null, animationPos = null;
+	let board;
+
+	switch(this.scene.game.getgameState()){
+		case(GAMESTATE.RUNNING):
+		case(GAMESTATE.ANIMATION):
+		case(GAMESTATE.GAME_FINISHED):
+			board = this.scene.game.getBoard();
+		break;
+		case(GAMESTATE.REPLAY):
+			board = this.scene.game.getReplayBoard();
+			if(this.scene.game.standByMove != null){
+				//animation = this.scene.game.moves[this.moveReplayIndex].getAnimation()
+				//animationPos = this.scene.game.standByMove.getStartingPos();
+			}
+		break;
+		default:
+		break;
+	}
 
 	if(this.scene.game.getgameState() == GAMESTATE.RUNNING){
 		switch(this.scene.game.getTurn()){
@@ -59,7 +77,7 @@ Board.prototype.display = function (){
 		for(let x=0; x<this.sizeN; x++){
 			this.scene.pushMatrix();
 			this.scene.translate(x-(this.sizeN/2)+0.5, 0, y-(this.sizeN/2)+0.5); //+0.5 because the cubes are centered
-			switch (this.scene.game.board.getPos(y, x)){
+			switch (board.getPos(y, x)){
 				case CELL.INVALID_SQUARE:{
 					this.whiteMaterial.apply();
 					this.scene.registerForPick(y*this.sizeN+x, this.cube);
