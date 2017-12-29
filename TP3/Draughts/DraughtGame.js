@@ -168,6 +168,10 @@ DraughtGame.prototype.undoMove = function(){
     let move;
     move = this.moves.pop();
     this.board.undoMove(move);
+    if(this.blacksOwner == 1 || this.whitesOwner == 1){
+      move = this.moves.pop();
+      this.board.undoMove(move);
+    }
     this.turn = move.getTurn();
   }
 }
