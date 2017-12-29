@@ -79,7 +79,7 @@ MyInterface.prototype.addManageGamesGroup = function(){
     this.scene.games = JSON.parse(window.localStorage['gameList']);
     this.scene.savedGames = Object.values(this.scene.games).length;
   }
-  
+
   let loadGame = manageGamesGroup.add(this.scene, 'selectedGame', Object.values(this.scene.games) ).name('Load Game');
   loadGame.onChange(function(){
     self.scene.loadGame();
@@ -109,7 +109,7 @@ MyInterface.prototype.addConfigurationGroup = function(){
       self.scene.loadGraph();
     });
 
-    configGroup.add(this.scene.game, 'resetGame').name('Reset Game');
+    configGroup.add(this.scene, 'resetGame').name('Reset Game');
 }
 
 MyInterface.prototype.addGameOptions = function(){

@@ -9,11 +9,6 @@ function XMLscene(interface) {
     CGFscene.call(this);
     this.interface = interface;
     this.lightValues = {};
-
-    this.games = {};
-    this.gameName = '';
-    this.savedGames = 0;
-    this.selectedGame = null;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -55,6 +50,11 @@ XMLscene.prototype.init = function(application) {
 
     this.game = new DraughtGame();
     this.gameStart = false;
+
+    this.games = {};
+    this.gameName = '';
+    this.savedGames = 0;
+    this.selectedGame = null;
 
     this.setPickEnabled(true);
 }
@@ -139,12 +139,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-    this.interface.ResetGUI();
-    this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addCameraGroup();
-    this.interface.addManageGamesGroup();
-    this.interface.addConfigurationGroup();
-    this.interface.addGameOptions();
+    this.initInterface();
 }
 
 XMLscene.prototype.handlePicking = function(){
@@ -264,6 +259,15 @@ XMLscene.prototype.update = function (currTime){
   }
 }
 
+XMLscene.prototype.initInterface = function(){
+  this.interface.ResetGUI();
+  this.interface.addLightsGroup(this.graph.lights);
+  this.interface.addCameraGroup();
+  this.interface.addManageGamesGroup();
+  this.interface.addConfigurationGroup();
+  this.interface.addGameOptions();
+}
+
 XMLscene.prototype.changeCameraPerspective = function(){
   this.cameraAnimation = new CameraAnimation(this, this.camera, this.cameraPerspectives[this.perspective], this.cameraAnimationSpeed);
 }
@@ -299,6 +303,17 @@ XMLscene.prototype.updateCamera = function(deltaTime){
 /**
  * .
  */
+XMLscene.prototype.resetGame = function(){
+  this.gameName = '';
+  this.selectedGame = null;
+  this.updateLoadGameList();
+
+  this.game.resetGame();
+}
+
+/**
+ * .
+ */
 XMLscene.prototype.updateLoadGameList = function(){
   let self = this;
   let manageGamesGroup = this.interface.gui.__folders['Manage Games'];
@@ -328,10 +343,16 @@ XMLscene.prototype.saveGame = function(){
   let self = this;
   let manageGamesGroup = this.interface.gui.__folders['Manage Games'];
 
-  this.games[this.savedGames] = this.gameName;
-  window.localStorage['gameList'] = JSON.stringify(this.games);
-  window.localStorage['savedGame'+this.savedGames] = JSON.stringify(this.game);
-  this.savedGames++;
+  let exists = Object.keys(this.games).find(key => this.games[key] === this.gameName);
+  if(exists==undefined){
+    this.games[this.savedGames] = this.gameName;
+    window.localStorage['gameList'] = JSON.stringify(this.games);
+    window.localStorage['savedGame'+this.savedGames] = JSON.stringify(this.game);
+    this.savedGames++;
+  }
+  else {
+    window.localStorage['savedGame'+ exists] = JSON.stringify(this.game);
+  }
 
   //Update Load Game List
   this.updateLoadGameList();
@@ -345,6 +366,7 @@ XMLscene.prototype.loadGame = function(){
   this.game = new DraughtGame(JSON.parse(window.localStorage['savedGame'+game]));
   this.gameStart = true;
   this.gameName = this.games[game];
+  this.initInterface();
 }
 
 /**
