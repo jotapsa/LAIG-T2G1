@@ -29,7 +29,7 @@ function DraughtGame(){
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.RUNNING;
   this.turn = TURN.BLACKS;
-  this.depth = 5;
+  this.depth = 10;
   this.started = false;
 
   this.board = new DraughtMap();

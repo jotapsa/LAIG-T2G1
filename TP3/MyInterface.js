@@ -82,7 +82,7 @@ MyInterface.prototype.addConfigurationGroup = function(){
         'CPU': OWNER.CPU,
     }).name('Blacks');
 
-    configGroup.add(this.scene.game, 'depth', 4, 20).name('CPU Depth');
+    configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
 
     let themeController = configGroup.add(this.scene, 'theme', Object.keys(this.scene.themes)).name('Theme');
     themeController.onChange(function(){
