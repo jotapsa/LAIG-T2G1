@@ -241,12 +241,13 @@ XMLscene.prototype.update = function (currTime){
   this.updateCamera(deltaTime);
   this.game.update(deltaTime);
 
-  let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
+  if(this.graph.loadedOk){
+    let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
-  if(!anim && this.resetAnimation){
-    this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
+    if(!anim && this.resetAnimation){
+      this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
+    }
   }
-
 
   if(this.game.started){
     if(!this.gameStart){
