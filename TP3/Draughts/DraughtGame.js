@@ -161,12 +161,14 @@ DraughtGame.prototype.update = function(deltaTime){
     break;
     case (GAMESTATE.REPLAY):{
       if((this.moves.length > 0) && (this.moveReplayIndex < this.moves.length)){
-        animation = this.moves[this.moveReplayIndex].getAnimation();
+        this.standByMove = this.moves[this.moveReplayIndex];
+        animation = this.standByMove.getAnimation();
         if(animation.isDone()){
           this.replayBoard.makeMove(this.moves[this.moveReplayIndex]);
           animation.resetAnimation(); // u never know
+          this.moveReplayIndex++;
+          this.standByMove = null;
         }
-
         animation.update(deltaTime);
       }
     }

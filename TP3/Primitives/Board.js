@@ -45,8 +45,8 @@ Board.prototype.display = function (){
 		case(GAMESTATE.REPLAY):
 			board = this.scene.game.getReplayBoard();
 			if(this.scene.game.standByMove != null){
-				//animation = this.scene.game.moves[this.moveReplayIndex].getAnimation()
-				//animationPos = this.scene.game.standByMove.getStartingPos();
+				animation = this.scene.game.standByMove.getAnimation()
+				animationPos = this.scene.game.standByMove.getStartingPos();
 			}
 		break;
 		default:
