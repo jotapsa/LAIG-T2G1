@@ -161,6 +161,8 @@
     <SPANREF id="Security2"/>
     <SPANREF id="Security1"/>
     <SPANREF id="Security2"/>
+    <SPANREF id="Security1"/>
+    <SPANREF id="Security2"/>
   </ANIMATION>
 
 </ANIMATIONS>

@@ -237,7 +237,7 @@ XMLscene.prototype.update = function (currTime){
 
   let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
-  if(!anim && this.resetAnimation){
+  if(!anim){
     this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
   }
 
