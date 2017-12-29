@@ -379,3 +379,10 @@ XMLscene.prototype.clearGames = function(){
   this.gameName = '';
   this.updateLoadGameList();
 }
+
+/**
+ * .
+ */
+XMLscene.prototype.updateDepth = function(){
+  this.initInterface();
+}
