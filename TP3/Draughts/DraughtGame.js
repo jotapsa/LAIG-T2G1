@@ -33,6 +33,8 @@ function DraughtGame(){
   this.started = false;
 
   this.board = new DraughtMap();
+  this.replayBoard = new DraughtMap();
+
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
   if(this.whitesOwner == OWNER.HUMAN){
@@ -134,20 +136,22 @@ DraughtGame.prototype.update = function(deltaTime){
 
   switch(this.gameState){
     case (GAMESTATE.RUNNING):{
-      if(this.standByMove != null){
-        this.moves.push(this.standByMove);
-        this.board.makeMove(this.standByMove);
-        this.standByMove = null;
-      }
     }
     break;
     case (GAMESTATE.ANIMATION):{
       animation = this.standByMove.getAnimation();
       if(animation.isDone()){
+        this.moves.push(this.standByMove);
+        this.board.makeMove(this.standByMove);
+        this.standByMove = null;
         this.gameState = GAMESTATE.RUNNING;
       }
       animation.update(deltaTime);
     }
+    break;
+    case (GAMESTATE.REPLAY):{
+    }
+    break;
     default:
     break;
   }
@@ -168,7 +172,7 @@ DraughtGame.prototype.update = function(deltaTime){
       break;
       default:
       break;
-    }  
+    }
   }
 
   if(move){
@@ -261,6 +265,12 @@ DraughtGame.prototype.resetGame = function(){
 
   this.players[0].innerHTML = blacks;
   this.players[1].innerHTML = whites;
+}
+
+DraughtGame.prototype.replayGame = function(){
+  if(this.moves.length > 0){
+    this.gameState = GAMESTATE.REPLAY;
+  }
 }
 
 DraughtGame.prototype.setStartTime = function(currTime){
