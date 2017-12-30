@@ -53,7 +53,7 @@ Computer.prototype.wantsDraw = function(){
 }
 
 Computer.prototype.toggleDraw = function(){
-  this.draw = !this.draw;
+  return;
 }
 
 /*

@@ -41,8 +41,8 @@ function DraughtGame(game){
 
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
   this.drawID = {
-    'whites':99,
-    'blacks':100
+    99: "whites",
+    100: "blacks",
   }
     this.board = new DraughtMap();
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
@@ -136,13 +136,24 @@ DraughtGame.prototype.getReplayBoard = function(){
 DraughtGame.prototype.picked = function (id){
   let move = null;
 
+  if (id in Object.keys(this.drawID)){
+    if(this.drawID[id] == "whites")
+    switch(this.drawID[id]){
+      case("whites"):
+      this.whites.toggleDraw();
+      break;
+      case("black"):
+      this.blacks.toggleDraw();
+      break;
+      default:
+      break;
+    }
+    return;
+  }
+
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
   }
-  // else if(this.drawID.indexOf(id)){
-  //   // ...
-  //   return;
-  // }
 
   if (this.gameState != GAMESTATE.RUNNING){
     return;
