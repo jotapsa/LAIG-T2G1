@@ -279,13 +279,11 @@ DraughtGame.prototype.update = function(deltaTime){
       winner = DraughtAux.isGameOver(this.board, this.turn);
       if(winner != null && winner == TURN.WHITES){
         this.whites.won();
-        this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
       else if(winner != null && winner == TURN.BLACKS){
         this.blacks.won();
-        this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
@@ -321,6 +319,10 @@ DraughtGame.prototype.update = function(deltaTime){
       }
     }
     break;
+    case (GAMESTATE.GAME_FINISHED):{
+      this.updateScoreboard();
+    }
+    break;
     default:
     break;
   }
@@ -340,6 +342,13 @@ DraughtGame.prototype.computerPlay = function(){
     this.forceConsecutiveMoves(move);
     this.standByMove = move;
   }
+}
+
+DraughtGame.prototype.isDraw = function(){
+  if(this.whites.wantsDraw() && this.blacks.wantsDraw()){
+    return true;
+  }
+
 }
 
 DraughtGame.prototype.resetGame = function(){

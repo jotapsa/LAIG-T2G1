@@ -12,14 +12,8 @@ CELL = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtMap(map , capturedWhites, capturedBlacks){
+function DraughtMap(map , capturedWhites, capturedBlacks, movesUntilDraw){
   //construtor
-  this.capturedWhites = capturedWhites || [];
-  this.capturedBlacks = capturedBlacks || [];
-
-  //set when countPieces() method is called because we can receive a modified map
-  this.blackPieces;
-  this.whitePieces;
 
   this.map = map || [
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
@@ -32,6 +26,15 @@ function DraughtMap(map , capturedWhites, capturedBlacks){
     [CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE, CELL.INVALID_SQUARE, CELL.BLACK_PIECE],
   ];
   this.sizeN = this.map.length;
+
+  this.capturedWhites = capturedWhites || [];
+  this.capturedBlacks = capturedBlacks || [];
+
+  this.movesUntilDraw = movesUntilDraw || 0;
+
+  //set when countPieces() method is called because we can receive a modified map
+  this.blackPieces;
+  this.whitePieces;
 
   this.countPieces();
 };
@@ -232,5 +235,5 @@ DraughtMap.prototype.clone = function (){
     mapClone.push(this.map[i].slice(0));
   }
 
-  return new DraughtMap(mapClone, this.capturedWhites.slice(0), this.capturedBlacks.slice(0));
+  return new DraughtMap(mapClone, this.capturedWhites.slice(0), this.capturedBlacks.slice(0), this.movesUntilDraw);
 }
