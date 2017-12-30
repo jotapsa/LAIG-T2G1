@@ -379,10 +379,3 @@ XMLscene.prototype.onGraphLoaded = function()
     this.gameName = '';
     this.updateLoadGameList();
   }
-
-  /**
-  * .
-  */
-  XMLscene.prototype.updateDepth = function(){
-    this.initInterface();
-  }

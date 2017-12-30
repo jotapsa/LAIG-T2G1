@@ -1674,12 +1674,6 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
 
   if(appearance != null && texture != null){
     appearance.setTexture(texture[0]);
-    texture[0].bind(1);
-  }
-
-  for (var i = 0; i<node.children.length; i++){
-    //Render all child nodes of node
-    this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture);
   }
 
   //Render all leaves of node if exists
@@ -1687,6 +1681,11 @@ MySceneGraph.prototype.renderNode = function (node, transformMatrix, appearance,
     if(node.leaves[i].object != null){
       this.renderLeaf(node.leaves[i], renderTransformMatrix, appearance, texture);
     }
+  }
+
+  for (var i = 0; i<node.children.length; i++){
+    //Render all child nodes of node
+    this.renderNode(this.nodes[node.children[i]], renderTransformMatrix, appearance, texture);
   }
 }
 

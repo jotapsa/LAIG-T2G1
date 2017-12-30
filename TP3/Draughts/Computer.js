@@ -20,6 +20,8 @@ function Computer(piece, depth,computer){
 
     this.selectLOCK = false;
     this.startingPos = null;
+
+    this.draw = false;
   }
   else {
     this.piece = computer['piece'];
@@ -42,6 +44,14 @@ Computer.prototype.getCreatingMove = function(){
 
 Computer.prototype.getselectLOCK = function(){
   return this.selectLOCK;
+}
+
+Computer.prototype.wantsDraw = function(){
+  return this.draw;
+}
+
+Computer.prototype.toggleDraw = function(){
+  this.draw = !this.draw;
 }
 
 /*

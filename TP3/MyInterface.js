@@ -97,7 +97,7 @@ MyInterface.prototype.addConfigurationGroup = function(){
        'CPU': OWNER.CPU,
    }).name('Whites');
    whitesController.onChange(function(){
-     self.scene.updateDepth();
+     self.scene.initInterface();
    });
 
    let blacksController = configGroup.add(this.scene.game, 'blacksOwner', {
@@ -105,12 +105,13 @@ MyInterface.prototype.addConfigurationGroup = function(){
         'CPU': OWNER.CPU,
     }).name('Blacks');
     blacksController.onChange(function(){
-      self.scene.updateDepth();
+      self.scene.initInterface();
     });
 
     if(this.scene.game.whitesOwner != OWNER.HUMAN || this.scene.game.blacksOwner != OWNER.HUMAN){
       configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
     }
+
     let themeController = configGroup.add(this.scene, 'theme', Object.keys(this.scene.themes)).name('Theme');
     themeController.onChange(function(){
       self.scene.loadGraph();

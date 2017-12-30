@@ -21,6 +21,8 @@
 	this.buttonMaterial.setDiffuse(0.5, 0.5, 0.5,1);
 	this.buttonMaterial.setShininess(1);
 	this.buttonMaterial.loadTexture("scenes/images/red_velvet.jpg");
+
+  this.player; // = whites ou blacks
  };
 
  Button.prototype = Object.create(CGFobject.prototype);
@@ -38,7 +40,12 @@
   this.scene.pushMatrix();
     this.scene.translate(0, 0.5, 0);
     this.buttonMaterial.apply();
-    this.scene.registerForPick(100, this.cube);
+    // if(this.player == whites){
+    //   this.scene.registerForPick(drawWhite, this.cube);
+    // }
+    // else if (this.player == blacks){
+    //   this.scene.registerForPick(drawBLACK, this.cube);
+    // }
     this.sphere.display();
   this.scene.popMatrix();
  };

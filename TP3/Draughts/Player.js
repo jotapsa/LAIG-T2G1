@@ -13,6 +13,8 @@ function Player(piece,player){
     this.selectLOCK = false;
     this.startingPos = null;
     this.finalPos = null;
+
+    this.draw = false;
   }
   else {
     this.pieces = player['pieces'];
@@ -31,6 +33,14 @@ Player.prototype.getselectLOCK = function(){
 
 Player.prototype.getWins = function(){
   return this.wins;
+}
+
+Player.prototype.wantsDraw = function(){
+  return this.draw;
+}
+
+Player.prototype.toggleDraw = function(){
+  this.draw = !this.draw;
 }
 
 Player.prototype.createMove = function(id, board){
