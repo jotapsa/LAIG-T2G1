@@ -18,7 +18,6 @@ function Computer(piece, depth,computer){
     this.creatingMove = false;
     this.wins = 0;
 
-    this.selectLOCK = false;
     this.startingPos = null;
 
     this.draw = false;
@@ -29,7 +28,6 @@ function Computer(piece, depth,computer){
     this.creatingMove = computer['creatingMove'];
     this.wins = computer['wins'];
 
-    this.selectLOCK = computer['selectLOCK'];
     this.startingPos = computer['startingPos'];
 
     this.draw = computer['draw'];
@@ -42,10 +40,6 @@ Computer.prototype.getWins = function(){
 
 Computer.prototype.getCreatingMove = function(){
   return this.creatingMove;
-}
-
-Computer.prototype.getselectLOCK = function(){
-  return this.selectLOCK;
 }
 
 Computer.prototype.wantsDraw = function(){
@@ -75,12 +69,10 @@ Computer.prototype.createMove = function(board){
 
 Computer.prototype.forceConsecutiveMove = function(startingPos){
   this.startingPos = startingPos;
-  this.selectLOCK = true;
 }
 
 Computer.prototype.toggleOFFselectLOCK = function(){
   this.startingPos = null;
-  this.selectLOCK = false;
 }
 
 

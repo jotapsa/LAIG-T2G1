@@ -29,10 +29,6 @@ function Player(piece,player){
   }
 };
 
-Player.prototype.getselectLOCK = function(){
-  return this.selectLOCK;
-}
-
 Player.prototype.getWins = function(){
   return this.wins;
 }

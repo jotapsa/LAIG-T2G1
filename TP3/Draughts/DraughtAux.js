@@ -2,11 +2,11 @@ function DraughtAux(){
 };
 
 DraughtAux.checkValidMove = function(move, map){
-  let forcedMoves, startingPos, finalPos, playerCell;
+  let forcedMoves, startingPos, finalPos, cell;
 
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
-  playerCell = map.getPos(startingPos[0], startingPos[1]);
+  cell = map.getPos(startingPos[0], startingPos[1]);
 
   //Calculate forced moves for piece at startingPosition
   forcedMoves = DraughtAux.ObtainForcedMovesForPiece(startingPos, map);
@@ -16,7 +16,7 @@ DraughtAux.checkValidMove = function(move, map){
       //Check if the move is a forced move
       if(move.Equals(forcedMoves[i])){
         //Check if further forced moves are possible
-        let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, map, playerCell);
+        let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, map, cell);
         move.setForcedMove(true);
         return true;
       }
@@ -25,7 +25,7 @@ DraughtAux.checkValidMove = function(move, map){
   }
 
   //Calculate forced moves for the player
-  forcedMoves = DraughtAux.ObtainAllForcedMovesForPlayer(playerCell, map);
+  forcedMoves = DraughtAux.ObtainAllForcedMovesForPlayer(cell, map);
 
   if(forcedMoves.length > 0){
     return false;
@@ -74,22 +74,22 @@ DraughtAux.isValidStandardMove = function(move, map){
 }
 
 DraughtAux.getAllPossibleMovesForPlayer = function(player, map){
-  let moves = [], playerCell;
+  let moves = [], cell;
 
   if(player == "Whites"){
-    playerCell=CELL.WHITE_PIECE;
+    cell=CELL.WHITE_PIECE;
   }
   else{
-    playerCell=CELL.BLACK_PIECE
+    cell=CELL.BLACK_PIECE
   }
 
   //Check if there are forced moves
-  moves = DraughtAux.ObtainAllForcedMovesForPlayer(playerCell, map);
+  moves = DraughtAux.ObtainAllForcedMovesForPlayer(cell, map);
   if(moves.length>0){
     return moves;
   }
 
-  moves = DraughtAux.ObtainAllNonForcedMovesForPlayer(playerCell, map);
+  moves = DraughtAux.ObtainAllNonForcedMovesForPlayer(cell, map);
   return moves;
 }
 
