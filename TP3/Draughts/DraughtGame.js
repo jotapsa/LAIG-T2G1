@@ -22,6 +22,17 @@ OWNER = {
 * @constructor
 */
 function DraughtGame(game){
+  //HTML
+  this.players = document.getElementsByClassName("player");
+  this.turnTimes = document.getElementsByClassName("timeTurn");
+  this.scoreboard = document.getElementsByClassName("score");
+  this.time = document.getElementsByClassName("time");
+
+  this.showInfo = document.getElementById("info");
+  this.showInfo.addEventListener("click", this.showInstructions);
+  this.closeInfo = document.getElementsByClassName("infoClose")[0];
+  this.closeInfo.addEventListener("click", this.closeInstructions);
+
   //construtor
 
   if (game===undefined){
@@ -32,8 +43,8 @@ function DraughtGame(game){
     this.gameState = GAMESTATE.RUNNING;
     this.turn = TURN.BLACKS;
     this.changeTurn = true;
-    this.depth = 10;
-    this.started = false;
+    this.depth = 5;
+    this.started = true;
 
     this.board = new DraughtMap();
     this.replayBoard = new DraughtMap();
@@ -56,6 +67,10 @@ function DraughtGame(game){
     else if(this.blacksOwner == OWNER.CPU){
       this.blacks = new Computer("Blacks", Math.floor(this.depth));
     }
+
+    //Turn Color
+    this.players[0].setAttribute("style","color:yellow;");
+    this.players[1].setAttribute("style","color:white");
   }
   else {
     this.moves = [];
@@ -101,17 +116,23 @@ function DraughtGame(game){
 
     let d = new Date();
     this.startTime = d.getTime() - game['timeElapsed']*1000;
+
+    //Turn Color
+    switch(this.turn){
+      case 1:{
+        this.players[1].setAttribute("style","color:yellow;");
+        this.players[0].setAttribute("style","color:white");
+      }
+      break;
+      case 2:{
+        this.players[0].setAttribute("style","color:yellow;");
+        this.players[1].setAttribute("style","color:white");
+      }
+      break;
+      default:
+      break;
+    }
   }
-
-  this.players = document.getElementsByClassName("player");
-  this.turnTimes = document.getElementsByClassName("timeTurn");
-  this.score = document.getElementsByClassName("score");
-  this.time = document.getElementsByClassName("time");
-
-  this.showInfo = document.getElementById("info");
-  this.showInfo.addEventListener("click", this.showInstructions);
-  this.closeInfo = document.getElementsByClassName("infoClose")[0];
-  this.closeInfo.addEventListener("click", this.closeInstructions);
 }
 
 DraughtGame.prototype.getgameState = function(){
@@ -199,10 +220,16 @@ DraughtGame.prototype.nextTurn = function(){
     switch(this.turn){
       case (TURN.BLACKS):{
         this.turn = TURN.WHITES;
+        //Turn Color
+        this.players[1].setAttribute("style","color:yellow;");
+        this.players[0].setAttribute("style","color:white");
       }
       break;
       case (TURN.WHITES):{
         this.turn = TURN.BLACKS;
+        //Turn Color
+        this.players[0].setAttribute("style","color:yellow;");
+        this.players[1].setAttribute("style","color:white");
       }
       break;
       default:
@@ -229,6 +256,13 @@ DraughtGame.prototype.undoMove = function(){
   }
 }
 
+DraughtGame.prototype.updateScoreboard = function(){
+  this.timeElapsed = (this.currentTime - this.startTime)/1000;
+  let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
+  let seconds = ("0" + parseInt(this.timeElapsed%60)).slice(-2);
+  this.scoreboard.innerHTML = '<span class="time">' + minutes + ':' + seconds + '</span>' + this.blacks.wins + ' - ' + this.whites.wins;
+}
+
 DraughtGame.prototype.update = function(deltaTime){
   let move = null, animation = null;
   //deltaTime is in ms
@@ -242,11 +276,13 @@ DraughtGame.prototype.update = function(deltaTime){
       }
       if(this.turn == TURN.WHITES && DraughtAux.hasWon(this.board, this.turn)){
         this.whites.won();
+        this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
       else if(this.turn == TURN.BLACKS && DraughtAux.hasWon(this.board, this.turn)){
         this.blacks.won();
+        this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
@@ -327,6 +363,10 @@ DraughtGame.prototype.resetGame = function(){
   else if(this.blacksOwner == OWNER.CPU){
     this.blacks = new Computer("Blacks", Math.floor(this.depth));
   }
+
+  //Turn Color
+  this.players[0].setAttribute("style","color:yellow;");
+  this.players[1].setAttribute("style","color:white");
 
   //Scoreboard
   this.time[0].innerHTML = '00:00';
