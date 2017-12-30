@@ -530,3 +530,19 @@ DraughtAux.isGameOver = function(board, turn){
   }
   return null;
 }
+
+DraughtAux.getOppositeTurn = function(turn){
+  switch(turn){
+    case(TURN.BLACKS):{
+      return TURN.WHITES;
+    }
+    break;
+    case(TURN.WHITES):{
+      return TURN.BLACKS;
+    }
+    break;
+    default:
+    break;
+  }
+  return null;
+}

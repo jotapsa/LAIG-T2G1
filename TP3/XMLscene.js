@@ -1,5 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
-var FPSToUpdate = 1000;
+var msInSec = 1000;
 
 /**
 * XMLscene class, representing the scene that is to be rendered.
@@ -31,7 +31,7 @@ XMLscene.prototype.init = function(application) {
 
   this.axis = new CGFaxis(this);
 
-  this.FPS = 120;
+  this.FPS = 60;
 
   this.themes = {
     "Casino": "Casino.xml",
@@ -204,7 +204,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // ---- END Background, camera and axis setup
 
-    this.setUpdatePeriod(FPSToUpdate/this.FPS);
+    this.setUpdatePeriod(msInSec/this.FPS);
 
     //Get the time in ms so we can update the clock relatively to this
     var d = new Date();
