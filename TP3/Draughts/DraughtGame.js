@@ -58,7 +58,7 @@ function DraughtGame(game){
 
     this.timeBeforeNewGame = 5;
     this.elapsedGameFinishedTime = 0;
-    this.turnTimeLimited = false;
+    this.turnTimeLimited = true;
     this.timeForTurn = 60;
     this.elapsedTurnTime = 0;
 
@@ -109,6 +109,14 @@ function DraughtGame(game){
     this.IDGamma = game['IDGamma'];
     this.whitesDrawID = game['whitesDrawID'];
     this.blacksDrawID = game['blacksDrawID'];
+
+    this.timeBeforeNewGame = game['timeBeforeNewGame'];
+    this.elapsedGameFinishedTime = game['elapsedGameFinishedTime'];
+    this.turnTimeLimited = game['turnTimeLimited'];
+    this.timeForTurn = game['timeForTurn'];
+    this.elapsedTurnTime = game['elapsedTurnTime'];
+
+    this.lastWinner = game['lastWinner'];
 
     if(game['whitesOwner'] == OWNER.HUMAN){
       this.whites = new Player("Whites",game['whites']);
@@ -300,6 +308,7 @@ DraughtGame.prototype.update = function(deltaTime){
 
       if(this.started && this.turnTimeLimited){
         this.elapsedTurnTime += deltaTime/1000;
+        this.displayTurnTime(this.elapsedTurnTime);
       }
       if(this.elapsedTurnTime >= this.timeForTurn){
         if(this.turn == TURN.WHITES){
@@ -499,47 +508,24 @@ DraughtGame.prototype.displayTime = function(currTime){
   this.time[0].innerHTML = minutes +':'+seconds;
 }
 
-DraughtGame.prototype.displayTurnTime = function(currTime){
-  let time;
-  time = (currTime - this.turnTime)/1000;
-
+DraughtGame.prototype.displayTurnTime = function(time){
   let minutes = ("0" + parseInt(time/60)).slice(-2);
   let seconds = ("0" + parseInt(time%60)).slice(-2);
 
-  switch(this.gameState){
-    case (GAMESTATE.BLACKS_TURN):{
+  switch(this.turn){
+    case (TURN.BLACKS):{
       this.turnTimes[0].innerHTML = minutes +':'+seconds;
+      this.turnTimes[1].innerHTML = '';
     }
     break;
-    case (GAMESTATE.WHITES_TURN):{
-      this.turnTimes[1].innerHTML = minutes +':'+seconds;
-    }
-    break;
-    default:
-    break;
-  }
-}
-
-DraughtGame.prototype.setTurnTime = function(){
-  switch(this.gameState){
-    case (GAMESTATE.BLACKS_TURN):{
-      this.turnTimes[1].setAttribute("style","");
-      this.turnTimes[1].innerHTML = '00:00';
-      this.turnTimes[0].innerHTML = '00:00';
-      this.turnTimes[0].setAttribute("style","color:yellow;");
-    }
-    break;
-    case (GAMESTATE.WHITES_TURN):{
-      this.turnTimes[0].setAttribute("style","");
-      this.turnTimes[0].innerHTML = '00:00';
-      this.turnTimes[1].innerHTML = '00:00';
-      this.turnTimes[1].setAttribute("style","color:yellow;");
+    case (TURN.WHITES):{
+      this.turnTimes[1].innerHTML = minutes +':'+ seconds;
+      this.turnTimes[0].innerHTML = '';
     }
     break;
     default:
     break;
   }
-  this.turnTime = this.currentTime;
 }
 
 DraughtGame.prototype.showInstructions = function(){

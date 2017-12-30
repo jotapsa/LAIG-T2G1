@@ -231,20 +231,6 @@ XMLscene.prototype.onGraphLoaded = function()
         this.graph.resetAnimations(this.graph.nodes[this.graph.idRoot]);
       }
     }
-
-    if(this.game.started){
-      if(!this.gameStart){
-        this.game.setStartTime(currTime);
-        this.gameStart = true;
-      }
-      else{
-        this.game.displayTime(currTime);
-        this.game.displayTurnTime(currTime);
-      }
-    }
-    else {
-      this.gameStart = false;
-    }
   }
 
   XMLscene.prototype.initInterface = function(){
