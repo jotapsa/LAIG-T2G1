@@ -46,6 +46,11 @@ Computer.prototype.wantsDraw = function(){
   return this.draw;
 }
 
+Computer.prototype.won = function(){
+  this.wins++;
+}
+
+
 Computer.prototype.toggleDraw = function(){
   return;
 }

@@ -17,6 +17,10 @@ function DraughtMap(map , capturedWhites, capturedBlacks){
   this.capturedWhites = capturedWhites || [];
   this.capturedBlacks = capturedBlacks || [];
 
+  //set when countPieces() method is called because we can receive a modified map
+  this.blackPieces;
+  this.whitePieces;
+
   this.map = map || [
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
     [CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE],
@@ -31,6 +35,14 @@ function DraughtMap(map , capturedWhites, capturedBlacks){
 
   this.countPieces();
 };
+
+DraughtMap.prototype.getblackPieces = function(){
+  return this.blackPieces;
+}
+
+DraughtMap.prototype.getwhitePieces = function(){
+  return this.whitePieces;
+}
 
 DraughtMap.prototype.getsizeN = function(){
   return this.sizeN;

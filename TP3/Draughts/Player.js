@@ -37,6 +37,10 @@ Player.prototype.wantsDraw = function(){
   return this.draw;
 }
 
+Player.prototype.won = function(){
+  this.wins++;
+}
+
 Player.prototype.toggleDraw = function(){
   this.draw = !this.draw;
 }
