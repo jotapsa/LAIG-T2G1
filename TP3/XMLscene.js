@@ -33,14 +33,6 @@ XMLscene.prototype.init = function(application) {
 
   this.FPS = 120;
 
-  this.selectedShader = new CGFshader(this.gl, "shaders/selected.vert", "shaders/selected.frag");
-
-  //So we can bind a texture to the shader
-  this.selectedShader.setUniformsValues({
-    uSampler: 1,
-    uSampler2: 2
-  });
-
   this.themes = {
     "Casino": "Casino.xml",
     "Living Room": "Living_Room.xml",
@@ -228,10 +220,6 @@ XMLscene.prototype.onGraphLoaded = function()
     var deltaTime = currTime - this.oldCurrTime;
     this.oldCurrTime = currTime;
     this.timeFactor = Math.abs(Math.sin(this.oldCurrTime/1000));
-
-    this.selectedShader.setUniformsValues({
-      timeFactor: this.timeFactor
-    });
 
     this.updateCamera(deltaTime);
     this.game.update(deltaTime);
