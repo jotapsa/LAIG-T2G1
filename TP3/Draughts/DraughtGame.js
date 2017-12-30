@@ -3,7 +3,7 @@ GAMESTATE = {
   ANIMATION: 2,
   GAME_FINISHED: 3,
   REPLAY: 4,
-};
+}
 
 TURN = {
   WHITES: 1,
@@ -17,35 +17,33 @@ OWNER = {
 }
 
 /**
- * DraughtGame
- * @param gl {WebGLRenderingContext}
- * @constructor
- */
+* DraughtGame
+* @param gl {WebGLRenderingContext}
+* @constructor
+*/
 function DraughtGame(game){
   //construtor
 
   if (game===undefined){
-  this.moves = [];
-  this.standByMove = null;
-  this.whitesOwner = OWNER.HUMAN;
-  this.blacksOwner = OWNER.HUMAN;
-  this.gameState = GAMESTATE.RUNNING;
-  this.turn = TURN.BLACKS;
-  this.changeTurn = true;
-  this.depth = 10;
-  this.started = false;
+    this.moves = [];
+    this.standByMove = null;
+    this.whitesOwner = OWNER.HUMAN;
+    this.blacksOwner = OWNER.HUMAN;
+    this.gameState = GAMESTATE.RUNNING;
+    this.turn = TURN.BLACKS;
+    this.changeTurn = true;
+    this.depth = 10;
+    this.started = false;
 
-  this.board = new DraughtMap();
-  this.replayBoard = new DraughtMap();
-  this.moveReplayIndex = 0;
-
-  this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-  this.drawID = {
-    99: "whites",
-    100: "blacks",
-  }
     this.board = new DraughtMap();
+    this.replayBoard = new DraughtMap();
+    this.moveReplayIndex = 0;
+
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
+    this.drawID = {
+      99: "whites",
+      100: "blacks",
+    }
 
     if(this.whitesOwner == OWNER.HUMAN){
       this.whites = new Player("Whites");
@@ -115,7 +113,7 @@ function DraughtGame(game){
   this.showInfo.addEventListener("click", this.showInstructions);
   this.closeInfo = document.getElementsByClassName("infoClose")[0];
   this.closeInfo.addEventListener("click", this.closeInstructions);
-};
+}
 
 DraughtGame.prototype.getgameState = function(){
   return this.gameState;
@@ -177,7 +175,7 @@ DraughtGame.prototype.picked = function (id){
   }
 
   //if valid move
-  if (move && DraughtAux.checkValidMove(move, this.board)){
+  if (move != null && DraughtAux.checkValidMove(move, this.board)){
     this.forceConsecutiveMoves(move);
     this.standByMove = move;
   }
@@ -234,16 +232,17 @@ DraughtGame.prototype.nextTurn = function(){
 }
 
 DraughtGame.prototype.undoMove = function(){
-  //If we have made a move
-  if(this.moves.length){
+  //If we have made a move & at least one of the players is human
+  if(this.moves.length > 0 && ((this.whites instanceof Player) || (this.blacks instanceof Player))){
     let move;
     move = this.moves.pop();
     this.board.undoMove(move);
-    if(this.blacksOwner == 1 || this.whitesOwner == 1){
+    this.turn = move.getTurn();
+    while((this.turn == TURN.BLACKS && this.blacks instanceof Computer) || (this.turn == TURN.WHITES && this.whites instanceof Computer)){
       move = this.moves.pop();
       this.board.undoMove(move);
+      this.turn = move.getTurn();
     }
-    this.turn = move.getTurn();
   }
 }
 
@@ -308,7 +307,7 @@ DraughtGame.prototype.update = function(deltaTime){
     }
   }
 
-  if(move){
+  if(move != null){
     this.forceConsecutiveMoves(move);
     this.standByMove = move;
   }
@@ -316,11 +315,15 @@ DraughtGame.prototype.update = function(deltaTime){
 
 DraughtGame.prototype.resetGame = function(){
   this.moves = [];
+  this.standByMove = null;
   this.gameState = GAMESTATE.RUNNING;
   this.turn = TURN.BLACKS;
+  this.changeTurn = true;
   this.started = false;
 
   this.board.resetMap();
+  this.replayBoard.resetMap();
+  this.moveReplayIndex = 0;
 
   if(this.whitesOwner == OWNER.HUMAN){
     this.whites = new Player("Whites");
