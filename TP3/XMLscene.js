@@ -332,7 +332,7 @@ XMLscene.prototype.onGraphLoaded = function()
   */
   XMLscene.prototype.saveGame = function(){
     if(!this.gameStart)
-    return;
+      return;
 
     if(this.gameName.length == 0){
       let input = document.querySelector(".cr.string input");

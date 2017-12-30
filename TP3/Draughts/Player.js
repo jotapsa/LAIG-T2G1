@@ -24,6 +24,8 @@ function Player(piece,player){
     this.selectLOCK = player['selectLOCK'];
     this.startingPos = player['startingPos'];
     this.finalPos = player['finalPos'];
+
+    this.draw = player['draw'];
   }
 };
 

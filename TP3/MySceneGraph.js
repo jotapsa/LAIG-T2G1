@@ -1482,8 +1482,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             var sizeChildren = 0;
             for (var j = 0; j < descendants.length; j++) {
-                if (descendants[j].nodeName == "NODEREF")
-				{
+                if (descendants[j].nodeName == "NODEREF"){
 
 					var curId = this.reader.getString(descendants[j], 'id');
 
@@ -1508,32 +1507,41 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						else
 							this.warn("Error in leaf");
 
-						//parse leaf
-            // if(this.reader.hasAttribute(children[i],'args')){
-            // }
-						this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
             if(type == 'patch'){
-                            this.CPLines = this.parseCPLines(descendants[j]);
-                            this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,this.CPLines));
+              this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
+              this.CPLines = this.parseCPLines(descendants[j]);
+              this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,this.CPLines));
+              sizeChildren++;
 						}
-                        else
+            else if(type == 'button'){
+              this.args = this.reader.getString(descendants[j],'args').split(" ");
+              this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
+              sizeChildren++;
+            }
+            else if(type == 'board'){
+              this.nodes[nodeID].addChild(new MyGraphLeaf(this, type));
+              sizeChildren++;
+            }
+            else{
+              this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
 						  this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
-                        sizeChildren++;
-					}
-					else
-						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+              sizeChildren++;
+					  }
+          }
+          else
+            this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
-        }
-        else
+          }
+          else
             this.onXMLMinorError("unknown tag name <" + nodeName);
-    }
+          }
 
     console.log("Parsed nodes");
     return null ;
-}
+  }
 
 /**
  * Parses the NURBS ControlPoints.

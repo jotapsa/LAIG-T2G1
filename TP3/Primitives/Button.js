@@ -2,8 +2,10 @@
  * Button
  * @constructor
  */
- function Button(scene) {
+ function Button(scene,player) {
  	CGFobject.call(this, scene);
+
+  this.player = player;
 
   this.cube = new UnitCube(this.scene);
   this.sphere = new Sphere(this.scene, 0.5, 10, 10);
@@ -13,16 +15,27 @@
 	this.plasticMaterial.setSpecular(0.5, 0.5, 0.5, 1);
 	this.plasticMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
 	this.plasticMaterial.setShininess(1);
-	this.plasticMaterial.loadTexture ("scenes/images/white_plastic.jpg");
+	this.plasticMaterial.loadTexture ("scenes/images/carbonfiber.jpg");
 
 	this.buttonMaterial = new CGFappearance(this.scene);
 	this.buttonMaterial.setAmbient(0.5, 0.5, 0.5,1);
 	this.buttonMaterial.setSpecular(0.5, 0.5, 0.5,1);
 	this.buttonMaterial.setDiffuse(0.5, 0.5, 0.5,1);
 	this.buttonMaterial.setShininess(1);
-	this.buttonMaterial.loadTexture("scenes/images/red_velvet.jpg");
 
-  this.player; // = whites ou blacks
+  switch(this.player){
+    case 'whites':
+      this.id = 99;
+      this.buttonMaterial.loadTexture ("scenes/images/white_plastic.jpg");
+      break;
+    case 'blacks':
+      this.id = 100;
+      this.buttonMaterial.loadTexture("scenes/images/red_velvet.jpg");
+      break;
+    default:
+      this.id = 101;
+      break;
+  }
  };
 
  Button.prototype = Object.create(CGFobject.prototype);
@@ -40,12 +53,7 @@
   this.scene.pushMatrix();
     this.scene.translate(0, 0.5, 0);
     this.buttonMaterial.apply();
-    // if(this.player == whites){
-    //   this.scene.registerForPick(drawWhite, this.cube);
-    // }
-    // else if (this.player == blacks){
-    //   this.scene.registerForPick(drawBLACK, this.cube);
-    // }
+    this.scene.registerForPick(this.id, this.sphere);
     this.sphere.display();
   this.scene.popMatrix();
  };

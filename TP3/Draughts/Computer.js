@@ -31,6 +31,8 @@ function Computer(piece, depth,computer){
 
     this.selectLOCK = computer['selectLOCK'];
     this.startingPos = computer['startingPos'];
+
+    this.draw = computer['draw'];
   }
 };
 

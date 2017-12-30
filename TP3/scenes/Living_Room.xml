@@ -189,10 +189,10 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="8" y="0" z="0" />
+    <TRANSLATION x="10" y="0" z="0" />
 
     <DESCENDANTS>
-      <LEAF type="button" args=""/>
+      <LEAF type="button" args="blacks"/>
     </DESCENDANTS>
   </NODE>
 
@@ -200,10 +200,10 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="-8" y="0" z="0" />
+    <TRANSLATION x="-10" y="0" z="0" />
 
     <DESCENDANTS>
-      <LEAF type="button" args=""/>
+      <LEAF type="button" args="whites"/>
     </DESCENDANTS>
   </NODE>
 
@@ -600,7 +600,7 @@
   <!-- TV 1 -->
   <NODE id="TV1">
       <MATERIAL id="null" />
-      <TEXTURE id="aeroFEUP" />
+      <TEXTURE id="null" />
 
       <TRANSLATION x="20" y="0" z="-22" />
       <ROTATION axis="y" angle="-45" />
@@ -608,14 +608,14 @@
       <DESCENDANTS>
         <NODEREF id="baseTV" />
         <NODEREF id="bodyTV" />
-        <NODEREF id="screenTV" />
+        <NODEREF id="screenTV1" />
       </DESCENDANTS>
   </NODE>
 
   <!-- TV 1 -->
   <NODE id="TV2">
       <MATERIAL id="null" />
-      <TEXTURE id="logoLAIG" />
+      <TEXTURE id="null" />
 
       <TRANSLATION x="-20" y="0" z="22" />
       <ROTATION axis="y" angle="135" />
@@ -623,7 +623,7 @@
       <DESCENDANTS>
         <NODEREF id="baseTV" />
         <NODEREF id="bodyTV" />
-        <NODEREF id="screenTV" />
+        <NODEREF id="screenTV2" />
       </DESCENDANTS>
   </NODE>
 
@@ -652,8 +652,8 @@
       </DESCENDANTS>
   </NODE>
 
-  <!-- Screen TV -->
-  <NODE id="screenTV">
+  <!-- Screen TV 1-->
+  <NODE id="screenTV1">
       <MATERIAL id="null" />
       <TEXTURE id="tableAround" />
 
@@ -663,14 +663,42 @@
 
       <DESCENDANTS>
         <NODEREF id="cube" />
-        <NODEREF id="logoTV" />
+        <NODEREF id="logoTV1" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Screen TV2 -->
+  <NODE id="screenTV2">
+      <MATERIAL id="null" />
+      <TEXTURE id="tableAround" />
+
+      <!-- 10/5.65 -->
+      <TRANSLATION x="-3" y="15" z="2.5" />
+      <SCALE sx="2.5" sy="1.4125" sz="0.05" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+        <NODEREF id="logoTV2" />
       </DESCENDANTS>
   </NODE>
 
   <!-- Logo TV -->
-  <NODE id="logoTV">
+  <NODE id="logoTV1">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
+      <TEXTURE id="aeroFEUP" />
+
+      <TRANSLATION x="0.1" y="0" z="0.1" />
+      <SCALE sx="0.95" sy="0.90" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="cube" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Logo TV -->
+  <NODE id="logoTV2">
+      <MATERIAL id="null" />
+      <TEXTURE id="logoLAIG" />
 
       <TRANSLATION x="0.1" y="0" z="0.1" />
       <SCALE sx="0.95" sy="0.90" sz="1" />
