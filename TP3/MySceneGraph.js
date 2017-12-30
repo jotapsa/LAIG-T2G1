@@ -1500,7 +1500,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch', 'board', 'boardaux', 'button']);
+						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch', 'board', 'boardaux', 'button','absorver']);
 
 						if (type != null)
 							this.log("   Leaf: "+ type);
@@ -1511,22 +1511,19 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
               this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
               this.CPLines = this.parseCPLines(descendants[j]);
               this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args,this.CPLines));
-              sizeChildren++;
 						}
             else if(type == 'button'){
               this.args = this.reader.getString(descendants[j],'args').split(" ");
               this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
-              sizeChildren++;
             }
-            else if(type == 'board'){
+            else if(type == 'board' || type == 'absorver'){
               this.nodes[nodeID].addChild(new MyGraphLeaf(this, type));
-              sizeChildren++;
             }
             else{
               this.args = this.reader.getString(descendants[j],'args').split(" ").map(function(n){ return +n;});
 						  this.nodes[nodeID].addChild(new MyGraphLeaf(this, type, this.args));
-              sizeChildren++;
 					  }
+            sizeChildren++;
           }
           else
             this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");

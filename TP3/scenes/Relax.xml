@@ -153,6 +153,7 @@
     <DESCENDANTS>
       <NODEREF id="floor" />
       <NODEREF id="Draughts" />
+      <NODEREF id="absorver" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
       <NODEREF id="lamps" />
@@ -691,7 +692,20 @@
       <TEXTURE id="null" />
 
       <DESCENDANTS>
-          <LEAF type="sphere" args="1.5 100 100" />
+          <LEAF type="sphere" args="1.5 50 50" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Picking Absorver -->
+  <NODE id="absorver">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="100" y="100" z="100" />
+      <SCALE sx="0.001" sy="0.001" sz="0.001" />
+
+      <DESCENDANTS>
+          <LEAF type="absorver" args="" />
       </DESCENDANTS>
   </NODE>
 
