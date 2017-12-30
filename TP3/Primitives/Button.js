@@ -17,6 +17,13 @@
 	this.plasticMaterial.setShininess(1);
 	this.plasticMaterial.loadTexture ("scenes/images/carbonfiber.jpg");
 
+  this.buttonDrawMaterial = new CGFappearance(this.scene);
+	this.buttonDrawMaterial.setAmbient(0.5, 0.5, 0.5,1);
+	this.buttonDrawMaterial.setSpecular(0.5, 0.5, 0.5,1);
+	this.buttonDrawMaterial.setDiffuse(0.5, 0.5, 0.5,1);
+	this.buttonDrawMaterial.setShininess(1);
+  this.buttonDrawMaterial.loadTexture("scenes/images/green_draw.jpg");
+
 	this.buttonMaterial = new CGFappearance(this.scene);
 	this.buttonMaterial.setAmbient(0.5, 0.5, 0.5,1);
 	this.buttonMaterial.setSpecular(0.5, 0.5, 0.5,1);
@@ -44,7 +51,6 @@
  Button.prototype.display = function() {
  	//Cube
  	this.scene.pushMatrix();
-   // 	this.scene.translate(0, 0, 0.5);
     this.plasticMaterial.apply();
    	this.cube.display();
  	this.scene.popMatrix();
@@ -52,7 +58,17 @@
   //Cube
   this.scene.pushMatrix();
     this.scene.translate(0, 0.5, 0);
-    this.buttonMaterial.apply();
+
+    if(this.player == 'whites' && this.scene.game.whites.wantsDraw()){
+      this.buttonDrawMaterial.apply();
+    }
+    else if(this.player == 'blacks' && this.scene.game.blacks.wantsDraw()){
+      this.buttonDrawMaterial.apply();
+    }
+    else {
+      this.buttonMaterial.apply();
+    }
+
     this.scene.registerForPick(this.id, this.sphere);
     this.sphere.display();
   this.scene.popMatrix();
