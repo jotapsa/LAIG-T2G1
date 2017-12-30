@@ -25,7 +25,7 @@ function DraughtGame(game){
   //HTML
   this.players = document.getElementsByClassName("player");
   this.turnTimes = document.getElementsByClassName("timeTurn");
-  this.scoreboard = document.getElementsByClassName("score");
+  this.scoreboard = document.getElementsByClassName("score")[0];
   this.time = document.getElementsByClassName("time");
 
   this.showInfo = document.getElementById("info");
@@ -257,6 +257,7 @@ DraughtGame.prototype.undoMove = function(){
 }
 
 DraughtGame.prototype.updateScoreboard = function(){
+  console.log(this.blacks.wins + ' - ' + this.whites.wins);
   this.timeElapsed = (this.currentTime - this.startTime)/1000;
   let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
   let seconds = ("0" + parseInt(this.timeElapsed%60)).slice(-2);
