@@ -86,8 +86,28 @@ canvas {
   text-align: center;
 }
 
+#score .drawAsks{
+  margin:0;
+}
+
+#score .drawAsks li{
+  margin: 0em;
+  padding-top: 0em;
+  color:#59FD3A;
+}
+
+#score .drawAsks li:first-child{
+  padding-left: 0.5em;
+  visibility: hidden;
+}
+
+#score .drawAsks li:last-child{
+  padding-left: 7.5em;
+  visibility: hidden;
+}
+
 #score .links li{
-  padding: 1em;
+  padding: 0em 1em 1em 1em;
 }
 
 .university img{
@@ -231,6 +251,10 @@ canvas {
       <li class="player"><span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>Player 1</li>
       <li class="score"><span class="time">00:00</span>0 - 0</li>
       <li class="player"><span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>Player 2</li>
+    </ul>
+    <ul class="drawAsks">
+      <li class="draw">Draw!</li>
+      <li class="draw">Draw!</li>
     </ul>
     <ul class="links">
       <li class="university"><a href="https://sigarra.up.pt/feup/pt/web_page.Inicial"><img src="scenes/images/up.png"/></a></li>

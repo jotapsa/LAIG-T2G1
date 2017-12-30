@@ -33,6 +33,8 @@ function DraughtGame(game){
   this.closeInfo = document.getElementsByClassName("infoClose")[0];
   this.closeInfo.addEventListener("click", this.closeInstructions);
 
+  this.blacksDraw = document.getElementsByClassName("draw")[0];
+  this.whitesDraw = document.getElementsByClassName("draw")[1];
   //construtor
 
   if (game===undefined){
@@ -156,10 +158,20 @@ DraughtGame.prototype.picked = function (id){
 
   if(id == this.whitesDrawID){
     this.whites.toggleDraw();
+    //HTML
+    if(this.whites.wantsDraw())
+      this.whitesDraw.setAttribute("style","visibility: visible;");
+    else
+      this.whitesDraw.setAttribute("style","visibility: hidden;");
     return;
   }
   if(id == this.blacksDrawID){
     this.blacks.toggleDraw();
+    //HTML
+    if(this.blacks.wantsDraw())
+      this.blacksDraw.setAttribute("style","visibility: visible;");
+    else
+      this.blacksDraw.setAttribute("style","visibility: hidden;");
     return;
   }
 
@@ -257,7 +269,6 @@ DraughtGame.prototype.undoMove = function(){
 }
 
 DraughtGame.prototype.updateScoreboard = function(){
-  console.log(this.blacks.wins + ' - ' + this.whites.wins);
   this.timeElapsed = (this.currentTime - this.startTime)/1000;
   let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
   let seconds = ("0" + parseInt(this.timeElapsed%60)).slice(-2);
