@@ -30,7 +30,7 @@ function DraughtMap(map , capturedWhites, capturedBlacks, movesUntilDraw){
   this.capturedWhites = capturedWhites || [];
   this.capturedBlacks = capturedBlacks || [];
 
-  this.movesUntilDraw = movesUntilDraw || 0;
+  this.movesUntilDraw = movesUntilDraw || 20;
 
   //set when countPieces() method is called because we can receive a modified map
   this.blackPieces;
@@ -69,6 +69,13 @@ DraughtMap.prototype.getCapturedArray = function(type){
     break;
   }
   return [];
+}
+
+DraughtMap.prototype.isDraw = function (){
+  if(this.movesUntilDraw <= 0){
+    return true;
+  }
+  return false;
 }
 
 DraughtMap.prototype.countPieces = function(){

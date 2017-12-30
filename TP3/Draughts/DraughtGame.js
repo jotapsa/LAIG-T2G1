@@ -288,6 +288,11 @@ DraughtGame.prototype.update = function(deltaTime){
         break;
       }
 
+      if(this.checkDraw()){
+        this.gameState = GAMESTATE.GAME_FINISHED;
+        break;
+      }
+
       if(this.whites instanceof Computer || this.blacks instanceof Computer){
         this.computerPlay();
       }
@@ -344,11 +349,12 @@ DraughtGame.prototype.computerPlay = function(){
   }
 }
 
-DraughtGame.prototype.isDraw = function(){
+DraughtGame.prototype.checkDraw = function(){
   if(this.whites.wantsDraw() && this.blacks.wantsDraw()){
     return true;
   }
 
+  return this.board.isDraw();
 }
 
 DraughtGame.prototype.resetGame = function(){
