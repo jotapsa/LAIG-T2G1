@@ -63,12 +63,15 @@ Computer.prototype.getSelectedPiecePos = function(){
 }
 
 Computer.prototype.createMove = function(board){
-  this.creatingMove = true;
   let move = null;
+  if(this.creatingMove){
+    return null;
+  }
 
+  this.creatingMove = true;
   move = Computer.alphaBeta(board, this.depth, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.piece, this.startingPos)[1];
-
   this.creatingMove = false;
+  
   return move;
 }
 

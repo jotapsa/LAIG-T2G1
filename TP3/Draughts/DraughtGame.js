@@ -150,21 +150,11 @@ DraughtGame.prototype.picked = function (id){
     return;
   }
 
-  switch(this.turn){
-    case TURN.WHITES:{
-      if(this.whites instanceof Player){
-        move = this.whites.createMove(id, this.board);
-      }
-    }
-    break;
-    case TURN.BLACKS:{
-      if(this.blacks instanceof Player){
-        move = this.blacks.createMove(id, this.board);
-      }
-    }
-    break;
-    default:
-    break;
+  if(this.turn == TURN.WHITES && this.whites instanceof Player){
+    move = this.whites.createMove(id, this.board);
+  }
+  else if(this.turn == TURN.BLACKS && this.blacks instanceof Player){
+    move = this.blacks.createMove(id, this.board);
   }
 
   //if valid move
@@ -248,14 +238,20 @@ DraughtGame.prototype.update = function(deltaTime){
       if(this.standByMove != null){
         this.nextTurn();
         this.gameState = GAMESTATE.ANIMATION;
+        break;
       }
       if(this.turn == TURN.WHITES && DraughtAux.hasWon(this.board, this.turn)){
         this.whites.won();
         this.gameState = GAMESTATE.GAME_FINISHED;
+        break;
       }
       else if(this.turn == TURN.BLACKS && DraughtAux.hasWon(this.board, this.turn)){
         this.blacks.won();
         this.gameState = GAMESTATE.GAME_FINISHED;
+        break;
+      }
+      if(this.whites instanceof Computer || this.blacks instanceof Computer){
+        this.computerPlay();
       }
     }
     break;
@@ -288,24 +284,16 @@ DraughtGame.prototype.update = function(deltaTime){
     default:
     break;
   }
+}
 
-  if (this.gameState == GAMESTATE.RUNNING){
-    switch(this.turn){
-      case TURN.WHITES:{
-        if(this.whites instanceof Computer && !this.whites.getCreatingMove()){
-          move = this.whites.createMove(this.board);
-        }
-      }
-      break;
-      case TURN.BLACKS:{
-        if(this.blacks instanceof Computer && !this.blacks.getCreatingMove()){
-          move = this.blacks.createMove(this.board);
-        }
-      }
-      break;
-      default:
-      break;
-    }
+DraughtGame.prototype.computerPlay = function(){
+  let move = null;
+
+  if(this.turn == TURN.WHITES && this.whites instanceof Computer){
+    move = this.whites.createMove(this.board);
+  }
+  else if(this.turn == TURN.BLACKS && this.blacks instanceof Computer){
+    move = this.blacks.createMove(this.board);
   }
 
   if(move != null){
