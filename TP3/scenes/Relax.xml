@@ -200,7 +200,7 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="10" y="0" z="0" />
+    <TRANSLATION x="8" y="0" z="4" />
 
     <DESCENDANTS>
       <LEAF type="button" args="blacks"/>
@@ -211,7 +211,7 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
-    <TRANSLATION x="-10" y="0" z="0" />
+    <TRANSLATION x="-8" y="0" z="-4" />
 
     <DESCENDANTS>
       <LEAF type="button" args="whites"/>
