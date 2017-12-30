@@ -107,9 +107,16 @@ MyInterface.prototype.addConfigurationGroup = function(){
     blacksController.onChange(function(){
       self.scene.initInterface();
     });
-
     if(this.scene.game.whitesOwner != OWNER.HUMAN || this.scene.game.blacksOwner != OWNER.HUMAN){
       configGroup.add(this.scene.game, 'depth', 4, 10).name('CPU Depth');
+    }
+
+    let timeController = configGroup.add(this.scene.game, 'turnTimeLimited').name('Limit Turn Time');
+    timeController.onChange(function(){
+      self.scene.initInterface();
+    })
+    if(this.scene.game.turnTimeLimited == true){
+      configGroup.add(this.scene.game, 'timeForTurn', 20, 120).name('Time Limit');
     }
 
     let themeController = configGroup.add(this.scene, 'theme', Object.keys(this.scene.themes)).name('Theme');

@@ -46,7 +46,7 @@ function DraughtGame(game){
     this.turn = TURN.BLACKS;
     this.changeTurn = true;
     this.depth = 5;
-    this.started = true;
+    this.started = false;
 
     this.board = new DraughtMap();
     this.replayBoard = new DraughtMap();
@@ -55,6 +55,14 @@ function DraughtGame(game){
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
     this.whitesDrawID = 99;
     this.blacksDrawID = 100;
+
+    this.timeBeforeNewGame = 5;
+    this.elapsedGameFinishedTime = 0;
+    this.turnTimeLimited = false;
+    this.timeForTurn = 60;
+    this.elapsedTurnTime = 0;
+
+    this.lastWinner = null;
 
     if(this.whitesOwner == OWNER.HUMAN){
       this.whites = new Player("Whites");
@@ -228,6 +236,8 @@ DraughtGame.prototype.forceConsecutiveMoves = function(move){
 
 
 DraughtGame.prototype.nextTurn = function(){
+  this.started = true;
+
   if(this.changeTurn){
     switch(this.turn){
       case (TURN.BLACKS):{
@@ -247,6 +257,7 @@ DraughtGame.prototype.nextTurn = function(){
       default:
       break;
     }
+    this.elapsedTurnTime = 0;
   }
   else{
     this.changeTurn = true;
@@ -285,6 +296,22 @@ DraughtGame.prototype.update = function(deltaTime){
         this.nextTurn();
         this.gameState = GAMESTATE.ANIMATION;
         break;
+      }
+
+      if(this.started && this.turnTimeLimited){
+        this.elapsedTurnTime += deltaTime/1000;
+      }
+      if(this.elapsedTurnTime >= this.timeForTurn){
+        if(this.turn == TURN.WHITES){
+          this.blacks.won();
+          this.gameState = GAMESTATE.GAME_FINISHED;
+          break;
+        }
+        else if(this.turn == TURN.BLACKS){
+          this.whites.won();
+          this.gameState = GAMESTATE.GAME_FINISHED;
+          break;
+        }
       }
 
       winner = DraughtAux.isGameOver(this.board, this.turn);
@@ -337,6 +364,12 @@ DraughtGame.prototype.update = function(deltaTime){
     break;
     case (GAMESTATE.GAME_FINISHED):{
       this.updateScoreboard();
+      this.elapsedGameFinishedTime += deltaTime/1000;
+
+      if(this.elapsedGameFinishedTime >= this.timeBeforeNewGame){
+        this.restartGame();
+        this.elapsedGameFinishedTime = 0;
+      }
     }
     break;
     default:
@@ -433,6 +466,24 @@ DraughtGame.prototype.replayGame = function(){
     this.replayBoard.resetMap();
     this.gameState = GAMESTATE.REPLAY;
   }
+}
+
+
+DraughtGame.prototype.restartGame = function(){
+  this.moves = [];
+  this.standByMove = null;
+  this.gameState = GAMESTATE.RUNNING;
+  this.turn = TURN.BLACKS;
+  this.changeTurn = true;
+  this.started = false;
+
+  this.board.resetMap();
+  this.replayBoard.resetMap();
+  this.moveReplayIndex = 0;
+
+  //Turn Color
+  this.players[0].setAttribute("style","color:yellow;");
+  this.players[1].setAttribute("style","color:white");
 }
 
 DraughtGame.prototype.setStartTime = function(currTime){
