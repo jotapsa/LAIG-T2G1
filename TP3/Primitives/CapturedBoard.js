@@ -54,7 +54,20 @@ CapturedBoard.prototype.display = function (){
 
 	xPiece = -(this.boardWidth/2) + 0.5;
 	yPiece = -(this.boardLength/2) + 0.5;
-	capturedPieces = this.scene.game.board.getCapturedArray(this.pieceType);
+	
+	switch(this.scene.game.getgameState()){
+		case(GAMESTATE.GAME_FINISHED):
+		case(GAMESTATE.ANIMATION):
+		case(GAMESTATE.RUNNING):{
+			capturedPieces = this.scene.game.board.getCapturedArray(this.pieceType);
+		}
+		break;
+		case(GAMESTATE.REPLAY):{
+			capturedPieces = this.scene.game.replayBoard.getCapturedArray(this.pieceType);
+		}
+		default:
+		break;
+	}
 
 	for(let i=0; i<capturedPieces.length; i++){
 		this.scene.pushMatrix();
