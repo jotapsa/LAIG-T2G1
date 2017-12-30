@@ -40,10 +40,8 @@ function DraughtGame(game){
     this.moveReplayIndex = 0;
 
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-    this.drawID = {
-      99: "whites",
-      100: "blacks",
-    }
+    this.whitesDrawID = 99;
+    this.blacksDrawID = 100;
 
     if(this.whitesOwner == OWNER.HUMAN){
       this.whites = new Player("Whites");
@@ -134,18 +132,12 @@ DraughtGame.prototype.getReplayBoard = function(){
 DraughtGame.prototype.picked = function (id){
   let move = null;
 
-  if (id in Object.keys(this.drawID)){
-    if(this.drawID[id] == "whites")
-    switch(this.drawID[id]){
-      case("whites"):
-      this.whites.toggleDraw();
-      break;
-      case("black"):
-      this.blacks.toggleDraw();
-      break;
-      default:
-      break;
-    }
+  if(id == this.whitesDrawID){
+    this.whites.toggleDraw();
+    return;
+  }
+  if(id == this.blacksDrawID){
+    this.blacks.toggleDraw();
     return;
   }
 
@@ -255,6 +247,14 @@ DraughtGame.prototype.update = function(deltaTime){
       if(this.standByMove != null){
         this.nextTurn();
         this.gameState = GAMESTATE.ANIMATION;
+      }
+      if(this.turn == TURN.WHITES && DraughtAux.hasWon(this.board, this.turn)){
+        this.whites.won();
+        this.gameState = GAMESTATE.GAME_FINISHED;
+      }
+      else if(this.turn == TURN.BLACKS && DraughtAux.hasWon(this.board, this.turn)){
+        this.blacks.won();
+        this.gameState = GAMESTATE.GAME_FINISHED;
       }
     }
     break;
