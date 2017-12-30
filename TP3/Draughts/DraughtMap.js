@@ -105,25 +105,26 @@ DraughtMap.prototype.makeMove = function(move){
 }
 
 DraughtMap.prototype.capturePiece = function(move){
-  let startingPos, intermediatePos, finalPos;
+  let startingPos, intermediatePos, finalPos, cell;
   let delta;
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
 
   delta = [finalPos[0]-startingPos[0], finalPos[1]-startingPos[1]];
   intermediatePos = [startingPos[0] + delta[0]/2, startingPos[1] + delta[1]/2];
+  cell = this.map[intermediatePos[0]][intermediatePos[1]];
 
   //Captured Piece
-  switch(this.map[intermediatePos[0]][intermediatePos[1]]){
+  switch(cell){
     case CELL.BLACK_KING:
     case CELL.BLACK_PIECE:{
-      this.capturedBlacks.push(this.map[intermediatePos[0]][intermediatePos[1]]);
+      this.capturedBlacks.push(cell);
       this.blackPieces--;
     }
     break;
     case CELL.WHITE_KING:
     case CELL.WHITE_PIECE:{
-      this.capturedWhites.push(this.map[intermediatePos[0]][intermediatePos[1]]);
+      this.capturedWhites.push(cell);
       this.whitePieces--;
     }
     break;
@@ -131,7 +132,7 @@ DraughtMap.prototype.capturePiece = function(move){
     break;
   }
 
-  move.setCapturedPiece(this.map[intermediatePos[0]][intermediatePos[1]]);
+  move.setCapturedPiece(cell);
   this.map[intermediatePos[0]][intermediatePos[1]] = CELL.EMPTY_SQUARE;
 }
 
@@ -158,18 +159,18 @@ DraughtMap.prototype.undoMove = function(move){
 }
 
 DraughtMap.prototype.releasePiece = function(move){
-  let startingPos, intermediatePos, finalPos, capturedPiece;
+  let startingPos, intermediatePos, finalPos, cell;
   let delta;
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
-  capturedPiece = move.getCapturedPiece();
+  cell = move.getCapturedPiece();
 
   delta = [finalPos[0]-startingPos[0], finalPos[1]-startingPos[1]];
   intermediatePos = [startingPos[0] + delta[0]/2, startingPos[1] + delta[1]/2];
 
   //Release Piece -- this assumes the last piece
   //captured is also the last one in the array
-  switch(capturedPiece){
+  switch(cell){
     case CELL.BLACK_PIECE:
     case CELL.BLACK_KING:{
       this.capturedBlacks.pop();
@@ -186,7 +187,7 @@ DraughtMap.prototype.releasePiece = function(move){
     break;
   }
 
-  this.map[intermediatePos[0]][intermediatePos[1]] = capturedPiece;
+  this.map[intermediatePos[0]][intermediatePos[1]] = cell;
 }
 
 DraughtMap.prototype.resetCapturedPieces = function(){

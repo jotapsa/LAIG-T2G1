@@ -1,7 +1,7 @@
 function DraughtAux(){
 };
 
-DraughtAux.checkValidMove = function(game, move, map){
+DraughtAux.checkValidMove = function(move, map){
   let forcedMoves, startingPos, finalPos, playerCell;
 
   startingPos = move.getStartingPos();
@@ -17,30 +17,7 @@ DraughtAux.checkValidMove = function(game, move, map){
       if(move.Equals(forcedMoves[i])){
         //Check if further forced moves are possible
         let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, map, playerCell);
-        switch (playerCell) {
-          case CELL.WHITE_PIECE:
-          case CELL.WHITE_KING:{
-            if(furtherForcedMoves.length>0){
-              game.whites.forceConsecutiveMove(finalPos);
-            }
-            else{
-              game.whites.toggleOFFselectLOCK(finalPos);
-            }
-          }
-          break;
-          case CELL.BLACK_PIECE:
-          case CELL.BLACK_KING:{
-            if(furtherForcedMoves.length>0){
-              game.blacks.forceConsecutiveMove(finalPos);
-            }
-            else{
-              game.blacks.toggleOFFselectLOCK(finalPos);
-            }
-          }
-          break;
-          default:
-          break;
-        }
+        move.setForcedMove(true);
         return true;
       }
     }
@@ -58,12 +35,13 @@ DraughtAux.checkValidMove = function(game, move, map){
 }
 
 DraughtAux.isValidStandardMove = function(move, map){
-  let startingPos, finalPos;
+  let startingPos, finalPos, cell;
 
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
+  cell = map.getPos(startingPos[0], startingPos[1]);
 
-  switch(map.getPos(startingPos[0], startingPos[1])){
+  switch(cell){
     case CELL.BLACK_KING:{
       if((finalPos[0]-startingPos[0] == 1) && (Math.abs(finalPos[1]-startingPos[1]) == 1)){
         return true;
@@ -81,6 +59,7 @@ DraughtAux.isValidStandardMove = function(move, map){
         return true;
       }
     }
+    //trickle down
     case CELL.WHITE_PIECE:{
       if((finalPos[0]-startingPos[0] == 1) && (Math.abs(finalPos[1]-startingPos[1]) == 1)){
         return true;

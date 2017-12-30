@@ -31,6 +31,7 @@ function DraughtGame(game){
   this.blacksOwner = OWNER.HUMAN;
   this.gameState = GAMESTATE.RUNNING;
   this.turn = TURN.BLACKS;
+  this.changeTurn = true;
   this.depth = 10;
   this.started = false;
 
@@ -152,29 +153,59 @@ DraughtGame.prototype.picked = function (id){
   }
 
   //if valid move
-  if (move && DraughtAux.checkValidMove(this, move, this.board)){
-    if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
-      this.nextTurn();
-    }
-    //animation
-
+  if (move && DraughtAux.checkValidMove(move, this.board)){
+    this.forceConsecutiveMoves(move);
     this.standByMove = move;
-    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 
+DraughtGame.prototype.forceConsecutiveMoves = function(move){
+  let startingPos, finalPos, cell;
+  startingPos = move.getStartingPos();
+  finalPos =  move.getFinalPos();
+  cell = this.board.getPos(startingPos[0], startingPos[1]);
+
+  if(move.isforcedMove()){
+    let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, this.board, cell);
+    if(furtherForcedMoves.length>0){
+      this.changeTurn = false;
+      if(this.turn == TURN.WHITES){
+        this.whites.forceConsecutiveMove(finalPos);
+      }
+      else if(this.turn == TURN.BLACKS){
+        this.blacks.forceConsecutiveMove(finalPos);
+      }
+    }
+    else{
+      this.changeTurn = true;
+      if(this.turn == TURN.WHITES){
+        this.whites.toggleOFFselectLOCK();
+      }
+      else if(this.turn == TURN.BLACKS){
+        this.blacks.toggleOFFselectLOCK();
+      }
+    }
+  }
+}
+
+
 DraughtGame.prototype.nextTurn = function(){
-  switch(this.turn){
-    case (TURN.BLACKS):{
-      this.turn = TURN.WHITES;
+  if(this.changeTurn){
+    switch(this.turn){
+      case (TURN.BLACKS):{
+        this.turn = TURN.WHITES;
+      }
+      break;
+      case (TURN.WHITES):{
+        this.turn = TURN.BLACKS;
+      }
+      break;
+      default:
+      break;
     }
-    break;
-    case (TURN.WHITES):{
-      this.turn = TURN.BLACKS;
-    }
-    break;
-    default:
-    break;
+  }
+  else{
+    this.changeTurn = true;
   }
 }
 
@@ -198,6 +229,10 @@ DraughtGame.prototype.update = function(deltaTime){
 
   switch(this.gameState){
     case (GAMESTATE.RUNNING):{
+      if(this.standByMove != null){
+        this.nextTurn();
+        this.gameState = GAMESTATE.ANIMATION;
+      }
     }
     break;
     case (GAMESTATE.ANIMATION):{
@@ -250,43 +285,8 @@ DraughtGame.prototype.update = function(deltaTime){
   }
 
   if(move){
-    let startingPos = move.getStartingPos();
-    let finalPos =  move.getFinalPos();
-    let playerCell = this.board.getPos(startingPos[0], startingPos[1]);
-
-
-    if(move.isforcedMove()){
-      let furtherForcedMoves = DraughtAux.ObtainForcedMovesForPiece(finalPos, this.board, playerCell);
-      switch (playerCell) {
-        case CELL.WHITE_PIECE:
-        case CELL.WHITE_KING:{
-          if(furtherForcedMoves.length>0){
-            this.whites.forceConsecutiveMove(finalPos);
-          }
-          else{
-            this.whites.toggleOFFselectLOCK(finalPos);
-          }
-        }
-        break;
-        case CELL.BLACK_PIECE:
-        case CELL.BLACK_KING:{
-          if(furtherForcedMoves.length>0){
-            this.blacks.forceConsecutiveMove(finalPos);
-          }
-          else{
-            this.blacks.toggleOFFselectLOCK(finalPos);
-          }
-        }
-        break;
-        default:
-        break;
-      }
-    }
-    if(!this.whites.getselectLOCK() && !this.blacks.getselectLOCK()){
-      this.nextTurn();
-    }
+    this.forceConsecutiveMoves(move);
     this.standByMove = move;
-    this.gameState = GAMESTATE.ANIMATION;
   }
 }
 

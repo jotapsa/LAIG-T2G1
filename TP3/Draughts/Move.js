@@ -50,6 +50,9 @@ Move.prototype.getCapturedPiece = function(){
   return this.capturedPiece;
 }
 
+Move.prototype.setForcedMove = function(bool){
+  this.forcedMove = bool;
+}
 
 Move.prototype.setCapturedPiece = function(piece){
   this.capturedPiece=piece;
