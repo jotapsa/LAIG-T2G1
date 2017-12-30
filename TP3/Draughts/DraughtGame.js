@@ -40,7 +40,10 @@ function DraughtGame(game){
   this.moveReplayIndex = 0;
 
   this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
-
+  this.drawID = {
+    'whites':99,
+    'blacks':100
+  }
     this.board = new DraughtMap();
     this.IDGamma = [0, Math.pow(this.board.getsizeN(), 2) -1];
 
@@ -68,16 +71,22 @@ function DraughtGame(game){
       this.moves.push(new Move(startingPos,finalPos,move['turn'],move['forcedMove'],move['promotedPiece'],move['capturedPiece']));
     }
 
+    this.standByMove = game['standByMove'];
     this.whitesOwner = game['whitesOwner'] == 0 ? OWNER.HUMAN : OWNER.CPU;
     this.blacksOwner = game['blacksOwner'] == 0 ? OWNER.HUMAN : OWNER.CPU;
     this.gameState = game['gameState'];
     this.turn = game['turn'];
+    this.changeTurn = game['changeTurn'];
     this.depth = game['depth'];
     this.started = game['started'];
 
     // DraughtMap(map , capturedWhites, capturedBlacks)
     this.board = new DraughtMap(game['board']['map'],game['board']['capturedWhites'],game['board']['capturedBlacks']);
+    this.replayBoard = new DraughtMap(game['replayBoard']['map'],game['replayBoard']['capturedWhites'],game['replayBoard']['capturedBlacks']);
+    this.moveReplayIndex = game['moveReplayIndex'];
+
     this.IDGamma = game['IDGamma'];
+    this.drawID = game['drawID'];
 
     if(game['whitesOwner'] == OWNER.HUMAN){
       this.whites = new Player("Whites",game['whites']);
@@ -130,6 +139,10 @@ DraughtGame.prototype.picked = function (id){
   if (id < this.IDGamma[0] || id > this.IDGamma[1]){
     return;
   }
+  // else if(this.drawID.indexOf(id)){
+  //   // ...
+  //   return;
+  // }
 
   if (this.gameState != GAMESTATE.RUNNING){
     return;
