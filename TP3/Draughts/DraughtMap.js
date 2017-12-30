@@ -12,7 +12,7 @@ CELL = {
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function DraughtMap(map , capturedWhites, capturedBlacks, movesUntilDraw){
+function DraughtMap(map , capturedWhites, capturedBlacks, movesN){
   //construtor
 
   this.map = map || [
@@ -30,7 +30,8 @@ function DraughtMap(map , capturedWhites, capturedBlacks, movesUntilDraw){
   this.capturedWhites = capturedWhites || [];
   this.capturedBlacks = capturedBlacks || [];
 
-  this.movesUntilDraw = movesUntilDraw || 20;
+  this.movesForDraw = 20;
+  this.movesN = movesN || 0;
 
   //set when countPieces() method is called because we can receive a modified map
   this.blackPieces;
@@ -71,13 +72,6 @@ DraughtMap.prototype.getCapturedArray = function(type){
   return [];
 }
 
-DraughtMap.prototype.isDraw = function (){
-  if(this.movesUntilDraw <= 0){
-    return true;
-  }
-  return false;
-}
-
 DraughtMap.prototype.countPieces = function(){
   this.blackPieces = 0;
   this.whitePieces = 0;
@@ -103,16 +97,25 @@ DraughtMap.prototype.countPieces = function(){
 }
 
 DraughtMap.prototype.makeMove = function(move){
-  let startingPos, finalPos;
+  let startingPos, finalPos, cell;
 
   startingPos = move.getStartingPos();
   finalPos = move.getFinalPos();
+  cell = this.map[startingPos[0]][startingPos[1]];
 
   if(Math.abs(finalPos[0]-startingPos[0]) == 2 && Math.abs(finalPos[1]-startingPos[1]) == 2){
     this.capturePiece(move);
   }
 
-  this.map[finalPos[0]][finalPos[1]] = this.map[startingPos[0]][startingPos[1]];
+  move.setMovesN(this.movesN);
+  if(move.getCapturedPiece != CELL.EMPTY_SQUARE || cell == CELL.BLACK_PIECE || cell == WHITE_PIECE){
+    this.resetMovesN();
+  }
+  else{
+    this.movesN++;
+  }
+
+  this.map[finalPos[0]][finalPos[1]] = cell;
   this.map[startingPos[0]][startingPos[1]] = CELL.EMPTY_SQUARE;
 
   //Should we also promote it ?
@@ -158,6 +161,13 @@ DraughtMap.prototype.capturePiece = function(move){
   this.map[intermediatePos[0]][intermediatePos[1]] = CELL.EMPTY_SQUARE;
 }
 
+DraughtMap.prototype.isDraw = function (){
+  if(this.movesN >= this.movesForDraw){
+    return true;
+  }
+  return false;
+}
+
 DraughtMap.prototype.undoMove = function(move){
   let startingPos, finalPos;
 
@@ -175,6 +185,8 @@ DraughtMap.prototype.undoMove = function(move){
   if(Math.abs(finalPos[0]-startingPos[0]) == 2 && Math.abs(finalPos[1]-startingPos[1]) == 2){
     this.releasePiece(move);
   }
+
+  this.movesN = move.getMovesN();
 
   this.map[startingPos[0]][startingPos[1]] = this.map[finalPos[0]][finalPos[1]];
   this.map[finalPos[0]][finalPos[1]] = CELL.EMPTY_SQUARE;
@@ -212,11 +224,6 @@ DraughtMap.prototype.releasePiece = function(move){
   this.map[intermediatePos[0]][intermediatePos[1]] = cell;
 }
 
-DraughtMap.prototype.resetCapturedPieces = function(){
-  this.capturedWhites = [];
-  this.capturedBlacks = [];
-}
-
 DraughtMap.prototype.resetMap = function(){
   this.map =[
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
@@ -232,6 +239,15 @@ DraughtMap.prototype.resetMap = function(){
   this.countPieces();
 }
 
+DraughtMap.prototype.resetCapturedPieces = function(){
+  this.capturedWhites = [];
+  this.capturedBlacks = [];
+}
+
+DraughtMap.prototype.resetMovesN = function(){
+  this.movesN = 0;
+}
+
 /**
 * Creates a new DraughtMap from the current parameters.
 * @return {DraughtMap} A DraughtMap that is a clone of this one.
@@ -242,5 +258,5 @@ DraughtMap.prototype.clone = function (){
     mapClone.push(this.map[i].slice(0));
   }
 
-  return new DraughtMap(mapClone, this.capturedWhites.slice(0), this.capturedBlacks.slice(0), this.movesUntilDraw);
+  return new DraughtMap(mapClone, this.capturedWhites.slice(0), this.capturedBlacks.slice(0), this.movesN);
 }

@@ -19,6 +19,8 @@ function Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPi
   this.forcedMove = forcedMove || false;
   this.promotedPiece = promotedPiece || false;
   this.capturedPiece = capturedPiece || CELL.EMPTY_SQUARE; //same as none
+
+  this.movesN = 0;
 };
 
 
@@ -50,6 +52,10 @@ Move.prototype.getCapturedPiece = function(){
   return this.capturedPiece;
 }
 
+Move.prototype.getMovesN = function(){
+  return this.movesN;
+}
+
 Move.prototype.setForcedMove = function(bool){
   this.forcedMove = bool;
 }
@@ -60,6 +66,10 @@ Move.prototype.setCapturedPiece = function(piece){
 
 Move.prototype.setPromotedPiece = function(bool){
   this.promotedPiece=bool;
+}
+
+Move.prototype.setMovesN = function(movesN){
+  this.movesN = movesN;
 }
 
 //Is there a more "elegant" way to do this ?
