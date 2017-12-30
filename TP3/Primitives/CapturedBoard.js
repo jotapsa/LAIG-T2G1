@@ -20,22 +20,18 @@ function CapturedBoard(scene, pieceType){
 	this.cube= new UnitCube(this.scene);
 	this.piece = new Piece(this.scene, this.pieceType);
 
+	this.boardMaterial = new CGFappearance(this.scene);
+	this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1);
+	this.boardMaterial.setSpecular(0.5, 0.5, 0.5, 1);
+	this.boardMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
+	this.boardMaterial.setShininess(1);
+
   switch(this.pieceType){
     case "white":{
-      this.boardMaterial = new CGFappearance(this.scene);
-      this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1);
-      this.boardMaterial.setSpecular(0.5, 0.5, 0.5, 1);
-      this.boardMaterial.setDiffuse(0.5, 0.5, 0.5, 1);
-      this.boardMaterial.setShininess(1);
       this.boardMaterial.loadTexture ("scenes/images/black_marble.jpg");
     }
     break;
     case "black":{
-      this.boardMaterial = new CGFappearance(this.scene);
-      this.boardMaterial.setAmbient(0.5, 0.5, 0.5,1);
-      this.boardMaterial.setSpecular(0.5, 0.5, 0.5,1);
-      this.boardMaterial.setDiffuse(0.5, 0.5, 0.5,1);
-      this.boardMaterial.setShininess(1);
       this.boardMaterial.loadTexture("scenes/images/white_marble.jpg");
     }
     break;
@@ -54,52 +50,26 @@ CapturedBoard.prototype.display = function (){
 		this.cube.display();
 	this.scene.popMatrix();
 
-	let xPiece, yPiece;
+	let xPiece, yPiece, capturedPieces;
 
 	xPiece = -(this.boardWidth/2) + 0.5;
 	yPiece = -(this.boardLength/2) + 0.5;
+	capturedPieces = this.scene.game.board.getCapturedArray(this.pieceType);
 
-	switch(this.pieceType){
-		case "white":{
-			for(let i=0; i<this.scene.game.board.capturedWhites.length; i++){
-				this.scene.pushMatrix();
-					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
-					this.piece.display();
-					if(this.scene.game.board.capturedWhites[i] == CELL.WHITE_KING){
-						this.scene.translate(0,0.21,0);
-						this.piece.display();
-					}
-				this.scene.popMatrix();
-
-				xPiece++;
-				if(xPiece > (this.boardWidth/2)){
-					yPiece++;
-					xPiece = -(this.boardWidth/2) + 0.5;
-				}
+	for(let i=0; i<capturedPieces.length; i++){
+		this.scene.pushMatrix();
+			this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
+			this.piece.display();
+			if(capturedPieces[i] == CELL.BLACK_KING || capturedPieces[i] == CELL.WHITE_KING){
+				this.scene.translate(0,0.21,0);
+				this.piece.display();
 			}
-		}
-		break;
-		case "black":{
-			for(let i=0; i<this.scene.game.board.capturedBlacks.length; i++){
-				this.scene.pushMatrix();
-					this.scene.translate(xPiece, this.boardHeigth/2, yPiece);
-					this.piece.display();
-					if(this.scene.game.board.capturedBlacks[i] == CELL.BLACK_KING){
-						this.scene.translate(0,0.21,0);
-						this.piece.display();
-					}
-				this.scene.popMatrix();
+		this.scene.popMatrix();
 
-				xPiece++;
-				if(xPiece > (this.boardWidth/2)){
-					yPiece++;
-					xPiece = -(this.boardWidth/2) + 0.5;
-				}
-			}
+		xPiece++;
+		if(xPiece > (this.boardWidth/2)){
+			yPiece++;
+			xPiece = -(this.boardWidth/2) + 0.5;
 		}
-		break;
-		default:
-		break;
 	}
-
 };

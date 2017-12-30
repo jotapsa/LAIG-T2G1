@@ -40,6 +40,22 @@ DraughtMap.prototype.getPos = function (y, x){
   return this.map[y][x];
 }
 
+DraughtMap.prototype.getCapturedArray = function(type){
+  switch(type){
+    case ("white"):{
+      return this.capturedWhites;
+    }
+    break;
+    case ("black"):{
+      return this.capturedBlacks;
+    }
+    break;
+    default:
+    break;
+  }
+  return [];
+}
+
 DraughtMap.prototype.countPieces = function(){
   this.blackPieces = 0;
   this.whitePieces = 0;
