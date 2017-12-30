@@ -503,20 +503,30 @@ DraughtAux.simulatePossibleBoards = function(board, moveSet){
   return boardSet;
 }
 
-DraughtAux.hasWon = function(board, turn){
+DraughtAux.isGameOver = function(board, turn){
   let possibleMoves;
 
-  if(turn == TURN.BLACKS){
-    if ((board.getwhitePieces() == 0) ||
-    (DraughtAux.getAllPossibleMovesForPlayer("Whites", board).length == 0)){
-      return true;
+  switch(turn){
+    case(TURN.BLACKS):{
+      if (board.getwhitePieces() == 0){
+        return TURN.BLACKS;
+      }
+      else if(DraughtAux.getAllPossibleMovesForPlayer("Blacks", board).length == 0){
+        return TURN.WHITES;
+      }
     }
-  }
-  else if(turn == TURN.WHITES){
-    if ((board.getblackPieces() == 0) ||
-    (DraughtAux.getAllPossibleMovesForPlayer("Blacks", board).length == 0)){
-      return true;
+    break;
+    case(TURN.WHITES):{
+      if (board.getblackPieces() == 0){
+        return TURN.WHITES;
+      }
+      else if(DraughtAux.getAllPossibleMovesForPlayer("Whites", board).length == 0){
+        return TURN.BLACKS;
+      }
     }
+    break;
+    default:
+    break;
   }
-  return false;
+  return null;
 }

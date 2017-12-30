@@ -264,7 +264,7 @@ DraughtGame.prototype.updateScoreboard = function(){
 }
 
 DraughtGame.prototype.update = function(deltaTime){
-  let move = null, animation = null;
+  let move = null, animation = null, winner = null;
   //deltaTime is in ms
 
   switch(this.gameState){
@@ -274,18 +274,21 @@ DraughtGame.prototype.update = function(deltaTime){
         this.gameState = GAMESTATE.ANIMATION;
         break;
       }
-      if(this.turn == TURN.WHITES && DraughtAux.hasWon(this.board, this.turn)){
+
+      winner = DraughtAux.isGameOver(this.board, this.turn);
+      if(winner != null && winner == TURN.WHITES){
         this.whites.won();
         this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
-      else if(this.turn == TURN.BLACKS && DraughtAux.hasWon(this.board, this.turn)){
+      else if(winner != null && winner == TURN.BLACKS){
         this.blacks.won();
         this.updateScoreboard();
         this.gameState = GAMESTATE.GAME_FINISHED;
         break;
       }
+
       if(this.whites instanceof Computer || this.blacks instanceof Computer){
         this.computerPlay();
       }
