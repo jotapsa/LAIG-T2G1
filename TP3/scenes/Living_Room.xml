@@ -140,9 +140,9 @@
     <TEXTURE id="null" />
 
     <DESCENDANTS>
-      <NODEREF id="floor" />
       <NODEREF id="Draughts" />
       <NODEREF id="absorver" />
+      <NODEREF id="floor" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
       <NODEREF id="TVs" />
