@@ -71,6 +71,9 @@ function MyGraphLeaf(graph, type, args,argsP) {
             this.object = new Button(graph.scene,this.args[0]);
           }
           break;
+        case 'absorver':
+            this.object = new Absorver(graph.scene);
+          break;
         default:
             break;
     }

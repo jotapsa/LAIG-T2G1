@@ -180,6 +180,7 @@
     <DESCENDANTS>
       <NODEREF id="floor" />
       <NODEREF id="Draughts" />
+      <NODEREF id="absorver" />
       <NODEREF id="gameTable" />
       <NODEREF id="chairs" />
       <NODEREF id="vigilance" />
@@ -758,6 +759,19 @@
 
       <DESCENDANTS>
         <LEAF type="rectangle" args="-1 -1.5 1 1.5" />
+      </DESCENDANTS>
+  </NODE>
+
+  <!-- Picking Absorver -->
+  <NODE id="absorver">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="100" y="100" z="100" />
+      <SCALE sx="0.001" sy="0.001" sz="0.001" />
+
+      <DESCENDANTS>
+          <LEAF type="absorver" args="" />
       </DESCENDANTS>
   </NODE>
 
