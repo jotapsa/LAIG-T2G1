@@ -82,7 +82,8 @@ function DraughtGame(game){
     this.moveReplayIndex = game['moveReplayIndex'];
 
     this.IDGamma = game['IDGamma'];
-    this.drawID = game['drawID'];
+    this.whitesDrawID = game['whitesDrawID'];
+    this.blacksDrawID = game['blacksDrawID'];
 
     if(game['whitesOwner'] == OWNER.HUMAN){
       this.whites = new Player("Whites",game['whites']);
