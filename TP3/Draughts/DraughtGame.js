@@ -547,6 +547,11 @@ DraughtGame.prototype.displayTurnTime = function(currTime){
   }
 }
 
+DraughtGame.prototype.continueTime = function(currTime){
+  this.currentTime = currTime;
+  this.startTime = this.currentTime - this.elapsedTime;
+  this.turnStartTime = this.currentTime - this.elapsedTurnTime;
+}
 DraughtGame.prototype.displayFinishedTime = function(currTime){
   let time = (currTime - this.startFinishedTime)/1000;
   let minutes = ("0" + parseInt(time/60)).slice(-2);
