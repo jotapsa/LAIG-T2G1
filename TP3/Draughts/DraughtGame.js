@@ -134,6 +134,22 @@ function DraughtGame(game){
       this.blacks = new Computer("Blacks", Math.floor(this.depth),game['blacks']);
     }
 
+    //Draws HTML
+    if(this.whites.wantsDraw()){
+      this.whitesDraw.setAttribute("style","visibility: visible;");
+    }
+    else{
+      this.whitesDraw.setAttribute("style","visibility: hidden;");
+    }
+
+    if(this.blacks.wantsDraw()){
+      this.blacksDraw.setAttribute("style","visibility: visible;");
+    }
+    else{
+      this.blacksDraw.setAttribute("style","visibility: hidden;");
+    }
+
+
     let d = new Date();
     this.startTime = d.getTime() - game['elapsedTime']*1000;
 
@@ -456,6 +472,10 @@ DraughtGame.prototype.resetGame = function(){
   else if(this.blacksOwner == OWNER.CPU){
     this.blacks = new Computer("Blacks", Math.floor(this.depth));
   }
+
+  //Reset Draws HTML
+  this.whitesDraw.setAttribute("style","visibility: hidden;");
+  this.blacksDraw.setAttribute("style","visibility: hidden;");
 
   //Turn Color
   this.players[0].setAttribute("style","color:yellow;");
