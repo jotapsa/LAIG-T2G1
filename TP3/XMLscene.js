@@ -234,7 +234,6 @@ XMLscene.prototype.onGraphLoaded = function()
       }
       else{
         this.game.displayTime(currTime);
-        this.game.displayTurnTime(currTime);
       }
     }
     else if(this.game.gameState == GAMESTATE.GAME_FINISHED){
@@ -300,25 +299,8 @@ XMLscene.prototype.onGraphLoaded = function()
   XMLscene.prototype.resetGame = function(){
     this.gameName = '';
     this.selectedGame = null;
-    this.updateLoadGameList();
-
     this.game.resetGame();
-  }
-
-  /**
-  * .
-  */
-  XMLscene.prototype.updateLoadGameList = function(){
-    let self = this;
-    let manageGamesGroup = this.interface.gui.__folders['Manage Games'];
-
-    manageGamesGroup.__controllers[3].remove();
-    manageGamesGroup.__controllers[2].remove();
-    let loadGame = manageGamesGroup.add(this, 'selectedGame', Object.values(this.games)).name('Load Game');
-    loadGame.onChange(function(){
-      self.loadGame();
-    });
-    manageGamesGroup.add(this, 'clearGames').name('Clear All Games');
+    this.initInterface();
   }
 
   /**
@@ -348,8 +330,7 @@ XMLscene.prototype.onGraphLoaded = function()
       window.localStorage['savedGame'+ exists] = JSON.stringify(this.game);
     }
 
-    //Update Load Game List
-    this.updateLoadGameList();
+    this.initInterface();
   }
 
   /**
@@ -360,6 +341,7 @@ XMLscene.prototype.onGraphLoaded = function()
     this.game = new DraughtGame(JSON.parse(window.localStorage['savedGame'+game]));
     this.gameStart = true;
     this.gameName = this.games[game];
+    this.selectedGame = null;
     this.initInterface();
   }
 
@@ -370,6 +352,7 @@ XMLscene.prototype.onGraphLoaded = function()
     window.localStorage.clear();
     this.savedGames = 0;
     this.games = {};
+    this.selectedGame = null;
     this.gameName = '';
-    this.updateLoadGameList();
+    this.initInterface();
   }

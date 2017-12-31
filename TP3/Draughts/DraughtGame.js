@@ -84,7 +84,6 @@ function DraughtGame(game){
     this.players[1].setAttribute("style","color:white");
   }
   else {
-    console.log(game);
     this.moves = [];
     for(let i = 0;i < game['moves'].length;i++){
       // Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPiece)
@@ -157,6 +156,8 @@ function DraughtGame(game){
       default:
       break;
     }
+
+    this.updateScoreboard();
   }
 }
 
@@ -179,7 +180,7 @@ DraughtGame.prototype.getReplayBoard = function(){
 DraughtGame.prototype.picked = function (id){
   let move = null;
 
-  if(id == this.whitesDrawID){
+  if(id == this.whitesDrawID && this.started){
     this.whites.toggleDraw();
     //HTML
     if(this.whites.wantsDraw())
@@ -188,7 +189,7 @@ DraughtGame.prototype.picked = function (id){
       this.whitesDraw.setAttribute("style","visibility: hidden;");
     return;
   }
-  if(id == this.blacksDrawID){
+  if(id == this.blacksDrawID && this.started){
     this.blacks.toggleDraw();
     //HTML
     if(this.blacks.wantsDraw())
@@ -434,6 +435,14 @@ DraughtGame.prototype.resetGame = function(){
   this.replayBoard.resetMap();
   this.moveReplayIndex = 0;
 
+  this.startTime = null;
+  this.currentTime = null;
+  this.turnStartTime = null;
+  this.startFinishedTime = null;
+  this.elapsedTime = 0;
+  this.elapsedTurnTime = 0;
+  this.elapsedGameFinishedTime = 0;
+
   if(this.whitesOwner == OWNER.HUMAN){
     this.whites = new Player("Whites");
   }
@@ -458,7 +467,6 @@ DraughtGame.prototype.resetGame = function(){
   this.turnTimes[0].innerHTML = '';
   this.turnTimes[1].setAttribute("style","");
   this.turnTimes[1].innerHTML = '';
-  this.startTime = null;
 
   let blacks = '<span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>';
   let whites = '<span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>';
@@ -479,6 +487,8 @@ DraughtGame.prototype.resetGame = function(){
 
   this.players[0].innerHTML = blacks;
   this.players[1].innerHTML = whites;
+
+  this.updateScoreboard();
 }
 
 DraughtGame.prototype.replayGame = function(){
@@ -530,17 +540,23 @@ DraughtGame.prototype.setStartTime = function(currTime){
 }
 
 DraughtGame.prototype.displayTime = function(currTime){
+  //Game Time
   this.currentTime = currTime;
   this.elapsedTime = (currTime - this.startTime)/1000;
   let minutes = ("0" + parseInt(this.elapsedTime/60)).slice(-2);
   let seconds = ("0" + parseInt(this.elapsedTime%60)).slice(-2);
   this.time[0].innerHTML = minutes +':'+seconds;
-}
 
-DraughtGame.prototype.displayTurnTime = function(currTime){
+  //Turn Time
+  if(!this.turnTimeLimited){
+    this.turnTimes[0].innerHTML = '';
+    this.turnTimes[1].innerHTML = '';
+    return;
+  }
+
   let time = (currTime - this.turnStartTime)/1000;
-  let minutes = ("0" + parseInt(time/60)).slice(-2);
-  let seconds = ("0" + parseInt(time%60)).slice(-2);
+  minutes = ("0" + parseInt(time/60)).slice(-2);
+  seconds = ("0" + parseInt(time%60)).slice(-2);
 
   this.elapsedTurnTime = time;
 
