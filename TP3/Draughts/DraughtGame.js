@@ -536,12 +536,16 @@ DraughtGame.prototype.displayTurnTime = function(currTime){
 
   switch(this.turn){
     case (TURN.BLACKS):{
-      this.turnTimes[0].innerHTML = minutes +':'+seconds;
+      if(this.blacks instanceof Player){
+        this.turnTimes[0].innerHTML = minutes +':'+seconds;
+      }
       this.turnTimes[1].innerHTML = '';
     }
     break;
     case (TURN.WHITES):{
-      this.turnTimes[1].innerHTML = minutes +':'+ seconds;
+      if(this.whites instanceof Player){
+        this.turnTimes[1].innerHTML = minutes +':'+ seconds;
+      }
       this.turnTimes[0].innerHTML = '';
     }
     break;
