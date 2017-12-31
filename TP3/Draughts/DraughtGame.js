@@ -111,6 +111,7 @@ function DraughtGame(game){
     this.whitesDrawID = game['whitesDrawID'];
     this.blacksDrawID = game['blacksDrawID'];
 
+    this.elapsedTime = game['elapsedTime'];
     this.timeBeforeNewGame = game['timeBeforeNewGame'];
     this.elapsedGameFinishedTime = game['elapsedGameFinishedTime'];
     this.turnTimeLimited = game['turnTimeLimited'];

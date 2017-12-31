@@ -224,6 +224,11 @@ XMLscene.prototype.onGraphLoaded = function()
     this.updateCamera(deltaTime);
     this.game.update(deltaTime);
 
+    if(this.game.started){
+      this.game.displayTime(deltaTime);
+      // this.game.displayTurnTime();
+    }
+
     if(this.graph.loadedOk){
       let anim = this.graph.updateNode(this.graph.nodes[this.graph.idRoot], deltaTime);
 
