@@ -225,8 +225,20 @@ XMLscene.prototype.onGraphLoaded = function()
     this.game.update(deltaTime);
 
     if(this.game.started){
-      this.game.displayTime(deltaTime);
-      // this.game.displayTurnTime();
+      if(!this.gameStart){
+        this.game.setStartTime(currTime);
+        this.gameStart = true;
+      }
+      else{
+        this.game.displayTime(currTime);
+        this.game.displayTurnTime(currTime);
+      }
+    }
+    else if(this.game.gameState == GAMESTATE.GAME_FINISHED){
+      this.game.displayFinishedTime(currTime);
+    }
+    else {
+      this.gameStart = false;
     }
 
     if(this.graph.loadedOk){

@@ -135,7 +135,7 @@ function DraughtGame(game){
     }
 
     let d = new Date();
-    this.startTime = d.getTime() - game['timeElapsed']*1000;
+    this.startTime = d.getTime() - game['elapsedTime']*1000;
 
     //Turn Color
     switch(this.turn){
@@ -268,6 +268,7 @@ DraughtGame.prototype.nextTurn = function(){
       break;
     }
     this.elapsedTurnTime = 0;
+    this.turnStartTime = this.currentTime;
   }
   else{
     this.changeTurn = true;
@@ -308,13 +309,11 @@ DraughtGame.prototype.update = function(deltaTime){
         break;
       }
 
-      this.elapsedTime += deltaTime /1000;
-
       if(this.started && this.turnTimeLimited){
-        this.elapsedTurnTime += deltaTime/1000;
         if(this.elapsedTurnTime >= this.timeForTurn){
           this.playerWon(DraughtAux.getOppositeTurn(this.turn));
           this.gameState = GAMESTATE.GAME_FINISHED;
+          this.startFinishedTime = this.currentTime;
           break;
         }
       }
@@ -323,11 +322,13 @@ DraughtGame.prototype.update = function(deltaTime){
       if(winner != null){
         this.playerWon(winner);
         this.gameState = GAMESTATE.GAME_FINISHED;
+        this.startFinishedTime = this.currentTime;
         break;
       }
 
       if(this.checkDraw()){
         this.gameState = GAMESTATE.GAME_FINISHED;
+        this.startFinishedTime = this.currentTime;
         break;
       }
 
@@ -337,7 +338,6 @@ DraughtGame.prototype.update = function(deltaTime){
     }
     break;
     case (GAMESTATE.ANIMATION):{
-      this.elapsedTime += deltaTime /1000;
       animation = this.standByMove.getAnimation();
       if(animation.isDone()){
         this.moves.push(this.standByMove);
@@ -365,7 +365,7 @@ DraughtGame.prototype.update = function(deltaTime){
     break;
     case (GAMESTATE.GAME_FINISHED):{
       this.updateScoreboard();
-      this.elapsedGameFinishedTime += deltaTime/1000;
+      this.started = false;
 
       if(this.elapsedGameFinishedTime >= this.timeBeforeNewGame){
         this.restartGame();
@@ -496,24 +496,35 @@ DraughtGame.prototype.restartGame = function(){
   //Turn Color
   this.players[0].setAttribute("style","color:yellow;");
   this.players[1].setAttribute("style","color:white");
+
+  //Scoreboard
+  this.time[0].innerHTML = '00:00';
+  this.turnTimes[0].setAttribute("style","");
+  this.turnTimes[0].innerHTML = '';
+  this.turnTimes[1].setAttribute("style","");
+  this.turnTimes[1].innerHTML = '';
+  this.startTime = null;
 }
 
 DraughtGame.prototype.setStartTime = function(currTime){
   this.startTime = currTime;
-  this.turnTime = currTime;
+  this.turnStartTime = currTime;
 }
 
 DraughtGame.prototype.displayTime = function(currTime){
   this.currentTime = currTime;
-  this.timeElapsed = (currTime - this.startTime)/1000;
-  let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
-  let seconds = ("0" + parseInt(this.timeElapsed%60)).slice(-2);
+  this.elapsedTime = (currTime - this.startTime)/1000;
+  let minutes = ("0" + parseInt(this.elapsedTime/60)).slice(-2);
+  let seconds = ("0" + parseInt(this.elapsedTime%60)).slice(-2);
   this.time[0].innerHTML = minutes +':'+seconds;
 }
 
-DraughtGame.prototype.displayTurnTime = function(time){
+DraughtGame.prototype.displayTurnTime = function(currTime){
+  let time = (currTime - this.turnStartTime)/1000;
   let minutes = ("0" + parseInt(time/60)).slice(-2);
   let seconds = ("0" + parseInt(time%60)).slice(-2);
+
+  this.elapsedTurnTime = time;
 
   switch(this.turn){
     case (TURN.BLACKS):{
@@ -529,6 +540,14 @@ DraughtGame.prototype.displayTurnTime = function(time){
     default:
     break;
   }
+}
+
+DraughtGame.prototype.displayFinishedTime = function(currTime){
+  let time = (currTime - this.startFinishedTime)/1000;
+  let minutes = ("0" + parseInt(time/60)).slice(-2);
+  let seconds = ("0" + parseInt(time%60)).slice(-2);
+
+  this.elapsedGameFinishedTime = time;
 }
 
 DraughtGame.prototype.showInstructions = function(){
