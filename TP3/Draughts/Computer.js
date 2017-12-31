@@ -1,5 +1,6 @@
 POINTS ={
   WON: 10000000000,
+  DRAW: 0,
   KING: 50000,
   PIECE: 30000,
   POSITION_MULTIPLIER: 100,
@@ -71,7 +72,7 @@ Computer.prototype.createMove = function(board){
   this.creatingMove = true;
   move = Computer.alphaBeta(board, this.depth, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.piece, this.startingPos)[1];
   this.creatingMove = false;
-  
+
   return move;
 }
 
@@ -82,8 +83,6 @@ Computer.prototype.forceConsecutiveMove = function(startingPos){
 Computer.prototype.toggleOFFselectLOCK = function(){
   this.startingPos = null;
 }
-
-
 
 /*
 *Implementation of the Alpha-beta Pruning Algorithm, we set whites as the maximizing player and blacks as the minimizer
@@ -98,7 +97,7 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player, startingPos){
   let bestMove = null;
 
   if(!Computer.canExploreFurther(depth)){
-    return [Computer.evaluateBoard(board), bestMove];
+    return [Computer.evaluateBoard(board, player), bestMove];
   }
 
   let possibleMoves, possibleBoards, value, childValue;
@@ -111,7 +110,6 @@ Computer.alphaBeta = function(board, depth, alpha, beta, player, startingPos){
     possibleMoves = DraughtAux.getAllPossibleMovesForPlayer(player, board);
   }
   possibleBoards = DraughtAux.simulatePossibleBoards(board, possibleMoves);
-  //console.log(possibleBoards);
 
   if(player == "Whites"){
     value = -Number.MAX_SAFE_INTEGER;
@@ -160,12 +158,16 @@ Computer.canExploreFurther = function(depth){
 * Heuristic to evaluate a board Position
 *
 */
-Computer.evaluateBoard = function(board){
+Computer.evaluateBoard = function(board, player){
   let value = 0;
 
   value += Computer.evaluateNumberOfPieces(board);
   value += Computer.evaluatePiecesPosition(board);
   value += Computer.generateRandomComponent();
+  value += Computer.evaluateIfGameIsOver(board, player);
+  if (board.isDraw()){
+    value = POINTS.DRAW;
+  }
 
   return value;
 }
@@ -227,4 +229,22 @@ Computer.generateRandomComponent = function(){
   }
 
   return -Math.floor(Math.random() * 10);
+}
+
+Computer.evaluateIfGameIsOver = function(board, player){
+  let winner = null;
+  if(player == "Whites"){
+    winner = DraughtAux.isGameOver(board, TURN.WHITES);
+  }
+  else if(player == "Blacks"){
+    winner = DraughtAux.isGameOver(board, TURN.BLACKS);
+  }
+
+  if(winner != null && winner == TURN.BLACKS){
+    return -POINTS.WON;
+  }
+  else if(winner != null && winner == TURN.WHITES){
+    return POINTS.WON;
+  }
+  return 0;
 }
