@@ -105,8 +105,8 @@ function DraughtGame(game){
     this.started = game['started'];
 
     // DraughtMap(map , capturedWhites, capturedBlacks)
-    this.board = new DraughtMap(game['board']['map'],game['board']['capturedWhites'],game['board']['capturedBlacks']);
-    this.replayBoard = new DraughtMap(game['replayBoard']['map'],game['replayBoard']['capturedWhites'],game['replayBoard']['capturedBlacks']);
+    this.board = new DraughtMap(game['board']['map'],game['board']['capturedWhites'],game['board']['capturedBlacks'], game['board']['movesN']);
+    this.replayBoard = new DraughtMap(game['replayBoard']['map'],game['replayBoard']['capturedWhites'],game['replayBoard']['capturedBlacks'], game['board']['movesN']);
     this.moveReplayIndex = game['moveReplayIndex'];
 
     this.IDGamma = game['IDGamma'];

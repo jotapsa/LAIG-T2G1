@@ -133,7 +133,7 @@ DraughtMap.prototype.makeMove = function(move){
   }
 
   move.setMovesN(this.movesN);
-  if(move.getCapturedPiece != CELL.EMPTY_SQUARE || cell == CELL.BLACK_PIECE || cell == WHITE_PIECE){
+  if(move.getCapturedPiece() != CELL.EMPTY_SQUARE || cell == CELL.BLACK_PIECE || cell == CELL.WHITE_PIECE){
     this.resetMovesN();
   }
   else{
