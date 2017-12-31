@@ -501,6 +501,16 @@ DraughtGame.prototype.restartGame = function(){
   this.replayBoard.resetMap();
   this.moveReplayIndex = 0;
 
+  if(this.whites.wantsDraw()){
+    this.whites.toggleDraw();
+    this.whitesDraw.setAttribute("style","visibility: hidden;");
+  }
+
+  if(this.blacks.wantsDraw()){
+    this.blacks.toggleDraw();
+    this.blacksDraw.setAttribute("style","visibility: hidden;");
+  }
+
   //Turn Color
   this.players[0].setAttribute("style","color:yellow;");
   this.players[1].setAttribute("style","color:white");
