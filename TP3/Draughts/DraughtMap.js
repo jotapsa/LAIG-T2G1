@@ -40,22 +40,40 @@ function DraughtMap(map , capturedWhites, capturedBlacks, movesN){
   this.countPieces();
 };
 
+/**
+* Return DraughtMap blackPieces.
+*/
 DraughtMap.prototype.getblackPieces = function(){
   return this.blackPieces;
 }
 
+/**
+* Return DraughtMap whitePieces.
+*/
 DraughtMap.prototype.getwhitePieces = function(){
   return this.whitePieces;
 }
 
+/**
+* Return DraughtMap sizeN.
+*/
 DraughtMap.prototype.getsizeN = function(){
   return this.sizeN;
 }
 
+/**
+* Return DraughtMap position.
+* @param {number} y
+* @param {number} x
+*/
 DraughtMap.prototype.getPos = function (y, x){
   return this.map[y][x];
 }
 
+/**
+* Return DraughtMap capturedWhites or capturedBlacks.
+* @param {string} type
+*/
 DraughtMap.prototype.getCapturedArray = function(type){
   switch(type){
     case ("white"):{
@@ -72,6 +90,9 @@ DraughtMap.prototype.getCapturedArray = function(type){
   return [];
 }
 
+/**
+* Count DraughtMap pieces.
+*/
 DraughtMap.prototype.countPieces = function(){
   this.blackPieces = 0;
   this.whitePieces = 0;
@@ -96,6 +117,10 @@ DraughtMap.prototype.countPieces = function(){
   }
 }
 
+/**
+* Make Move on DraughtMap.
+* @param {Move} move
+*/
 DraughtMap.prototype.makeMove = function(move){
   let startingPos, finalPos, cell;
 
@@ -129,6 +154,10 @@ DraughtMap.prototype.makeMove = function(move){
   }
 }
 
+/**
+* Capture Piece on Move in DraughtMap.
+* @param {Move} move
+*/
 DraughtMap.prototype.capturePiece = function(move){
   let startingPos, intermediatePos, finalPos, cell;
   let delta;
@@ -161,6 +190,9 @@ DraughtMap.prototype.capturePiece = function(move){
   this.map[intermediatePos[0]][intermediatePos[1]] = CELL.EMPTY_SQUARE;
 }
 
+/**
+* Return if Game has draw.
+*/
 DraughtMap.prototype.isDraw = function (){
   if(this.movesN >= this.movesForDraw){
     return true;
@@ -168,6 +200,10 @@ DraughtMap.prototype.isDraw = function (){
   return false;
 }
 
+/**
+* Undo Move in DraughtMap.
+* @param {Move} move
+*/
 DraughtMap.prototype.undoMove = function(move){
   let startingPos, finalPos;
 
@@ -192,6 +228,10 @@ DraughtMap.prototype.undoMove = function(move){
   this.map[finalPos[0]][finalPos[1]] = CELL.EMPTY_SQUARE;
 }
 
+/**
+* Release piece on Move in DraughtMap.
+* @param {Move} move
+*/
 DraughtMap.prototype.releasePiece = function(move){
   let startingPos, intermediatePos, finalPos, cell;
   let delta;
@@ -224,6 +264,9 @@ DraughtMap.prototype.releasePiece = function(move){
   this.map[intermediatePos[0]][intermediatePos[1]] = cell;
 }
 
+/**
+* Reset DraughtMap map.
+*/
 DraughtMap.prototype.resetMap = function(){
   this.map =[
     [CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE, CELL.WHITE_PIECE, CELL.INVALID_SQUARE],
@@ -239,11 +282,17 @@ DraughtMap.prototype.resetMap = function(){
   this.countPieces();
 }
 
+/**
+* Reset DraughtMap captured pieces.
+*/
 DraughtMap.prototype.resetCapturedPieces = function(){
   this.capturedWhites = [];
   this.capturedBlacks = [];
 }
 
+/**
+* Reset DraughtMap movesN.
+*/
 DraughtMap.prototype.resetMovesN = function(){
   this.movesN = 0;
 }

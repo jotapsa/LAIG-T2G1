@@ -35,34 +35,53 @@ function Computer(piece, depth,computer){
   }
 };
 
+/**
+* Return number of Computer wins.
+*/
 Computer.prototype.getWins = function(){
   return this.wins;
 }
 
+/**
+* Return if Computer creatingMove.
+*/
 Computer.prototype.getCreatingMove = function(){
   return this.creatingMove;
 }
 
+/**
+* Return if Computer wants to draw Game.
+*/
 Computer.prototype.wantsDraw = function(){
   return this.draw;
 }
 
+/**
+* Increments Computer wins.
+*/
 Computer.prototype.won = function(){
   this.wins++;
 }
 
-
+/**
+* Toggle Computer draw boolean.
+*/
 Computer.prototype.toggleDraw = function(){
   return;
 }
 
 /*
-* This function will always return null if called on Computer
+* Return Computer selected Piece.
+* This function will always return null if called on Computer.
 */
 Computer.prototype.getSelectedPiecePos = function(){
   return null;
 }
 
+/**
+* Create Move to Computer.
+* @param {DraughtMap} board
+*/
 Computer.prototype.createMove = function(board){
   let move = null;
   if(this.creatingMove){
@@ -76,10 +95,16 @@ Computer.prototype.createMove = function(board){
   return move;
 }
 
+/**
+* Force Computer to consecutive Move.
+*/
 Computer.prototype.forceConsecutiveMove = function(startingPos){
   this.startingPos = startingPos;
 }
 
+/**
+* Toggle Computer select Lock.
+*/
 Computer.prototype.toggleOFFselectLOCK = function(){
   this.startingPos = null;
 }

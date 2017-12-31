@@ -180,22 +180,38 @@ function DraughtGame(game){
   }
 }
 
+/**
+* Return DraughtGame gameState.
+*/
 DraughtGame.prototype.getgameState = function(){
   return this.gameState;
 }
 
+/**
+* Return DraughtGame turn.
+*/
 DraughtGame.prototype.getTurn = function (){
   return this.turn;
 }
 
+/**
+* Return DraughtGame board.
+*/
 DraughtGame.prototype.getBoard = function(){
   return this.board;
 }
 
+/**
+* Return DraughtGame replayBoard.
+*/
 DraughtGame.prototype.getReplayBoard = function(){
   return this.replayBoard;
 }
 
+/**
+* When piece is Picked.
+* @param {number} id
+*/
 DraughtGame.prototype.picked = function (id){
   let move = null;
 
@@ -240,6 +256,10 @@ DraughtGame.prototype.picked = function (id){
   }
 }
 
+/**
+* Force Consecutive Move on  DraughtGame.
+* @param {Move} move
+*/
 DraughtGame.prototype.forceConsecutiveMoves = function(move){
   let startingPos, finalPos, cell;
   startingPos = move.getStartingPos();
@@ -269,7 +289,9 @@ DraughtGame.prototype.forceConsecutiveMoves = function(move){
   }
 }
 
-
+/**
+* Updates DraughtGame turn.
+*/
 DraughtGame.prototype.nextTurn = function(){
   this.started = true;
 
@@ -300,6 +322,9 @@ DraughtGame.prototype.nextTurn = function(){
   }
 }
 
+/**
+* Undo Last Move on DraughtGame.
+*/
 DraughtGame.prototype.undoMove = function(){
   //If we have made a move & at least one of the players is human
   if(this.moves.length > 0 && ((this.whites instanceof Player) || (this.blacks instanceof Player))){
@@ -315,6 +340,9 @@ DraughtGame.prototype.undoMove = function(){
   }
 }
 
+/**
+* Updates DraughtGame HTML scoreboard.
+*/
 DraughtGame.prototype.updateScoreboard = function(){
   this.timeElapsed = (this.currentTime - this.startTime)/1000;
   let minutes = ("0" + parseInt(this.timeElapsed/60)).slice(-2);
@@ -322,6 +350,10 @@ DraughtGame.prototype.updateScoreboard = function(){
   this.scoreboard.innerHTML = '<span class="time">' + minutes + ':' + seconds + '</span>' + this.blacks.wins + ' - ' + this.whites.wins;
 }
 
+/**
+* Updates DraughtGame.
+* @param {number} deltaTime
+*/
 DraughtGame.prototype.update = function(deltaTime){
   let move = null, animation = null, winner = null;
   //deltaTime is in ms
@@ -411,6 +443,9 @@ DraughtGame.prototype.update = function(deltaTime){
   }
 }
 
+/**
+* Computer plays in DraughtGame.
+*/
 DraughtGame.prototype.computerPlay = function(){
   let move = null;
 
@@ -427,6 +462,9 @@ DraughtGame.prototype.computerPlay = function(){
   }
 }
 
+/**
+* Return if DraughtGame is draw.
+*/
 DraughtGame.prototype.checkDraw = function(){
   if(this.whites.wantsDraw() && this.blacks.wantsDraw()){
     return true;
@@ -435,6 +473,9 @@ DraughtGame.prototype.checkDraw = function(){
   return this.board.isDraw();
 }
 
+/**
+* Return which Player has won.
+*/
 DraughtGame.prototype.playerWon = function(player){
     if(player == TURN.WHITES){
       this.whites.won();
@@ -446,7 +487,9 @@ DraughtGame.prototype.playerWon = function(player){
     }
 }
 
-
+/**
+* Resets DraughtGame.
+*/
 DraughtGame.prototype.resetGame = function(){
   this.moves = [];
   this.standByMove = null;
@@ -500,6 +543,9 @@ DraughtGame.prototype.resetGame = function(){
   this.updateScoreboard();
 }
 
+/**
+* Updates DraughtGame Players HTML Scoreboard.
+*/
 DraughtGame.prototype.updatePlayersScoreboard = function(){
   let blacks = '<span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>';
   let whites = '<span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>';
@@ -529,6 +575,9 @@ DraughtGame.prototype.updatePlayersScoreboard = function(){
   this.players[1].innerHTML = whites;
 }
 
+/**
+* Replays DraughtGame since first move.
+*/
 DraughtGame.prototype.replayGame = function(){
   if(this.moves.length > 0){
     this.moveReplayIndex = 0;
@@ -537,7 +586,9 @@ DraughtGame.prototype.replayGame = function(){
   }
 }
 
-
+/**
+* Restarts DraughtGame.
+*/
 DraughtGame.prototype.restartGame = function(){
   this.moves = [];
   this.standByMove = null;
@@ -572,11 +623,19 @@ DraughtGame.prototype.restartGame = function(){
   this.startTime = null;
 }
 
+/**
+* Set DraughtGame startTime.
+* @param {number} currTime
+*/
 DraughtGame.prototype.setStartTime = function(currTime){
   this.startTime = currTime;
   this.turnStartTime = currTime;
 }
 
+/**
+* Display DraughtGame elapsedTime and elapsedTurnTime.
+* @param {number} currTime
+*/
 DraughtGame.prototype.displayTime = function(currTime){
   //Game Time
   this.currentTime = currTime;
@@ -618,11 +677,20 @@ DraughtGame.prototype.displayTime = function(currTime){
   }
 }
 
+/**
+* Updates DraughtGame times when is on Replay Mode.
+* @param {number} currTime
+*/
 DraughtGame.prototype.continueTime = function(currTime){
   this.currentTime = currTime;
   this.startTime = this.currentTime - this.elapsedTime*1000;
   this.turnStartTime = this.currentTime - this.elapsedTurnTime*1000;
 }
+
+/**
+* Display DraughtGame elapsedGameFinishedTime and HTML popup.
+* @param {number} currTime
+*/
 DraughtGame.prototype.displayFinishedTime = function(currTime){
   let time = (currTime - this.startFinishedTime)/1000;
   let minutes = ("0" + parseInt(time/60)).slice(-2);
@@ -671,16 +739,25 @@ switch(this.lastWinner){
   starts.innerHTML = "New Game starts in " + countdown + "...";
 }
 
+/**
+* Show DraughtGame Instructions.
+*/
 DraughtGame.prototype.showInstructions = function(){
   let info = document.getElementById("gameInstructions");
   info.style.display = "block";
 }
 
+/**
+* Close DraughtGame Instructions.
+*/
 DraughtGame.prototype.closeInstructions = function(){
   let info = document.getElementById("gameInstructions");
   info.style.display = "none";
 }
 
+/**
+* Close DraughtGame Instructions.
+*/
 window.onclick = function(event) {
   let info = document.getElementById("gameInstructions");
     if (event.target == info) {

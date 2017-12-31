@@ -1,7 +1,8 @@
 /**
  * Player
- * @param gl {WebGLRenderingContext}
  * @constructor
+ * @param {string} piece
+ * @param {Player/Computer} player
  */
 function Player(piece,player){
   //construtor
@@ -29,22 +30,39 @@ function Player(piece,player){
   }
 };
 
+/**
+* Return number of Player wins.
+*/
 Player.prototype.getWins = function(){
   return this.wins;
 }
 
+/**
+* Return if Player wants to draw Game.
+*/
 Player.prototype.wantsDraw = function(){
   return this.draw;
 }
 
+/**
+* Increments Player wins.
+*/
 Player.prototype.won = function(){
   this.wins++;
 }
 
+/**
+* Toggle Player draw boolean.
+*/
 Player.prototype.toggleDraw = function(){
   this.draw = !this.draw;
 }
 
+/**
+* Create Move to Player.
+* @param {number} id
+* @param {DraughtMap} board
+*/
 Player.prototype.createMove = function(id, board){
   let move=null; //reset move everytime
   let y, x;
@@ -90,17 +108,25 @@ Player.prototype.createMove = function(id, board){
   return move;
 }
 
+/**
+* Force Player to consecutive Move.
+*/
 Player.prototype.forceConsecutiveMove = function(startingPos){
   this.startingPos = startingPos;
   this.selectedPiece = true;
   this.selectLOCK = true;
 }
 
-
+/**
+* Toggle Player select Lock.
+*/
 Player.prototype.toggleOFFselectLOCK = function(){
   this.selectLOCK = false;
 }
 
+/**
+* Return Player selected Piece.
+*/
 Player.prototype.getSelectedPiecePos = function(){
   if(this.selectedPiece){
     return this.startingPos;

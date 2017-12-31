@@ -4,6 +4,7 @@ var msInSec = 1000;
 /**
 * XMLscene class, representing the scene that is to be rendered.
 * @constructor
+* @param 	{MyInterface}		interface
 */
 function XMLscene(interface) {
   CGFscene.call(this);
@@ -215,6 +216,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
   /**
   * Updates the scene and animations.
+  * @param 	{number}	 currTime
   */
   XMLscene.prototype.update = function (currTime){
     var deltaTime = currTime - this.oldCurrTime;
@@ -252,6 +254,9 @@ XMLscene.prototype.onGraphLoaded = function()
     }
   }
 
+  /**
+  * Resets and Updates the interface.
+  */
   XMLscene.prototype.initInterface = function(){
     this.interface.ResetGUI();
     this.interface.addLightsGroup(this.graph.lights);
@@ -266,7 +271,7 @@ XMLscene.prototype.onGraphLoaded = function()
   }
 
   /**
-  * .
+  * Load Seleted Theme Graph.
   */
   XMLscene.prototype.loadGraph = function(){
     var myGraph = new MySceneGraph(this.themes[this.theme], this);
@@ -275,7 +280,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
   /**
   * @method 	updateCamera
-  * @param	{int}	deltaTime	delta since the last time there was an update
+  * @param	{number}	deltaTime	delta since the last time there was an update
   *
   */
 
@@ -294,7 +299,7 @@ XMLscene.prototype.onGraphLoaded = function()
   }
 
   /**
-  * .
+  * Reset Game and Interface.
   */
   XMLscene.prototype.resetGame = function(){
     this.gameName = '';
@@ -304,7 +309,7 @@ XMLscene.prototype.onGraphLoaded = function()
   }
 
   /**
-  * .
+  * Save Game to LocalStorage.
   */
   XMLscene.prototype.saveGame = function(){
     if(!this.gameStart)
@@ -334,7 +339,7 @@ XMLscene.prototype.onGraphLoaded = function()
   }
 
   /**
-  * .
+  * Load Game from LocalStorage.
   */
   XMLscene.prototype.loadGame = function(){
     let game = Object.keys(this.games).find(key => this.games[key] === this.selectedGame);
@@ -346,7 +351,7 @@ XMLscene.prototype.onGraphLoaded = function()
   }
 
   /**
-  * .
+  * Clear all games in LocalStorage.
   */
   XMLscene.prototype.clearGames = function(){
     window.localStorage.clear();

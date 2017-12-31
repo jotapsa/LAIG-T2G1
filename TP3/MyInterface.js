@@ -54,6 +54,9 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
+/**
+ * Adds a folder containing the cameras perspectives.
+ */
 MyInterface.prototype.addCameraGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
   var cameraGroup = this.gui.addFolder("Camera");
@@ -67,6 +70,9 @@ MyInterface.prototype.addCameraGroup = function(){
   cameraGroup.add(this.scene, 'cameraAnimationSpeed', 1, 20);
 }
 
+/**
+ * Adds a folder containing the save/load/clear games.
+ */
 MyInterface.prototype.addManageGamesGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
   var manageGamesGroup = this.gui.addFolder("Manage Games");
@@ -87,6 +93,9 @@ MyInterface.prototype.addManageGamesGroup = function(){
   manageGamesGroup.add(this.scene, 'clearGames').name('Clear All Games');
 }
 
+/**
+ * Adds a folder containing the configuration of DraughtGame.
+ */
 MyInterface.prototype.addConfigurationGroup = function(){
   var self = this; //maintain reference to the original this in a change of context
   var configGroup = this.gui.addFolder("Configuration");
@@ -125,6 +134,9 @@ MyInterface.prototype.addConfigurationGroup = function(){
     });
 }
 
+/**
+ * Adds a folder containing the DraughtGame options like undoMove,resetGame and replayGame.
+ */
 MyInterface.prototype.addGameOptions = function(){
   this.gui.add(this.scene.game, 'undoMove').name('Undo Move');
   this.gui.add(this.scene, 'resetGame').name('Reset Game');

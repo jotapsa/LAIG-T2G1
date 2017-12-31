@@ -23,51 +23,90 @@ function Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPi
   this.movesN = 0;
 };
 
-
+/**
+* Return Move Starting position.
+*/
 Move.prototype.getStartingPos = function(){
   return this.startingPos;
 }
 
+/**
+* Return Move Final position.
+*/
 Move.prototype.getFinalPos = function(){
   return this.finalPos;
 }
 
+/**
+* Return Move Turn.
+*/
 Move.prototype.getTurn = function(){
   return this.turn;
 }
 
+/**
+* Return Move Animation.
+*/
 Move.prototype.getAnimation = function(){
   return this.animation;
 }
 
+/**
+* Return Move forcedMove.
+*/
 Move.prototype.isforcedMove = function(){
   return this.forcedMove;
 }
 
+/**
+* Return Move promotedPiece.
+*/
 Move.prototype.getPromotedPiece = function(){
   return this.promotedPiece;
 }
 
+/**
+* Return Move capturedPiece.
+*/
 Move.prototype.getCapturedPiece = function(){
   return this.capturedPiece;
 }
 
+/**
+* Return Move movesN.
+*/
 Move.prototype.getMovesN = function(){
   return this.movesN;
 }
 
+/**
+* Set Move forcedMove.
+* @param {boolean} bool
+*/
 Move.prototype.setForcedMove = function(bool){
   this.forcedMove = bool;
 }
 
+/**
+* Set Move capturedPiece.
+* @param {number} piece
+*/
 Move.prototype.setCapturedPiece = function(piece){
   this.capturedPiece=piece;
 }
 
+/**
+* Set Move promotedPiece.
+* @param {boolean} bool
+*/
 Move.prototype.setPromotedPiece = function(bool){
   this.promotedPiece=bool;
 }
 
+/**
+* Set Move movesN.
+* @param {number} movesN
+*/
 Move.prototype.setMovesN = function(movesN){
   this.movesN = movesN;
 }
