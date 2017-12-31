@@ -84,6 +84,7 @@ function DraughtGame(game){
     this.players[1].setAttribute("style","color:white");
   }
   else {
+    console.log(game);
     this.moves = [];
     for(let i = 0;i < game['moves'].length;i++){
       // Move(startingPos, finalPos, turn, forcedMove, promotedPiece, capturedPiece)
@@ -136,6 +137,10 @@ function DraughtGame(game){
 
     let d = new Date();
     this.startTime = d.getTime() - game['elapsedTime']*1000;
+
+    this.currentTime = d.getTime();
+    this.turnStartTime = d.getTime() - game['elapsedTurnTime']*1000;
+    this.startFinishedTime = d.getTime() - game['elapsedGameFinishedTime']*1000;
 
     //Turn Color
     switch(this.turn){
