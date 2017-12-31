@@ -366,6 +366,9 @@ DraughtGame.prototype.update = function(deltaTime){
         }
         animation.update(deltaTime);
       }
+      else {
+        this.gameState = GAMESTATE.RUNNING;
+      }
     }
     break;
     case (GAMESTATE.GAME_FINISHED):{
@@ -549,8 +552,8 @@ DraughtGame.prototype.displayTurnTime = function(currTime){
 
 DraughtGame.prototype.continueTime = function(currTime){
   this.currentTime = currTime;
-  this.startTime = this.currentTime - this.elapsedTime;
-  this.turnStartTime = this.currentTime - this.elapsedTurnTime;
+  this.startTime = this.currentTime - this.elapsedTime*1000;
+  this.turnStartTime = this.currentTime - this.elapsedTurnTime*1000;
 }
 DraughtGame.prototype.displayFinishedTime = function(currTime){
   let time = (currTime - this.startFinishedTime)/1000;

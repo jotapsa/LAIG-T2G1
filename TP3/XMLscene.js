@@ -229,6 +229,9 @@ XMLscene.prototype.onGraphLoaded = function()
         this.game.setStartTime(currTime);
         this.gameStart = true;
       }
+      else if(this.game.gameState == GAMESTATE.REPLAY){
+        this.game.continueTime(currTime);
+      }
       else{
         this.game.displayTime(currTime);
         this.game.displayTurnTime(currTime);
