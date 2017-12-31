@@ -426,6 +426,7 @@ DraughtGame.prototype.update = function(deltaTime){
     break;
     case (GAMESTATE.GAME_FINISHED):{
       this.updateScoreboard();
+      this.updatePlayersScoreboard();
       this.started = false;
       this.waitingFinish.setAttribute("style","display:block;");
 
@@ -735,7 +736,7 @@ switch(this.lastWinner){
   break;
 }
 
-  let countdown = parseInt(this.timeBeforeNewGame - this.elapsedGameFinishedTime);
+  let countdown = parseInt(this.timeBeforeNewGame - this.elapsedGameFinishedTime) + 1;
   starts.innerHTML = "New Game starts in " + countdown + "...";
 }
 
