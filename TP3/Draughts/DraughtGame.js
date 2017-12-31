@@ -35,6 +35,8 @@ function DraughtGame(game){
 
   this.blacksDraw = document.getElementsByClassName("draw")[0];
   this.whitesDraw = document.getElementsByClassName("draw")[1];
+
+  this.waitingFinish = document.getElementById("gameWinner");
   //construtor
 
   if (game===undefined){
@@ -173,6 +175,7 @@ function DraughtGame(game){
       break;
     }
 
+    this.updatePlayersScoreboard();
     this.updateScoreboard();
   }
 }
@@ -351,6 +354,7 @@ DraughtGame.prototype.update = function(deltaTime){
       if(this.checkDraw()){
         this.gameState = GAMESTATE.GAME_FINISHED;
         this.startFinishedTime = this.currentTime;
+        this.lastWinner = "draw";
         break;
       }
 
@@ -391,8 +395,10 @@ DraughtGame.prototype.update = function(deltaTime){
     case (GAMESTATE.GAME_FINISHED):{
       this.updateScoreboard();
       this.started = false;
+      this.waitingFinish.setAttribute("style","display:block;");
 
       if(this.elapsedGameFinishedTime >= this.timeBeforeNewGame){
+        this.waitingFinish.setAttribute("style","display:none;");
         this.restartGame();
         this.elapsedGameFinishedTime = 0;
         this.gameState = GAMESTATE.RUNNING;
@@ -432,9 +438,11 @@ DraughtGame.prototype.checkDraw = function(){
 DraughtGame.prototype.playerWon = function(player){
     if(player == TURN.WHITES){
       this.whites.won();
+      this.lastWinner = "whites";
     }
     else if(player == TURN.BLACKS){
       this.blacks.won();
+      this.lastWinner = "blacks";
     }
 }
 
@@ -488,18 +496,30 @@ DraughtGame.prototype.resetGame = function(){
   this.turnTimes[1].setAttribute("style","");
   this.turnTimes[1].innerHTML = '';
 
+  this.updatePlayersScoreboard();
+  this.updateScoreboard();
+}
+
+DraughtGame.prototype.updatePlayersScoreboard = function(){
   let blacks = '<span class="timeTurn" id="time1"></span><img src="scenes/images/black_checker.jpg"/>';
   let whites = '<span class="timeTurn" id="time2"></span><img src="scenes/images/white_checker.jpg"/>';
+  let cpuVScpu = (this.blacks instanceof Computer) && (this.whites instanceof Computer);
 
-  if(this.blacksOwner == OWNER.HUMAN){
+  if(this.blacks instanceof Player){
     blacks += 'Player 1';
+  }
+  else if(cpuVScpu){
+    blacks += 'CPU 1';
   }
   else {
     blacks += 'CPU';
   }
 
-  if(this.whitesOwner == OWNER.HUMAN){
+  if(this.whites instanceof Player){
     whites += 'Player 2';
+  }
+  else if(cpuVScpu){
+    whites += 'CPU 2';
   }
   else {
     whites += 'CPU';
@@ -507,8 +527,6 @@ DraughtGame.prototype.resetGame = function(){
 
   this.players[0].innerHTML = blacks;
   this.players[1].innerHTML = whites;
-
-  this.updateScoreboard();
 }
 
 DraughtGame.prototype.replayGame = function(){
@@ -611,6 +629,46 @@ DraughtGame.prototype.displayFinishedTime = function(currTime){
   let seconds = ("0" + parseInt(time%60)).slice(-2);
 
   this.elapsedGameFinishedTime = time;
+
+  let winner = document.getElementById("winner");
+  let starts = document.getElementById("waitingStart");
+  let cpuVScpu = (this.blacks instanceof Computer) && (this.whites instanceof Computer);
+
+switch(this.lastWinner){
+  case 'blacks':{
+    if(this.blacks instanceof Player){
+      winner.innerHTML = "Player 1 WON!";
+    }
+    else if(cpuVScpu){
+      winner.innerHTML = "CPU 1 WON!";
+    }
+    else{
+      winner.innerHTML = "CPU WON!";
+    }
+  }
+  break;
+  case 'whites':{
+    if(this.whites instanceof Player){
+      winner.innerHTML = "Player 2 WON!";
+    }
+    else if(cpuVScpu){
+      winner.innerHTML = "CPU 2 WON!";
+    }
+    else{
+      winner.innerHTML = "CPU WON!";
+    }
+  }
+  break;
+  case 'draw':{
+    winner.innerHTML = "DRAW!";
+  }
+  break;
+  default:
+  break;
+}
+
+  let countdown = parseInt(this.timeBeforeNewGame - this.elapsedGameFinishedTime);
+  starts.innerHTML = "New Game starts in " + countdown + "...";
 }
 
 DraughtGame.prototype.showInstructions = function(){
