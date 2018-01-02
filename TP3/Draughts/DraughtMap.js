@@ -195,7 +195,7 @@ DraughtMap.prototype.capturePiece = function(move){
 */
 DraughtMap.prototype.isDraw = function (){
   if(this.movesN >= this.movesForDraw){
-    this.movesN = 0;
+    this.resetMovesN();
     return true;
   }
   return false;
